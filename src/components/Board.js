@@ -3,36 +3,27 @@ import { connect } from "react-redux";
 import Row from "./Row";
 import "./Board.scss";
 
-const Board = ({ games, movePiece }) => {
-  const getGameById = (id) => {
-    return games
-      .filter((game) => {
-        return game.id === id;
-      })
-      .shift();
-  };
-
-  const game = getGameById(143);
-  console.log(game);
+const Board = ({ currentGameType, gameTypes, movePiece }) => {
+  const gameType = gameTypes[currentGameType];
+  console.log(gameType);
 
   return (
     <div className="board">
-      {[...Array(game.board.size[0]).keys()].map((num) => (
-        <Row numSpaces={game.board.size[1]} colorIndent={num % 2} />
+      {[...Array(gameType.board.size[0]).keys()].reverse().map((num) => (
+        <Row
+          key={num}
+          numSpaces={gameType.board.size[1]}
+          colorIndent={(num + 1) % 2}
+          rowNum={num + 1}
+        />
       ))}
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    games: state.games,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  movePiece: () =>
-    dispatch({ type: "MOVEPIECE", payload: { from: "d2", to: "b3" } }),
+const mapStateToProps = (state) => ({
+  gameTypes: state.gameTypes,
+  currentGameType: state.currentGameType,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Board);
+export default connect(mapStateToProps, null)(Board);

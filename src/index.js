@@ -5,9 +5,11 @@ import * as serviceWorker from "./serviceWorker";
 
 import { Provider } from "react-redux";
 import { createStore } from "redux";
+// import devToolsEnhancer from "remote-redux-devtools";
 import countReducer from "./redux-stuff/reducers";
 
 const store = createStore(countReducer);
+// const store = createStore(countReducer, devToolsEnhancer({ realtime: true }));
 
 ReactDOM.render(
   <Provider store={store}>

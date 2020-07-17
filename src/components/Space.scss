@@ -1,6 +1,9 @@
 .space {
   height: 100%;
   width: calc(100% / 8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .light-space {
