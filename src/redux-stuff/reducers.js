@@ -2,6 +2,81 @@ import { INCREMENT, DECREMENT, RESET } from "./actionTypes";
 import initialState from "./initialState";
 
 const countReducer = (state = initialState, action) => {
+  const legalMove = (whoseTurn) => {
+    // const pieceType = state.currentMove.piece.slice(1);
+    const currentPos = state.currentMove.from.split("");
+    const pieceMoveTypes =
+      state.gameTypes[state.currentGameType].pieces[0].movement.possibleMoves; // todo - search for piece type (not just [0])
+
+    console.log({ pieceMoveTypes });
+
+    const possibleMoveSquares = pieceMoveTypes.map((moveType) => {
+      const newPossibleMoveSquare = currentPos;
+      moveType.split("").map((moveTypeChar) => {
+        console.log({ moveTypeChar });
+        switch (moveTypeChar) {
+          case "f": {
+            if (whoseTurn === "A") {
+              newPossibleMoveSquare[1] = String(
+                parseInt(newPossibleMoveSquare[1]) + 1
+              );
+            } else {
+              newPossibleMoveSquare[1] = String(
+                parseInt(newPossibleMoveSquare[1]) - 1
+              );
+            }
+            return newPossibleMoveSquare.join("");
+          }
+          case "b": {
+            if (whoseTurn === "A") {
+              newPossibleMoveSquare[1] = String(
+                parseInt(newPossibleMoveSquare[1]) - 1
+              );
+            } else {
+              newPossibleMoveSquare[1] = String(
+                parseInt(newPossibleMoveSquare[1]) + 1
+              );
+            }
+            return newPossibleMoveSquare.join("");
+          }
+          case "l": {
+            if (whoseTurn === "A") {
+              newPossibleMoveSquare[0] = String.fromCharCode(
+                newPossibleMoveSquare[0].charCodeAt(0) - 1
+              );
+            } else {
+              newPossibleMoveSquare[0] = String.fromCharCode(
+                newPossibleMoveSquare[0].charCodeAt(0) + 1
+              );
+            }
+            return newPossibleMoveSquare.join("");
+          }
+          case "r": {
+            if (whoseTurn === "A") {
+              newPossibleMoveSquare[0] = String.fromCharCode(
+                newPossibleMoveSquare[0].charCodeAt(0) + 1
+              );
+            } else {
+              newPossibleMoveSquare[0] = String.fromCharCode(
+                newPossibleMoveSquare[0].charCodeAt(0) - 1
+              );
+            }
+            return newPossibleMoveSquare.join("");
+          }
+          default: {
+            break;
+          }
+        }
+        return newPossibleMoveSquare;
+      });
+      return newPossibleMoveSquare;
+    });
+
+    console.log({ possibleMoveSquares });
+
+    return possibleMoveSquares.includes(action.payload.code);
+  };
+
   switch (action.type) {
     case "INC_CURRENT_BOARD_AND_PIECES_NUM": {
       let newCurrentBoardAndPiecesSeqNum = state.currentBoardAndPiecesSeqNum;
@@ -45,8 +120,11 @@ const countReducer = (state = initialState, action) => {
             piece: action.payload.piece,
           },
         };
-      } else if (pieceTeam !== whoseTurn && state.currentMove.piece) {
-        // const oldMoves = state.gameBoardAndPiecesMoves;
+      } else if (
+        pieceTeam !== whoseTurn &&
+        state.currentMove.piece &&
+        legalMove(whoseTurn)
+      ) {
         const prevBoardAndPieces = state.gameBoardAndPiecesSequence
           .slice(-1)
           .pop();

@@ -53,9 +53,7 @@ const initialState = {
       board: board,
       pieces: pieces,
       settings: {
-        rules: {
-          winCondition: "annihilation",
-        },
+        winCondition: "annihilation",
       },
     },
     {
@@ -63,10 +61,7 @@ const initialState = {
       id: 145,
       board: board,
       settings: {
-        rules: {
-          winCondition: "checkmate",
-        },
-        moveCode: "square-directional",
+        winCondition: "checkmate",
       },
     },
   ],
