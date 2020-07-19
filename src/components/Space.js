@@ -21,7 +21,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setCurrentMovePiece: (code, piece) =>
     dispatch({
-      type: "SET_CURRENT_MOVE_PIECE",
+      type: "MOVE_PIECE",
       payload: { code, piece },
     }),
 });

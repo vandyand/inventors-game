@@ -4,7 +4,8 @@ const pieces = [
     code: "sp",
     img: "",
     movement: {
-      move: ["fl", "f", "ff", "fr"],
+      code: "square-directional",
+      possibleMoves: ["fl", "f", "ff", "fr"],
       attackSameAsMove: true,
       canJump: false,
     },
@@ -17,40 +18,18 @@ const board = {
   size: [8, 8],
   numSpaces: 64,
   spaceShape: "square",
-  pieces: pieces,
 };
 
 const initialState = {
   count: 0,
   gameBoardAndPiecesSequence: [
-    {
-      teamA: ["d2-sp", "e1-sp"],
-      teamB: ["d7-sp", "e7-sp"],
-    },
-    {
-      teamA: ["d3-sp", "e1-sp"],
-      teamB: ["d7-sp", "e7-sp"],
-    },
-    {
-      teamA: ["d3-sp", "e1-sp"],
-      teamB: ["d7-sp", "e5-sp"],
-    },
-    {
-      teamA: ["d3-sp", "f2-sp"],
-      teamB: ["d7-sp", "e5-sp"],
-    },
-    {
-      teamA: ["d3-sp", "f2-sp"],
-      teamB: ["d6-sp", "e5-sp"],
-    },
-    {
-      teamA: ["d3-sp", "g3-sp"],
-      teamB: ["d6-sp", "e5-sp"],
-    },
-    {
-      teamA: ["d3-sp", "g3-sp"],
-      teamB: ["d6-sp", "e3-sp"],
-    },
+    ["Asp-d2", "Asp-e1", "Bsp-d7", "Bsp-e7"],
+    ["Asp-d3", "Asp-e1", "Bsp-d7", "Bsp-e7"],
+    ["Asp-d3", "Asp-e1", "Bsp-d7", "Bsp-e5"],
+    ["Asp-d3", "Asp-f2", "Bsp-d7", "Bsp-e5"],
+    ["Asp-d3", "Asp-f2", "Bsp-d6", "Bsp-e5"],
+    ["Asp-d3", "Asp-g3", "Bsp-d6", "Bsp-e5"],
+    ["Asp-d3", "Asp-g3", "Bsp-d6", "Bsp-e3"],
   ],
   gameBoardAndPiecesMoves: [
     "Asp-d2>d3",
@@ -72,11 +51,11 @@ const initialState = {
       name: "gameType1",
       id: 143,
       board: board,
+      pieces: pieces,
       settings: {
         rules: {
           winCondition: "annihilation",
         },
-        moveCode: "square-directional",
       },
     },
     {

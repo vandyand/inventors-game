@@ -19,24 +19,14 @@ const Row = ({
           const currentSetup =
             gameBoardAndPiecesSequence[currentBoardAndPiecesSeqNum];
 
-          // {
-          //   teamA: ["d2-sp", "e1-sp"],
-          //   teamB: ["d7-sp", "e7-sp"],
-          // },
-
-          let piece = "";
-          const teamA = currentSetup.teamA.filter((piecePos) =>
-            piecePos.includes(spaceCode)
-          );
-          const teamB = currentSetup.teamB.filter((piecePos) =>
-            piecePos.includes(spaceCode)
-          );
-
-          if (teamA.length !== 0) {
-            piece = `A${teamA[0].split("-")[1]}`;
-          } else if (teamB.length !== 0) {
-            piece = `B${teamB[0].split("-")[1]}`;
-          }
+          const piece = currentSetup
+            .map((teamPieceSpace) => {
+              if (spaceCode === teamPieceSpace.split("-")[1]) {
+                return teamPieceSpace.split("-")[0];
+              }
+              return "";
+            })
+            .filter((item) => item !== "")[0];
 
           return (
             <Space
