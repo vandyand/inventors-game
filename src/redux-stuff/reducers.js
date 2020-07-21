@@ -3,11 +3,15 @@ import initialState from "./initialState";
 
 const countReducer = (state = initialState, action) => {
   const currentGameType = state.gameTypes[state.currentGameType];
+  const currentBoard = state.boards
+    .filter((board) => board.code === currentGameType.boardCode)
+    .pop();
 
   const legalMove = (whoseTurn) => {
     const currentPos = state.newMove.from;
 
-    const currentPiece = currentGameType.pieces
+    const currentPiece = state.pieces
+      // .filter((piece) => piece.code === currentGameType.pieceCode)
       .filter((piece) => piece.code === state.newMove.piece.slice(1))
       .pop();
 
@@ -120,19 +124,20 @@ const countReducer = (state = initialState, action) => {
 
         const pieceOldPos = `${state.newMove.piece}-${state.newMove.from}`;
         let pieceNewPos = `${state.newMove.piece}-${action.payload.code}`;
-        const lastRow = currentGameType.board.rows.slice(-1).pop();
-        const firstRow = currentGameType.board.rows.slice(0, 1).pop();
+        console.log({ currentBoard });
+        const lastRow = currentBoard.rows.slice(-1).pop();
+        const firstRow = currentBoard.rows.slice(0, 1).pop();
 
         if (
           // Promotion logic
-          currentGameType.pieces
+          state.pieces
             .filter((piece) => piece.code === state.newMove.piece.slice(1))
             .pop().promotion.conditionCode === "lr" &&
           ((whoseTurn === "A" && action.payload.code.includes(lastRow)) ||
             (whoseTurn === "B" && action.payload.code.includes(firstRow)))
         ) {
           pieceNewPos = `${whoseTurn}${
-            currentGameType.pieces
+            state.pieces
               .filter((piece) => piece.code === state.newMove.piece.slice(1))
               .pop().promotion.to
           }-${action.payload.code}`;
