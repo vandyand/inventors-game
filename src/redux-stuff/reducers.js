@@ -6,66 +6,111 @@ const countReducer = (state = initialState, action) => {
   const currentBoard = state.boards
     .filter((board) => board.code === currentGameType.boardCode)
     .pop();
+  const prevBoardAndPieces = state.gameBoardAndPiecesSequence.slice(-1).pop();
 
   const legalMove = (whoseTurn) => {
     const currentPos = state.newMove.from;
 
     const currentPiece = state.pieces
-      // .filter((piece) => piece.code === currentGameType.pieceCode)
       .filter((piece) => piece.code === state.newMove.piece.slice(1))
       .pop();
 
-    console.log({ currentPiece });
     const pieceMoveTypes = currentPiece.movement.possibleMoves;
-
-    console.log({ pieceMoveTypes });
 
     const possibleMoveSquares = pieceMoveTypes.map((moveType) => {
       let newPossibleMoveSquare = currentPos;
+      const turnModifier = whoseTurn === "A" ? 1 : -1;
 
-      moveType.split("").map((moveTypeChar) => {
-        const turnModifier = whoseTurn === "A" ? 1 : -1;
-        const foreBackModifier =
-          moveTypeChar === "f" ? 1 : moveTypeChar === "b" ? -1 : 0;
-        const leftRightModifier =
-          moveTypeChar === "r" ? 1 : moveTypeChar === "l" ? -1 : 0;
-        switch (moveTypeChar) {
-          case "f":
-          case "b": {
-            newPossibleMoveSquare = newPossibleMoveSquare.replace(
-              newPossibleMoveSquare.charAt(1),
-              String(
-                parseInt(newPossibleMoveSquare.charAt(1)) +
-                  turnModifier * foreBackModifier
-              )
-            );
-            return newPossibleMoveSquare;
-          }
-          case "l":
-          case "r": {
-            newPossibleMoveSquare = newPossibleMoveSquare.replace(
-              newPossibleMoveSquare.charAt(0),
-              String.fromCharCode(
-                newPossibleMoveSquare.charCodeAt(0) +
-                  turnModifier * leftRightModifier
-              )
-            );
-
-            return newPossibleMoveSquare;
-          }
-          default: {
-            break;
-          }
-        }
-        return newPossibleMoveSquare;
-      });
-
-      return newPossibleMoveSquare;
+      return adjacentPos(newPossibleMoveSquare, moveType, turnModifier);
     });
 
     console.log({ possibleMoveSquares });
 
-    return possibleMoveSquares.includes(action.payload.code);
+    //Make sure it's not a jump condition or jumps are allowed.
+    const filteredPossibleMoveSquares = possibleMoveSquares.filter(
+      (moveSquare) =>
+        currentPiece.movement.canJump || !jumpCondition(moveSquare, currentPos)
+    );
+
+    return filteredPossibleMoveSquares.includes(action.payload.code);
+  };
+
+  const adjacentPos = (pos, movement, invert) => {
+    let newPos = pos;
+    movement.split("").map((moveTypeChar) => {
+      switch (moveTypeChar) {
+        case "f": {
+          newPos = newPos.replace(
+            newPos.charAt(1),
+            String(parseInt(newPos.charAt(1)) + invert)
+          );
+          return newPos;
+        }
+        case "b": {
+          newPos = newPos.replace(
+            newPos.charAt(1),
+            String(parseInt(newPos.charAt(1)) - invert)
+          );
+          return newPos;
+        }
+        case "l": {
+          newPos = newPos.replace(
+            newPos.charAt(0),
+            String.fromCharCode(newPos.charCodeAt(0) - invert)
+          );
+          return newPos;
+        }
+        case "r": {
+          newPos = newPos.replace(
+            newPos.charAt(0),
+            String.fromCharCode(newPos.charCodeAt(0) + invert)
+          );
+          return newPos;
+        }
+        default: {
+          break;
+        }
+      }
+      return newPos;
+    });
+    return newPos;
+  };
+
+  const jumpCondition = (moveSquare, currentPos) => {
+    return prevBoardAndPieces.reduce((acc, curVal, curInd, arr) => {
+      const pos = curVal.slice(-2);
+      if (between(pos, moveSquare, currentPos)) {
+        return true;
+      }
+      return acc || false;
+    }, false);
+  };
+
+  const between = (pos, moveTo, moveFrom) => {
+    const posCoord = posToCoord(pos);
+    const moveToCoord = posToCoord(moveTo);
+    const moveFromCoord = posToCoord(moveFrom);
+    if (
+      ((posCoord[0] < moveToCoord[0] && posCoord[0] > moveFromCoord[0]) ||
+        (posCoord[0] > moveToCoord[0] && posCoord[0] < moveFromCoord[0]) ||
+        posCoord[0] === moveFromCoord[0]) &&
+      ((posCoord[1] < moveToCoord[1] && posCoord[1] > moveFromCoord[1]) ||
+        (posCoord[1] > moveToCoord[1] && posCoord[1] < moveFromCoord[1]) ||
+        posCoord[1] === moveFromCoord[1]) &&
+      (posCoord[0] !== moveFromCoord[0] || posCoord[1] !== moveFromCoord[1])
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  const posToCoord = (pos) => {
+    return pos.split("").map((posChar, ind) => {
+      if (ind < 1) {
+        return posChar.charCodeAt(0) - 97;
+      }
+      return parseInt(posChar) - 1;
+    });
   };
 
   switch (action.type) {
@@ -118,29 +163,22 @@ const countReducer = (state = initialState, action) => {
         state.newMove.piece &&
         legalMove(whoseTurn)
       ) {
-        const prevBoardAndPieces = state.gameBoardAndPiecesSequence
-          .slice(-1)
-          .pop();
-
         const pieceOldPos = `${state.newMove.piece}-${state.newMove.from}`;
         let pieceNewPos = `${state.newMove.piece}-${action.payload.code}`;
-        console.log({ currentBoard });
-        const lastRow = currentBoard.rows.slice(-1).pop();
-        const firstRow = currentBoard.rows.slice(0, 1).pop();
+        const lastRow = currentBoard.rowCodes.slice(-1).pop();
+        const firstRow = currentBoard.rowCodes.slice(0, 1).pop();
+
+        const currentPromotion = state.pieces
+          .filter((piece) => piece.code === state.newMove.piece.slice(1))
+          .pop().promotion;
 
         if (
           // Promotion logic
-          state.pieces
-            .filter((piece) => piece.code === state.newMove.piece.slice(1))
-            .pop().promotion.conditionCode === "lr" &&
+          currentPromotion.conditionCode === "lr" &&
           ((whoseTurn === "A" && action.payload.code.includes(lastRow)) ||
             (whoseTurn === "B" && action.payload.code.includes(firstRow)))
         ) {
-          pieceNewPos = `${whoseTurn}${
-            state.pieces
-              .filter((piece) => piece.code === state.newMove.piece.slice(1))
-              .pop().promotion.to
-          }-${action.payload.code}`;
+          pieceNewPos = `${whoseTurn}${currentPromotion.to}-${action.payload.code}`;
         }
         const newBoardAndPiecesMove = `${state.newMove.piece}-${state.newMove.from}>${action.payload.code}`;
 
@@ -155,8 +193,18 @@ const countReducer = (state = initialState, action) => {
             }),
         ];
 
+        const winner = newBoardAndPieces[0].reduce((acc, curVal) => {
+          if (curVal[0] === "A") {
+            return acc.replace("B", "");
+          } else if (curVal[0] === "B") {
+            return acc.replace("A", "");
+          }
+          return acc;
+        }, "AB");
+
         return {
           ...state,
+          currentWinner: winner,
           gameBoardAndPiecesMoves: state.gameBoardAndPiecesMoves.concat(
             newBoardAndPiecesMove
           ),
