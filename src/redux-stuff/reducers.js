@@ -1,8 +1,9 @@
-import { INCREMENT, DECREMENT, RESET } from "./actionTypes";
 import initialState from "./initialState";
 
 const countReducer = (state = initialState, action) => {
-  const currentGameType = state.gameTypes[state.currentGameType];
+  const currentGameType = state.gameTypes.filter(
+    (gameType) => gameType.code === state.currentGameTypeCode
+  )[0];
   const currentBoard = state.boards
     .filter((board) => board.code === currentGameType.boardCode)
     .pop();
@@ -13,13 +14,15 @@ const countReducer = (state = initialState, action) => {
         .pop()
     : {};
 
-  const flatMap = (f, xs) => xs.reduce((acc, x) => acc.concat(f(x)), []);
+  const flatMap = (xs, f) => xs.reduce((acc, x) => acc.concat(f(x)), []);
 
   const legalMove = (whoseTurn) => {
     const currentPos = state.newMove.from;
-    const pieceMoveTypes = currentPieceType.movement.possibleMoves;
-
-    const possibleMoveSquares = flatMap((moveType) => {
+    const pieceMoveTypes =
+      !currentPieceType.movement.attackSameAsMove && attacking()
+        ? currentPieceType.movement.attackMoves
+        : currentPieceType.movement.possibleMoves;
+    const possibleMoveSquares = flatMap(pieceMoveTypes, (moveType) => {
       if (moveType.includes("+")) {
         let moveTypes = [];
         for (let i = 1; i < 8; i++) {
@@ -28,7 +31,7 @@ const countReducer = (state = initialState, action) => {
         return moveTypes;
       }
       return moveType;
-    }, pieceMoveTypes)
+    })
       .map((moveType) => {
         const turnModifier = whoseTurn === "A" ? 1 : -1;
         return adjacentPos(currentPos, moveType, turnModifier);
@@ -36,6 +39,15 @@ const countReducer = (state = initialState, action) => {
       .filter((possibleMoveSquare) => possibleMoveSquare !== undefined);
     console.log({ possibleMoveSquares });
     return possibleMoveSquares.includes(action.payload.code);
+  };
+
+  const attacking = () => {
+    return prevBoardAndPieces.reduce((acc, pieceAndPos) => {
+      if (pieceAndPos.slice(-2) === action.payload.code) {
+        return true;
+      }
+      return acc;
+    }, false);
   };
 
   const getNewRow = (spaceCode, val) => {
@@ -69,14 +81,14 @@ const countReducer = (state = initialState, action) => {
 
   const adjacentPos = (pos, movement, invert) => {
     const rowIncDec = movement.includes("f")
-      ? -1 * (movement.split("f").length - 1)
+      ? (movement.split("f").length - 1) * invert
       : movement.includes("b")
-      ? movement.split("b").length - 1
+      ? (movement.split("b").length - 1) * invert * -1
       : 0;
     const colIncDec = movement.includes("l")
-      ? -1 * (movement.split("l").length - 1)
+      ? (movement.split("l").length - 1) * invert
       : movement.includes("r")
-      ? movement.split("r").length - 1
+      ? (movement.split("r").length - 1) * invert * -1
       : 0;
     return getNewRow(getNewColumn(pos, colIncDec), rowIncDec);
   };
@@ -273,28 +285,6 @@ const countReducer = (state = initialState, action) => {
         gameBoardAndPiecesSequence: state.gameBoardAndPiecesSequence.concat([
           currentGameType.startingPiecePositions,
         ]),
-      };
-    }
-
-    case INCREMENT: {
-      const newCount = state.count + 1;
-      return {
-        // ...state,
-        count: newCount,
-      };
-    }
-    case DECREMENT: {
-      const newCount = state.count - 1;
-      return {
-        // ...state,
-        count: newCount,
-      };
-    }
-    case RESET: {
-      const newCount = 0;
-      return {
-        // ...state,
-        count: newCount,
       };
     }
     default:

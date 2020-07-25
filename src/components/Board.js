@@ -3,8 +3,10 @@ import { connect } from "react-redux";
 import Row from "./Row";
 import "./Board.scss";
 
-const Board = ({ boards, currentGameType, gameTypes, movePiece }) => {
-  const gameType = gameTypes[currentGameType];
+const Board = ({ boards, currentGameTypeCode, gameTypes, movePiece }) => {
+  const gameType = gameTypes.filter(
+    (gameType) => gameType.code === currentGameTypeCode
+  )[0];
   const board = boards
     .filter((board) => board.code === gameType.boardCode)
     .pop();
@@ -26,7 +28,7 @@ const Board = ({ boards, currentGameType, gameTypes, movePiece }) => {
 const mapStateToProps = (state) => ({
   gameTypes: state.gameTypes,
   boards: state.boards,
-  currentGameType: state.currentGameType,
+  currentGameTypeCode: state.currentGameTypeCode,
 });
 
 export default connect(mapStateToProps, null)(Board);
