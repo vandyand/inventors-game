@@ -7,101 +7,133 @@ const countReducer = (state = initialState, action) => {
     .filter((board) => board.code === currentGameType.boardCode)
     .pop();
   const prevBoardAndPieces = state.gameBoardAndPiecesSequence.slice(-1).pop();
+  const currentPieceType = state.newMove.piece
+    ? state.pieces
+        .filter((piece) => piece.code === state.newMove.piece.slice(1))
+        .pop()
+    : {};
+
+  const flatMap = (f, xs) => xs.reduce((acc, x) => acc.concat(f(x)), []);
 
   const legalMove = (whoseTurn) => {
     const currentPos = state.newMove.from;
+    const pieceMoveTypes = currentPieceType.movement.possibleMoves;
 
-    const currentPiece = state.pieces
-      .filter((piece) => piece.code === state.newMove.piece.slice(1))
-      .pop();
-
-    const pieceMoveTypes = currentPiece.movement.possibleMoves;
-
-    const possibleMoveSquares = pieceMoveTypes.map((moveType) => {
-      let newPossibleMoveSquare = currentPos;
-      const turnModifier = whoseTurn === "A" ? 1 : -1;
-
-      return adjacentPos(newPossibleMoveSquare, moveType, turnModifier);
-    });
-
+    const possibleMoveSquares = flatMap((moveType) => {
+      if (moveType.includes("+")) {
+        let moveTypes = [];
+        for (let i = 1; i < 8; i++) {
+          moveTypes.push(moveType.replace("+", "").repeat(i));
+        }
+        return moveTypes;
+      }
+      return moveType;
+    }, pieceMoveTypes)
+      .map((moveType) => {
+        const turnModifier = whoseTurn === "A" ? 1 : -1;
+        return adjacentPos(currentPos, moveType, turnModifier);
+      })
+      .filter((possibleMoveSquare) => possibleMoveSquare !== undefined);
     console.log({ possibleMoveSquares });
+    return possibleMoveSquares.includes(action.payload.code);
+  };
 
-    //Make sure it's not a jump condition or jumps are allowed.
-    const filteredPossibleMoveSquares = possibleMoveSquares.filter(
-      (moveSquare) =>
-        currentPiece.movement.canJump || !jumpCondition(moveSquare, currentPos)
-    );
+  const getNewRow = (spaceCode, val) => {
+    if (spaceCode) {
+      const newRow = parseInt(spaceCode.charAt(1)) + val;
+      if (
+        newRow >= parseInt(currentBoard.rowCodes.slice(0, 1).pop()) &&
+        newRow <= parseInt(currentBoard.rowCodes.slice(-1).pop())
+      ) {
+        return spaceCode.replace(spaceCode.charAt(1), String(newRow));
+      }
+    }
+  };
 
-    return filteredPossibleMoveSquares.includes(action.payload.code);
+  const getNewColumn = (spaceCode, val) => {
+    if (spaceCode) {
+      const newColSymbolNum = spaceCode.charCodeAt(0) + val;
+      if (
+        newColSymbolNum >=
+          currentBoard.columnCodes.slice(0, 1).pop().charCodeAt(0) &&
+        newColSymbolNum <=
+          currentBoard.columnCodes.slice(-1).pop().charCodeAt(0)
+      ) {
+        return spaceCode.replace(
+          spaceCode.charAt(0),
+          String.fromCharCode(newColSymbolNum)
+        );
+      }
+    }
   };
 
   const adjacentPos = (pos, movement, invert) => {
-    let newPos = pos;
-    movement.split("").map((moveTypeChar) => {
-      switch (moveTypeChar) {
-        case "f": {
-          newPos = newPos.replace(
-            newPos.charAt(1),
-            String(parseInt(newPos.charAt(1)) + invert)
-          );
-          return newPos;
-        }
-        case "b": {
-          newPos = newPos.replace(
-            newPos.charAt(1),
-            String(parseInt(newPos.charAt(1)) - invert)
-          );
-          return newPos;
-        }
-        case "l": {
-          newPos = newPos.replace(
-            newPos.charAt(0),
-            String.fromCharCode(newPos.charCodeAt(0) - invert)
-          );
-          return newPos;
-        }
-        case "r": {
-          newPos = newPos.replace(
-            newPos.charAt(0),
-            String.fromCharCode(newPos.charCodeAt(0) + invert)
-          );
-          return newPos;
-        }
-        default: {
-          break;
-        }
-      }
-      return newPos;
-    });
-    return newPos;
+    const rowIncDec = movement.includes("f")
+      ? -1 * (movement.split("f").length - 1)
+      : movement.includes("b")
+      ? movement.split("b").length - 1
+      : 0;
+    const colIncDec = movement.includes("l")
+      ? -1 * (movement.split("l").length - 1)
+      : movement.includes("r")
+      ? movement.split("r").length - 1
+      : 0;
+    return getNewRow(getNewColumn(pos, colIncDec), rowIncDec);
   };
 
-  const jumpCondition = (moveSquare, currentPos) => {
-    return prevBoardAndPieces.reduce((acc, curVal, curInd, arr) => {
-      const pos = curVal.slice(-2);
-      if (between(pos, moveSquare, currentPos)) {
-        return true;
-      }
-      return acc || false;
-    }, false);
+  const jumpCondition = (moveTo, moveFrom) => {
+    const betweenPositions = getBetweenPositions(moveTo, moveFrom);
+    const piecePositions = new Set(
+      prevBoardAndPieces.map((pieceAndSpace) => pieceAndSpace.slice(-2))
+    );
+    const intersection = new Set(
+      [...betweenPositions].filter((x) => piecePositions.has(x))
+    );
+    return intersection.size !== 0;
   };
 
-  const between = (pos, moveTo, moveFrom) => {
-    const posCoord = posToCoord(pos);
-    const moveToCoord = posToCoord(moveTo);
-    const moveFromCoord = posToCoord(moveFrom);
-    if (
-      ((posCoord[0] < moveToCoord[0] && posCoord[0] > moveFromCoord[0]) ||
-        (posCoord[0] > moveToCoord[0] && posCoord[0] < moveFromCoord[0]) ||
-        posCoord[0] === moveFromCoord[0]) &&
-      ((posCoord[1] < moveToCoord[1] && posCoord[1] > moveFromCoord[1]) ||
-        (posCoord[1] > moveToCoord[1] && posCoord[1] < moveFromCoord[1]) ||
-        posCoord[1] === moveFromCoord[1]) &&
-      (posCoord[0] !== moveFromCoord[0] || posCoord[1] !== moveFromCoord[1])
-    ) {
-      return true;
+  const getBetweenPositions = (moveTo, moveFrom) => {
+    let moveToCoord = posToCoord(moveTo);
+    let moveFromCoord = posToCoord(moveFrom);
+    let betweenPositions = new Set();
+    if (moveToCoord[0] === moveFromCoord[0]) {
+      const numBetweenSquares = Math.abs(moveToCoord[1] - moveFromCoord[1]) - 1;
+      for (let i = 0; i < numBetweenSquares; i++) {
+        if (moveFromCoord[1] > moveToCoord[1]) {
+          moveFromCoord = [moveFromCoord[0], moveFromCoord[1] - 1];
+        } else {
+          moveFromCoord = [moveFromCoord[0], moveFromCoord[1] + 1];
+        }
+        betweenPositions.add(coordToPos(moveFromCoord));
+      }
+    } else if (moveToCoord[1] === moveFromCoord[1]) {
+      if (moveFromCoord[0] > moveToCoord[0]) {
+        moveFromCoord = [moveFromCoord[0] - 1, moveFromCoord[1]];
+      } else {
+        moveFromCoord = [moveFromCoord[0] + 1, moveFromCoord[1]];
+      }
+      betweenPositions.add(coordToPos(moveFromCoord));
+    } else {
+      const numBetweenSquares = Math.abs(moveToCoord[0] - moveFromCoord[0]) - 1;
+      for (let i = 0; i < numBetweenSquares; i++) {
+        if (moveToCoord[0] > moveFromCoord[0]) {
+          if (moveToCoord[1] > moveFromCoord[1]) {
+            moveFromCoord = [moveFromCoord[0] + 1, moveFromCoord[1] + 1];
+          } else {
+            moveFromCoord = [moveFromCoord[0] + 1, moveFromCoord[1] - 1];
+          }
+        } else {
+          if (moveToCoord[1] > moveFromCoord[1]) {
+            moveFromCoord = [moveFromCoord[0] - 1, moveFromCoord[1] + 1];
+          } else {
+            moveFromCoord = [moveFromCoord[0] - 1, moveFromCoord[1] - 1];
+          }
+        }
+        betweenPositions.add(coordToPos(moveFromCoord));
+      }
     }
-    return false;
+    console.log({ betweenPositions });
+    return betweenPositions;
   };
 
   const posToCoord = (pos) => {
@@ -111,6 +143,10 @@ const countReducer = (state = initialState, action) => {
       }
       return parseInt(posChar) - 1;
     });
+  };
+
+  const coordToPos = (coord) => {
+    return `${String.fromCharCode(coord[0] + 97)}${coord[1] + 1}`;
   };
 
   switch (action.type) {
@@ -137,7 +173,6 @@ const countReducer = (state = initialState, action) => {
         currentBoardAndPiecesSeqNum: newCurrentBoardAndPiecesSeqNum,
       };
     }
-
     case "MOVE_PIECE": {
       const whoseTurn =
         state.gameBoardAndPiecesMoves.length > 0
@@ -148,7 +183,6 @@ const countReducer = (state = initialState, action) => {
       const pieceTeam = action.payload.piece
         ? action.payload.piece.charAt(0)
         : "";
-
       if (whoseTurn === pieceTeam) {
         return {
           ...state,
@@ -161,19 +195,19 @@ const countReducer = (state = initialState, action) => {
       } else if (
         pieceTeam !== whoseTurn &&
         state.newMove.piece &&
-        legalMove(whoseTurn)
+        legalMove(whoseTurn) &&
+        (currentPieceType.movement.canJump ||
+          !jumpCondition(action.payload.code, state.newMove.from))
       ) {
         const pieceOldPos = `${state.newMove.piece}-${state.newMove.from}`;
         let pieceNewPos = `${state.newMove.piece}-${action.payload.code}`;
+        // Promotion logic
         const lastRow = currentBoard.rowCodes.slice(-1).pop();
         const firstRow = currentBoard.rowCodes.slice(0, 1).pop();
-
         const currentPromotion = state.pieces
           .filter((piece) => piece.code === state.newMove.piece.slice(1))
           .pop().promotion;
-
         if (
-          // Promotion logic
           currentPromotion.conditionCode === "lr" &&
           ((whoseTurn === "A" && action.payload.code.includes(lastRow)) ||
             (whoseTurn === "B" && action.payload.code.includes(firstRow)))
@@ -181,7 +215,6 @@ const countReducer = (state = initialState, action) => {
           pieceNewPos = `${whoseTurn}${currentPromotion.to}-${action.payload.code}`;
         }
         const newBoardAndPiecesMove = `${state.newMove.piece}-${state.newMove.from}>${action.payload.code}`;
-
         const newBoardAndPieces = [
           prevBoardAndPieces
             .filter((piecePos) => pieceNewPos.slice(-2) !== piecePos.slice(-2)) // Capturing logic
@@ -192,15 +225,27 @@ const countReducer = (state = initialState, action) => {
               return piecePos;
             }),
         ];
-
-        const winner = newBoardAndPieces[0].reduce((acc, curVal) => {
-          if (curVal[0] === "A") {
-            return acc.replace("B", "");
-          } else if (curVal[0] === "B") {
-            return acc.replace("A", "");
-          }
-          return acc;
-        }, "AB");
+        // Winner logic
+        const winner =
+          currentGameType.settings.winCondition.type === "annihilation"
+            ? newBoardAndPieces[0].reduce((acc, curVal) => {
+                if (curVal[0] === "A") {
+                  return acc.replace("B", "");
+                } else if (curVal[0] === "B") {
+                  return acc.replace("A", "");
+                }
+                return acc;
+              }, "AB")
+            : currentGameType.settings.winCondition.type === "kill piece"
+            ? newBoardAndPieces[0].reduce((acc, curVal) => {
+                const team = curVal.split("-")[0][0];
+                const piece = curVal.split("-")[0].slice(1);
+                if (piece === currentGameType.settings.winCondition.killPiece) {
+                  return acc.replace(team === "A" ? "B" : "A", "");
+                }
+                return acc;
+              }, "AB")
+            : "";
 
         return {
           ...state,
@@ -222,9 +267,12 @@ const countReducer = (state = initialState, action) => {
       return state;
     }
 
-    case "MOVEPIECE": {
+    case "STARTUP_LOAD_GAME": {
       return {
         ...state,
+        gameBoardAndPiecesSequence: state.gameBoardAndPiecesSequence.concat([
+          currentGameType.startingPiecePositions,
+        ]),
       };
     }
 
