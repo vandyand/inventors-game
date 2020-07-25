@@ -119,12 +119,15 @@ const countReducer = (state = initialState, action) => {
         betweenPositions.add(coordToPos(moveFromCoord));
       }
     } else if (moveToCoord[1] === moveFromCoord[1]) {
-      if (moveFromCoord[0] > moveToCoord[0]) {
-        moveFromCoord = [moveFromCoord[0] - 1, moveFromCoord[1]];
-      } else {
-        moveFromCoord = [moveFromCoord[0] + 1, moveFromCoord[1]];
+      const numBetweenSquares = Math.abs(moveToCoord[1] - moveFromCoord[1]) - 1;
+      for (let i = 0; i < numBetweenSquares; i++) {
+        if (moveFromCoord[0] > moveToCoord[0]) {
+          moveFromCoord = [moveFromCoord[0] - 1, moveFromCoord[1]];
+        } else {
+          moveFromCoord = [moveFromCoord[0] + 1, moveFromCoord[1]];
+        }
+        betweenPositions.add(coordToPos(moveFromCoord));
       }
-      betweenPositions.add(coordToPos(moveFromCoord));
     } else {
       const numBetweenSquares = Math.abs(moveToCoord[0] - moveFromCoord[0]) - 1;
       for (let i = 0; i < numBetweenSquares; i++) {
