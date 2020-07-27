@@ -228,6 +228,8 @@ const countReducer = (state = initialState, action) => {
             (whoseTurn === "B" && action.payload.code.includes(firstRow)))
         ) {
           pieceNewPos = `${whoseTurn}${currentPromotion.to}-${action.payload.code}`;
+        } else if (currentPromotion.conditionCode === "nfm") {
+          pieceNewPos = `${whoseTurn}${currentPromotion.to}-${action.payload.code}`;
         }
         const newBoardAndPiecesMove = `${state.newMove.piece}-${state.newMove.from}>${action.payload.code}`;
         const newBoardAndPieces = [
