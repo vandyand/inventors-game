@@ -7,8 +7,8 @@ const Row = ({
   colorIndent,
   numSpaces,
   rowNum,
-  gameBoardAndPiecesSequence,
-  currentBoardAndPiecesSeqNum,
+  arrangementSequence,
+  currentArrangementSeqNum,
 }) => {
   return (
     <div className="row">
@@ -16,8 +16,7 @@ const Row = ({
         .slice(0, numSpaces)
         .map((letter, ind) => {
           const spaceCode = `${letter}${rowNum}`;
-          const currentSetup =
-            gameBoardAndPiecesSequence[currentBoardAndPiecesSeqNum];
+          const currentSetup = arrangementSequence[currentArrangementSeqNum];
 
           const piece = currentSetup
             .map((teamPieceSpace) => {
@@ -43,8 +42,8 @@ const Row = ({
 
 const mapStateToProps = (state) => {
   return {
-    gameBoardAndPiecesSequence: state.gameBoardAndPiecesSequence,
-    currentBoardAndPiecesSeqNum: state.currentBoardAndPiecesSeqNum,
+    arrangementSequence: state.currentGame.arrangementSequence,
+    currentArrangementSeqNum: state.currentGame.currentArrangementSeqNum,
   };
 };
 
