@@ -3,6 +3,7 @@ export const currentGame = {
   currentArrangementSeqNum: 0,
   code: "chess",
   moves: [],
+  whoseTurn: "A",
   newMove: {
     from: "",
     piece: "",
