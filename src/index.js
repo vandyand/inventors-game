@@ -4,7 +4,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 import { Provider } from "react-redux";
-import { createStore, combineReducers } from "redux";
+import { createStore } from "redux";
 // import devToolsEnhancer from "remote-redux-devtools";
 import {
   piecesReducer,
@@ -13,14 +13,23 @@ import {
   currentGameReducer,
 } from "./redux/reducers";
 
-const combinedReducer = combineReducers({
-  pieces: piecesReducer,
-  boards: boardsReducer,
-  gameTypes: gameTypesReducer,
-  currentGame: currentGameReducer,
-});
+// const combinedReducer = combineReducers({
+//   pieces: piecesReducer,
+//   boards: boardsReducer,
+//   gameTypes: gameTypesReducer,
+//   currentGame: currentGameReducer,
+// });
 
-const store = createStore(combinedReducer);
+const fullStateCombinedReducer = (state = {}, action) => {
+  return {
+    pieces: piecesReducer(state.pieces, action, state),
+    boards: boardsReducer(state.boards, action, state),
+    gameTypes: gameTypesReducer(state.gameTypes, action, state),
+    currentGame: currentGameReducer(state.currentGame, action, state),
+  };
+};
+
+const store = createStore(fullStateCombinedReducer);
 // const store = createStore(countReducer, devToolsEnhancer({ realtime: true }));
 
 ReactDOM.render(
