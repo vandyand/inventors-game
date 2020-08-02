@@ -6,9 +6,30 @@ import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 // import devToolsEnhancer from "remote-redux-devtools";
-import countReducer from "./redux-stuff/reducers";
+import {
+  piecesReducer,
+  boardsReducer,
+  gameTypesReducer,
+  currentGameReducer,
+} from "./redux/reducers";
 
-const store = createStore(countReducer);
+// const combinedReducer = combineReducers({
+//   pieces: piecesReducer,
+//   boards: boardsReducer,
+//   gameTypes: gameTypesReducer,
+//   currentGame: currentGameReducer,
+// });
+
+const fullStateCombinedReducer = (state = {}, action) => {
+  return {
+    pieces: piecesReducer(state.pieces, action, state),
+    boards: boardsReducer(state.boards, action, state),
+    gameTypes: gameTypesReducer(state.gameTypes, action, state),
+    currentGame: currentGameReducer(state.currentGame, action, state),
+  };
+};
+
+const store = createStore(fullStateCombinedReducer);
 // const store = createStore(countReducer, devToolsEnhancer({ realtime: true }));
 
 ReactDOM.render(

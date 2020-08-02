@@ -2,31 +2,31 @@ import React from "react";
 import { connect } from "react-redux";
 
 const Controls = ({
-  currentBoardAndPiecesSeqNum,
-  incCurrentBoardAndPiecesNum,
-  decCurrentBoardAndPiecesNum,
+  currentArrangementSeqNum,
+  incCurrentArrangementNum,
+  decCurrentArrangementNum,
 }) => {
   return (
     <div>
-      <button onClick={decCurrentBoardAndPiecesNum}>{"<"}</button>
-      <button onClick={incCurrentBoardAndPiecesNum}>{">"}</button>
-      {currentBoardAndPiecesSeqNum}
+      <button onClick={decCurrentArrangementNum}>{"<"}</button>
+      <button onClick={incCurrentArrangementNum}>{">"}</button>
+      {currentArrangementSeqNum}
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  currentBoardAndPiecesSeqNum: state.currentBoardAndPiecesSeqNum,
+  currentArrangementSeqNum: state.currentGame.currentArrangementSeqNum,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  incCurrentBoardAndPiecesNum: () =>
+  incCurrentArrangementNum: () =>
     dispatch({
-      type: "INC_CURRENT_BOARD_AND_PIECES_NUM",
+      type: "INC_CURRENT_ARRANGEMENT_NUM",
     }),
-  decCurrentBoardAndPiecesNum: () =>
+  decCurrentArrangementNum: () =>
     dispatch({
-      type: "DEC_CURRENT_BOARD_AND_PIECES_NUM",
+      type: "DEC_CURRENT_ARRANGEMENT_NUM",
     }),
 });
 

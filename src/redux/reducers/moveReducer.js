@@ -1,23 +1,25 @@
-import initialState from "./initialState";
-
-const countReducer = (state = initialState, action) => {
+const countReducer = (state, action) => {
   const currentGameType = state.gameTypes.filter(
-    (gameType) => gameType.code === state.currentGameTypeCode
+    (gameType) => gameType.code === state.currentGame.code
   )[0];
   const currentBoard = state.boards
     .filter((board) => board.code === currentGameType.boardCode)
     .pop();
-  const prevBoardAndPieces = state.gameBoardAndPiecesSequence.slice(-1).pop();
-  const currentPieceType = state.newMove.piece
+  const prevBoardAndPieces = state.currentGame.arrangementSequence
+    .slice(-1)
+    .pop();
+  const currentPieceType = state.currentGame.newMove.piece
     ? state.pieces
-        .filter((piece) => piece.code === state.newMove.piece.slice(1))
+        .filter(
+          (piece) => piece.code === state.currentGame.newMove.piece.slice(1)
+        )
         .pop()
     : {};
 
   const flatMap = (xs, f) => xs.reduce((acc, x) => acc.concat(f(x)), []);
 
   const legalMove = (whoseTurn) => {
-    const currentPos = state.newMove.from;
+    const currentPos = state.currentGame.newMove.from;
     const pieceMoveTypes =
       !currentPieceType.movement.attackSameAsMove && attacking()
         ? currentPieceType.movement.attackMoves
@@ -165,29 +167,6 @@ const countReducer = (state = initialState, action) => {
   };
 
   switch (action.type) {
-    case "INC_CURRENT_BOARD_AND_PIECES_NUM": {
-      let newCurrentBoardAndPiecesSeqNum = state.currentBoardAndPiecesSeqNum;
-      if (
-        newCurrentBoardAndPiecesSeqNum <
-        state.gameBoardAndPiecesSequence.length - 1
-      ) {
-        newCurrentBoardAndPiecesSeqNum++;
-      }
-      return {
-        ...state,
-        currentBoardAndPiecesSeqNum: newCurrentBoardAndPiecesSeqNum,
-      };
-    }
-    case "DEC_CURRENT_BOARD_AND_PIECES_NUM": {
-      let newCurrentBoardAndPiecesSeqNum = state.currentBoardAndPiecesSeqNum;
-      if (newCurrentBoardAndPiecesSeqNum > 0) {
-        newCurrentBoardAndPiecesSeqNum--;
-      }
-      return {
-        ...state,
-        currentBoardAndPiecesSeqNum: newCurrentBoardAndPiecesSeqNum,
-      };
-    }
     case "MOVE_PIECE": {
       const whoseTurn =
         state.gameBoardAndPiecesMoves.length > 0
@@ -283,18 +262,11 @@ const countReducer = (state = initialState, action) => {
       }
       return state;
     }
-
-    case "STARTUP_LOAD_GAME": {
-      return {
-        ...state,
-        gameBoardAndPiecesSequence: state.gameBoardAndPiecesSequence.concat([
-          currentGameType.startingPiecePositions,
-        ]),
-      };
+    default: {
+      break;
     }
-    default:
-      return state;
   }
+  return state;
 };
 
 export default countReducer;

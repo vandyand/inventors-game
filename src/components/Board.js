@@ -28,7 +28,7 @@ const Board = ({ boards, currentGameTypeCode, gameTypes, movePiece }) => {
 const mapStateToProps = (state) => ({
   gameTypes: state.gameTypes,
   boards: state.boards,
-  currentGameTypeCode: state.currentGameTypeCode,
+  currentGameTypeCode: state.currentGame.code,
 });
 
 export default connect(mapStateToProps, null)(Board);

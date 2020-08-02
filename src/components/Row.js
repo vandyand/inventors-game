@@ -1,14 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import Space from "./Space";
+import Space from "./Space.container";
 import "./Row.scss";
 
 const Row = ({
   colorIndent,
   numSpaces,
   rowNum,
-  gameBoardAndPiecesSequence,
-  currentBoardAndPiecesSeqNum,
+  arrangementSequence,
+  currentArrangementSeqNum,
 }) => {
   return (
     <div className="row">
@@ -16,10 +16,9 @@ const Row = ({
         .slice(0, numSpaces)
         .map((letter, ind) => {
           const spaceCode = `${letter}${rowNum}`;
-          const currentSetup =
-            gameBoardAndPiecesSequence[currentBoardAndPiecesSeqNum];
+          const currentSetup = arrangementSequence[currentArrangementSeqNum];
 
-          const piece = currentSetup
+          const teamPiece = currentSetup
             .map((teamPieceSpace) => {
               if (spaceCode === teamPieceSpace.split("-")[1]) {
                 return teamPieceSpace.split("-")[0];
@@ -32,8 +31,8 @@ const Row = ({
             <Space
               color={(ind + colorIndent) % 2 === 0 ? "light" : "dark"}
               key={ind}
-              code={spaceCode}
-              piece={piece}
+              spaceCode={spaceCode}
+              teamPiece={teamPiece}
             />
           );
         })}
@@ -43,8 +42,8 @@ const Row = ({
 
 const mapStateToProps = (state) => {
   return {
-    gameBoardAndPiecesSequence: state.gameBoardAndPiecesSequence,
-    currentBoardAndPiecesSeqNum: state.currentBoardAndPiecesSeqNum,
+    arrangementSequence: state.currentGame.arrangementSequence,
+    currentArrangementSeqNum: state.currentGame.currentArrangementSeqNum,
   };
 };
 
