@@ -3,13 +3,16 @@ import { connect } from "react-redux";
 
 const Controls = ({
   currentArrangementSeqNum,
-  incCurrentArrangementNum,
-  decCurrentArrangementNum,
+  updateCurrentArrangementSeqNum,
 }) => {
+  // const updateCurrentArrangementHelper = (incOrDec) => {
+  //   updateCurrentArrangementSeqNum(incOrDec);
+  // };
+
   return (
     <div>
-      <button onClick={decCurrentArrangementNum}>{"<"}</button>
-      <button onClick={incCurrentArrangementNum}>{">"}</button>
+      <button onClick={() => updateCurrentArrangementSeqNum(-1)}>{"<"}</button>
+      <button onClick={() => updateCurrentArrangementSeqNum(1)}>{">"}</button>
       {currentArrangementSeqNum}
     </div>
   );
@@ -20,14 +23,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  incCurrentArrangementNum: () =>
-    dispatch({
-      type: "INC_CURRENT_ARRANGEMENT_NUM",
-    }),
-  decCurrentArrangementNum: () =>
-    dispatch({
-      type: "DEC_CURRENT_ARRANGEMENT_NUM",
-    }),
+  updateCurrentArrangementSeqNum: (payload) => {
+    return dispatch({
+      type: "UPDATE_CURRENT_ARRANGEMENT_SEQ_NUM",
+      payload,
+    });
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Controls);

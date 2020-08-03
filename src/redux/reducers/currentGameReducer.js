@@ -118,6 +118,26 @@ export const currentGameReducer = (state = currentGame, action) => {
     case "CASTLING_MOVE": {
       return state;
     }
+    case "UPDATE_CURRENT_ARRANGEMENT_SEQ_NUM": {
+      console.log("update arrangement num", action.payload);
+      let newCurrentArrangementSeqNum =
+        state.currentArrangementSeqNum + action.payload;
+
+      console.log(newCurrentArrangementSeqNum);
+
+      if (newCurrentArrangementSeqNum < 0) {
+        newCurrentArrangementSeqNum = 0;
+      }
+
+      if (newCurrentArrangementSeqNum > state.arrangementSequence.length - 1) {
+        newCurrentArrangementSeqNum = state.arrangementSequence.length - 1;
+      }
+
+      return {
+        ...state,
+        currentArrangementSeqNum: newCurrentArrangementSeqNum,
+      };
+    }
     default:
       return state;
   }
