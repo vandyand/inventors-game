@@ -2,7 +2,7 @@ export const pieces = [
   {
     name: "super pawn",
     code: "sp",
-    img: "",
+    img: "pawn",
     movement: {
       code: "square-directional",
       possibleMoves: ["fl", "f", "ff", "fr"],
@@ -19,7 +19,7 @@ export const pieces = [
   {
     name: "promoted super pawn",
     code: "psp",
-    img: "",
+    img: "pawn",
     movement: {
       code: "square-directional",
       possibleMoves: ["fl", "f", "ff", "fr", "l", "r", "bl", "b", "bb", "br"],
@@ -32,7 +32,7 @@ export const pieces = [
   {
     name: "knight",
     code: "n",
-    img: "",
+    img: "knight",
     movement: {
       code: "square-directional",
       possibleMoves: ["ffl", "ffr", "fll", "frr", "bll", "brr", "bbl", "bbr"],
@@ -45,7 +45,7 @@ export const pieces = [
   {
     name: "king",
     code: "k",
-    img: "",
+    img: "king",
     movement: {
       code: "square-directional",
       possibleMoves: ["fl", "f", "fr", "l", "r", "bl", "b", "br"],
@@ -58,7 +58,7 @@ export const pieces = [
   {
     name: "pawn",
     code: "p",
-    img: "",
+    img: "pawn",
     movement: {
       code: "square-directional",
       possibleMoves: ["f"],
@@ -75,7 +75,7 @@ export const pieces = [
   {
     name: "first move pawn",
     code: "fmp",
-    img: "",
+    img: "pawn",
     movement: {
       code: "square-directional",
       possibleMoves: ["f", "ff"],
@@ -92,7 +92,7 @@ export const pieces = [
   {
     name: "rook",
     code: "r",
-    img: "",
+    img: "rook",
     movement: {
       code: "square-directional",
       possibleMoves: ["f+", "b+", "l+", "r+"],
@@ -105,7 +105,7 @@ export const pieces = [
   {
     name: "bishop",
     code: "b",
-    img: "",
+    img: "bishop",
     movement: {
       code: "square-directional",
       possibleMoves: ["fl+", "fr+", "bl+", "br+"],
@@ -118,7 +118,7 @@ export const pieces = [
   {
     name: "queen",
     code: "q",
-    img: "",
+    img: "queen",
     movement: {
       code: "square-directional",
       possibleMoves: ["fl+", "f+", "fr+", "l+", "r+", "bl+", "b+", "br+"],
@@ -131,7 +131,7 @@ export const pieces = [
   {
     name: "jumping queen",
     code: "jq",
-    img: "",
+    img: "queen",
     movement: {
       code: "square-directional",
       possibleMoves: ["fl+", "f+", "fr+", "l+", "r+", "bl+", "b+", "br+"],

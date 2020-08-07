@@ -21,8 +21,7 @@ const App = ({ startUpLoadGame, state }) => {
     <div className="app">
       <Board />
       <Controls />
-      {state.currentWinner && `Team ${state.currentWinner} wins!`}
-      {/* <Counter /> */}
+      {state.currentGame.winner && `Team ${state.currentGame.winner} wins!`}
     </div>
   );
 };

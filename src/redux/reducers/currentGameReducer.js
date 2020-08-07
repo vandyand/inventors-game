@@ -11,7 +11,6 @@ export const currentGameReducer = (state = currentGame, action) => {
   const calculateMove = () => {
     return {
       ...state,
-      currentWinner: getWinner(),
       moves: state.moves.concat(getNewMoveCode()),
       arrangementSequence: state.arrangementSequence.concat(
         getNewArrangement()
@@ -22,6 +21,7 @@ export const currentGameReducer = (state = currentGame, action) => {
         from: "",
         piece: "",
       },
+      winner: getWinner(),
       whoseTurn: state.whoseTurn === "A" ? "B" : "A",
     };
   };
@@ -70,6 +70,7 @@ export const currentGameReducer = (state = currentGame, action) => {
   const getWinner = () => {
     return currentGameType.settings.winCondition.type === "annihilation"
       ? getNewArrangement()[0].reduce((acc, curVal) => {
+          console.log("annihilation:", { acc });
           if (curVal[0] === "A") {
             return acc.replace("B", "");
           } else if (curVal[0] === "B") {
@@ -79,6 +80,7 @@ export const currentGameReducer = (state = currentGame, action) => {
         }, "AB")
       : currentGameType.settings.winCondition.type === "kill piece"
       ? getNewArrangement()[0].reduce((acc, curVal) => {
+          console.log("kill piece:", { acc });
           const team = curVal.split("-")[0][0];
           const piece = curVal.split("-")[0].slice(1);
           if (piece === currentGameType.settings.winCondition.killPiece) {

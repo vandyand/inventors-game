@@ -22,22 +22,25 @@ const Space = ({
   const prevBoardAndPieces = state.currentGame.arrangementSequence
     .slice(-1)
     .pop();
+  const newMovePieceInfo = state.currentGame.newMove.piece
+    ? state.pieces
+        .filter(
+          (piece) => piece.code === state.currentGame.newMove.piece.slice(1)
+        )
+        .pop()
+    : {};
+  const currentSpacePieceInfo = teamPiece
+    ? state.pieces.filter((piece) => piece.code === teamPiece.slice(1)).pop()
+    : {};
 
   const flatMap = (xs, f) => xs.reduce((acc, x) => acc.concat(f(x)), []);
 
   const legalMove = () => {
-    const pieceInfo = state.currentGame.newMove.piece
-      ? state.pieces
-          .filter(
-            (piece) => piece.code === state.currentGame.newMove.piece.slice(1)
-          )
-          .pop()
-      : {};
     const currentPos = state.currentGame.newMove.from;
     const pieceMoveTypes =
-      !pieceInfo.movement.attackSameAsMove && attacking()
-        ? pieceInfo.movement.attackMoves
-        : pieceInfo.movement.possibleMoves;
+      !newMovePieceInfo.movement.attackSameAsMove && attacking()
+        ? newMovePieceInfo.movement.attackMoves
+        : newMovePieceInfo.movement.possibleMoves;
     const possibleMoveSquares = flatMap(pieceMoveTypes, (moveType) => {
       if (moveType.includes("+")) {
         let moveTypes = [];
@@ -55,7 +58,7 @@ const Space = ({
       .filter((possibleMoveSquare) => possibleMoveSquare !== undefined);
     console.log({ possibleMoveSquares });
 
-    return pieceInfo.movement.canJump ||
+    return newMovePieceInfo.movement.canJump ||
       !jumpCondition(spaceCode, state.currentGame.newMove.from)
       ? possibleMoveSquares.includes(spaceCode)
       : false;
@@ -185,6 +188,9 @@ const Space = ({
   };
 
   const handleClick = () => {
+    if (state.currentGame.winner) {
+      return;
+    }
     if (state.currentGame.whoseTurn === pieceTeam) {
       selectPieceReducer(spaceCode, teamPiece);
     } else if (
@@ -202,7 +208,14 @@ const Space = ({
 
   return (
     <div className={`space ${color}-space`} onClick={handleClick}>
-      {teamPiece}
+      {!!currentSpacePieceInfo && !!pieceTeam && (
+        <img
+          alt="blackKing"
+          src={require(`../img/${pieceTeam}${currentSpacePieceInfo.img}.png`)}
+          height="80px"
+          width="80px"
+        />
+      )}
     </div>
   );
 };
