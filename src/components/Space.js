@@ -29,6 +29,7 @@ const Space = ({
         )
         .pop()
     : {};
+
   const currentSpacePieceInfo = teamPiece
     ? state.pieces.filter((piece) => piece.code === teamPiece.slice(1)).pop()
     : {};

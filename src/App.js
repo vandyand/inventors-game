@@ -5,16 +5,16 @@ import Controls from "./components/Controls";
 // import Counter from "./components/Counter";
 import "./App.scss";
 
-const useComponentWillMount = (func) => {
+const useComponentWillMount = (...funcs) => {
   const willMount = useRef(true);
   if (willMount.current) {
-    func();
+    funcs.forEach((func) => func());
   }
   willMount.current = false;
 };
 
-const App = ({ startUpLoadGame, state }) => {
-  useComponentWillMount(startUpLoadGame);
+const App = ({ startUpLoadGame, getPiecesStrength, state }) => {
+  useComponentWillMount(startUpLoadGame, getPiecesStrength);
 
   console.log(state);
   return (
@@ -32,6 +32,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   startUpLoadGame: () => dispatch({ type: "STARTUP_LOAD_GAME" }),
+  getPiecesStrength: () => dispatch({ type: "GET_PIECES_STRENGTH" }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

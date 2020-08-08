@@ -70,7 +70,6 @@ export const currentGameReducer = (state = currentGame, action) => {
   const getWinner = () => {
     return currentGameType.settings.winCondition.type === "annihilation"
       ? getNewArrangement()[0].reduce((acc, curVal) => {
-          console.log("annihilation:", { acc });
           if (curVal[0] === "A") {
             return acc.replace("B", "");
           } else if (curVal[0] === "B") {
@@ -80,7 +79,6 @@ export const currentGameReducer = (state = currentGame, action) => {
         }, "AB")
       : currentGameType.settings.winCondition.type === "kill piece"
       ? getNewArrangement()[0].reduce((acc, curVal) => {
-          console.log("kill piece:", { acc });
           const team = curVal.split("-")[0][0];
           const piece = curVal.split("-")[0].slice(1);
           if (piece === currentGameType.settings.winCondition.killPiece) {
@@ -121,11 +119,8 @@ export const currentGameReducer = (state = currentGame, action) => {
       return state;
     }
     case "UPDATE_CURRENT_ARRANGEMENT_SEQ_NUM": {
-      console.log("update arrangement num", action.payload);
       let newCurrentArrangementSeqNum =
         state.currentArrangementSeqNum + action.payload;
-
-      console.log(newCurrentArrangementSeqNum);
 
       if (newCurrentArrangementSeqNum < 0) {
         newCurrentArrangementSeqNum = 0;

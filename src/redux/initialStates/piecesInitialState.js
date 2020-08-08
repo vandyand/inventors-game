@@ -6,7 +6,7 @@ export const pieces = [
     movement: {
       code: "square-directional",
       possibleMoves: ["fl", "f", "ff", "fr"],
-      attackMoves: ["fl", "f", "ff", "fr"],
+      attackMoves: [],
       attackSameAsMove: true,
       canJump: false,
     },
@@ -15,6 +15,7 @@ export const pieces = [
       condition: "last row",
       conditionCode: "lr",
     },
+    strength: 0,
   },
   {
     name: "promoted super pawn",
@@ -23,11 +24,12 @@ export const pieces = [
     movement: {
       code: "square-directional",
       possibleMoves: ["fl", "f", "ff", "fr", "l", "r", "bl", "b", "bb", "br"],
-      attackMoves: ["fl", "f", "ff", "fr", "l", "r", "bl", "b", "bb", "br"],
+      attackMoves: [],
       attackSameAsMove: true,
       canJump: false,
     },
     promotion: {},
+    strength: 0,
   },
   {
     name: "knight",
@@ -36,11 +38,12 @@ export const pieces = [
     movement: {
       code: "square-directional",
       possibleMoves: ["ffl", "ffr", "fll", "frr", "bll", "brr", "bbl", "bbr"],
-      attackMoves: ["ffl", "ffr", "fll", "frr", "bll", "brr", "bbl", "bbr"],
+      attackMoves: [],
       attackSameAsMove: true,
-      canJump: true,
+      canJump: false,
     },
     promotion: {},
+    strength: 0,
   },
   {
     name: "king",
@@ -49,11 +52,12 @@ export const pieces = [
     movement: {
       code: "square-directional",
       possibleMoves: ["fl", "f", "fr", "l", "r", "bl", "b", "br"],
-      attackMoves: ["fl", "f", "fr", "l", "r", "bl", "b", "br"],
+      attackMoves: [],
       attackSameAsMove: true,
       canJump: false,
     },
     promotion: {},
+    strength: 0,
   },
   {
     name: "pawn",
@@ -71,6 +75,7 @@ export const pieces = [
       condition: "last row",
       conditionCode: "lr",
     },
+    strength: 0,
   },
   {
     name: "first move pawn",
@@ -88,6 +93,7 @@ export const pieces = [
       condition: "not first move",
       conditionCode: "nfm",
     },
+    strength: 0,
   },
   {
     name: "rook",
@@ -96,11 +102,12 @@ export const pieces = [
     movement: {
       code: "square-directional",
       possibleMoves: ["f+", "b+", "l+", "r+"],
-      attackMoves: ["f+", "b+", "l+", "r+"],
+      attackMoves: [],
       attackSameAsMove: true,
       canJump: false,
     },
     promotion: {},
+    strength: 0,
   },
   {
     name: "bishop",
@@ -109,11 +116,12 @@ export const pieces = [
     movement: {
       code: "square-directional",
       possibleMoves: ["fl+", "fr+", "bl+", "br+"],
-      attackMoves: ["fl+", "fr+", "bl+", "br+"],
+      attackMoves: [],
       attackSameAsMove: true,
       canJump: false,
     },
     promotion: {},
+    strength: 0,
   },
   {
     name: "queen",
@@ -122,11 +130,12 @@ export const pieces = [
     movement: {
       code: "square-directional",
       possibleMoves: ["fl+", "f+", "fr+", "l+", "r+", "bl+", "b+", "br+"],
-      attackMoves: ["fl+", "f+", "fr+", "l+", "r+", "bl+", "b+", "br+"],
+      attackMoves: [],
       attackSameAsMove: true,
       canJump: false,
     },
     promotion: {},
+    strength: 0,
   },
   {
     name: "jumping queen",
@@ -135,10 +144,11 @@ export const pieces = [
     movement: {
       code: "square-directional",
       possibleMoves: ["fl+", "f+", "fr+", "l+", "r+", "bl+", "b+", "br+"],
-      attackMoves: ["fl+", "f+", "fr+", "l+", "r+", "bl+", "b+", "br+"],
+      attackMoves: [],
       attackSameAsMove: true,
       canJump: true,
     },
     promotion: {},
+    strength: 0,
   },
 ];
