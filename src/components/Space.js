@@ -153,7 +153,10 @@ const Space = ({
         betweenPositions.add(coordToPos(moveFromCoord));
       }
     } else {
-      const numBetweenSquares = Math.abs(moveToCoord[0] - moveFromCoord[0]) - 1;
+      const numBetweenSquares = Math.min(
+        Math.abs(moveToCoord[0] - moveFromCoord[0]) - 1,
+        Math.abs(moveToCoord[1] - moveFromCoord[1]) - 1
+      );
       for (let i = 0; i < numBetweenSquares; i++) {
         if (moveToCoord[0] > moveFromCoord[0]) {
           if (moveToCoord[1] > moveFromCoord[1]) {
