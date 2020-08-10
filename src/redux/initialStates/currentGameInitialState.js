@@ -10,4 +10,6 @@ export const currentGame = {
     to: "",
   },
   winner: "",
+  playerA: "human",
+  playerB: "computer",
 };

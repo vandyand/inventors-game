@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { connect } from "react-redux";
 import Board from "./components/Board";
 import Controls from "./components/Controls";
+import GameEngine from "./gameEngine/gameEngine";
 // import Counter from "./components/Counter";
 import "./App.scss";
 
@@ -22,6 +23,8 @@ const App = ({ startUpLoadGame, getPiecesStrength, state }) => {
       <Board />
       <Controls />
       {state.currentGame.winner && `Team ${state.currentGame.winner} wins!`}
+      <br />
+      <GameEngine />
     </div>
   );
 };
