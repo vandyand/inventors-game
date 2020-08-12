@@ -108,15 +108,8 @@ export const currentGameReducer = (state = currentGame, action) => {
         },
       };
     }
-    case "PIECE_MOVE":
-    case "ATTACK_MOVE": {
+    case "PIECE_MOVE": {
       return calculateMove();
-    }
-    case "ENPASSANT_MOVE": {
-      return state;
-    }
-    case "CASTLING_MOVE": {
-      return state;
     }
     case "UPDATE_CURRENT_ARRANGEMENT_SEQ_NUM": {
       let newCurrentArrangementSeqNum =

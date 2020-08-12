@@ -3,7 +3,7 @@ const moveFuncs = (state, funcToCall, arg) => {
     (gameType) => gameType.code === state.currentGame.code
   )[0];
 
-  const currentBoard = state.boards
+  const currentBoardType = state.boards
     .filter((board) => board.code === currentGameType.boardCode)
     .pop();
 
@@ -25,18 +25,15 @@ const moveFuncs = (state, funcToCall, arg) => {
     const possibleMoveSquares = getPossibleMoveSquares();
     console.log({ possibleMoveSquares });
 
-    return newMovePieceInfo.movement.canJump ||
-      !jumpCondition(spaceCode, state.currentGame.newMove.from)
-      ? possibleMoveSquares.includes(spaceCode)
-      : false;
+    return possibleMoveSquares.includes(spaceCode);
   };
 
   const getPossibleMoveSquares = () => {
     const currentPos = state.currentGame.newMove.from;
-    const pieceMoveTypes =
-      !newMovePieceInfo.movement.attackSameAsMove && attacking()
-        ? newMovePieceInfo.movement.attackMoves
-        : newMovePieceInfo.movement.possibleMoves;
+    const pieceMoveTypes = newMovePieceInfo.movement.possibleMoves;
+    // !newMovePieceInfo.movement.attackSameAsMove && attacking()
+    //   ? newMovePieceInfo.movement.attackMoves
+    // : newMovePieceInfo.movement.possibleMoves;
     const possibleMoveSquares = flatMap(pieceMoveTypes, (moveType) => {
       if (moveType.includes("+")) {
         let moveTypes = [];
@@ -44,32 +41,61 @@ const moveFuncs = (state, funcToCall, arg) => {
           moveTypes.push(moveType.replace("+", "").repeat(i));
         }
         return moveTypes;
+      } else {
+        return moveType;
       }
-      return moveType;
     })
       .map((moveType) => {
         const turnModifier = state.currentGame.whoseTurn === "A" ? 1 : -1;
         return adjacentPos(currentPos, moveType, turnModifier);
       })
-      .filter((possibleMoveSquare) => possibleMoveSquare !== undefined);
+      .filter((possibleMoveSquare) => possibleMoveSquare !== undefined)
+      .filter(
+        (possibleMoveSquare) =>
+          squareAvailable(possibleMoveSquare) ||
+          attackAvailable(possibleMoveSquare)
+      )
+      .filter(
+        (possibleMoveSquare) => !jumpCondition(possibleMoveSquare, currentPos)
+      );
     return possibleMoveSquares;
   };
 
-  const attacking = (spaceCode) => {
-    return prevBoardAndPieces.reduce((acc, pieceAndPos) => {
-      if (pieceAndPos.slice(-2) === spaceCode) {
-        return true;
-      }
-      return acc;
-    }, false);
+  const squareAvailable = (spaceCode) => {
+    const pieceOnSpace = getPieceOnSpace(spaceCode);
+    return pieceOnSpace.charAt(0) !== state.currentGame.whoseTurn;
   };
+
+  const attackAvailable = (spaceCode) => {
+    return false;
+  };
+
+  const getPieceOnSpace = (spaceCode) => {
+    const spaceFromArrangement = prevBoardAndPieces.filter((teamPieceSpace) =>
+      teamPieceSpace.includes(spaceCode)
+    )[0];
+    if (spaceFromArrangement && spaceFromArrangement.length > 2) {
+      return spaceFromArrangement.split("-")[0];
+    } else {
+      return "";
+    }
+  };
+
+  // const attacking = (spaceCode) => {
+  //   return prevBoardAndPieces.reduce((acc, pieceAndPos) => {
+  //     if (pieceAndPos.slice(-2) === spaceCode) {
+  //       return true;
+  //     }
+  //     return acc;
+  //   }, false);
+  // };
 
   const getNewRow = (spaceCode, val) => {
     if (spaceCode) {
       const newRow = parseInt(spaceCode.charAt(1)) + val;
       if (
-        newRow >= parseInt(currentBoard.rowCodes.slice(0, 1).pop()) &&
-        newRow <= parseInt(currentBoard.rowCodes.slice(-1).pop())
+        newRow >= parseInt(currentBoardType.rowCodes.slice(0, 1).pop()) &&
+        newRow <= parseInt(currentBoardType.rowCodes.slice(-1).pop())
       ) {
         return spaceCode.replace(spaceCode.charAt(1), String(newRow));
       }
@@ -81,9 +107,9 @@ const moveFuncs = (state, funcToCall, arg) => {
       const newColSymbolNum = spaceCode.charCodeAt(0) + val;
       if (
         newColSymbolNum >=
-          currentBoard.columnCodes.slice(0, 1).pop().charCodeAt(0) &&
+          currentBoardType.columnCodes.slice(0, 1).pop().charCodeAt(0) &&
         newColSymbolNum <=
-          currentBoard.columnCodes.slice(-1).pop().charCodeAt(0)
+          currentBoardType.columnCodes.slice(-1).pop().charCodeAt(0)
       ) {
         return spaceCode.replace(
           spaceCode.charAt(0),
@@ -115,7 +141,7 @@ const moveFuncs = (state, funcToCall, arg) => {
     const intersection = new Set(
       [...betweenPositions].filter((x) => piecePositions.has(x))
     );
-    return intersection.size !== 0;
+    return !newMovePieceInfo.movement.canJump && intersection.size !== 0;
   };
 
   const getBetweenPositions = (moveTo, moveFrom) => {
@@ -133,7 +159,7 @@ const moveFuncs = (state, funcToCall, arg) => {
         betweenPositions.add(coordToPos(moveFromCoord));
       }
     } else if (moveToCoord[1] === moveFromCoord[1]) {
-      const numBetweenSquares = Math.abs(moveToCoord[1] - moveFromCoord[1]) - 1;
+      const numBetweenSquares = Math.abs(moveToCoord[0] - moveFromCoord[0]) - 1;
       for (let i = 0; i < numBetweenSquares; i++) {
         if (moveFromCoord[0] > moveToCoord[0]) {
           moveFromCoord = [moveFromCoord[0] - 1, moveFromCoord[1]];
@@ -164,7 +190,6 @@ const moveFuncs = (state, funcToCall, arg) => {
         betweenPositions.add(coordToPos(moveFromCoord));
       }
     }
-    console.log({ betweenPositions });
     return betweenPositions;
   };
 
@@ -172,8 +197,9 @@ const moveFuncs = (state, funcToCall, arg) => {
     return pos.split("").map((posChar, ind) => {
       if (ind < 1) {
         return posChar.charCodeAt(0) - 97;
+      } else {
+        return parseInt(posChar) - 1;
       }
-      return parseInt(posChar) - 1;
     });
   };
 
@@ -183,8 +209,6 @@ const moveFuncs = (state, funcToCall, arg) => {
 
   if (funcToCall === "legalMove") {
     return legalMove(arg);
-  } else if (funcToCall === "attacking") {
-    return attacking(arg);
   } else {
     return;
   }

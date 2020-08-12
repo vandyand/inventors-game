@@ -9,7 +9,6 @@ const Space = ({
   state,
   selectPieceReducer,
   pieceMoveReducer,
-  attackMoveReducer,
 }) => {
   const pieceTeam = teamPiece ? teamPiece.charAt(0) : "";
   const currentSpacePieceInfo = teamPiece
@@ -23,14 +22,11 @@ const Space = ({
       selectPieceReducer(spaceCode, teamPiece);
     } else if (
       state.currentGame.newMove.piece && // piece has been selected
+      // moveFuncs(state, "possibleMoves", spaceCode).includes(spaceCode)
       pieceTeam !== state.currentGame.whoseTurn && // empty space or opponent space
       moveFuncs(state, "legalMove", spaceCode) // the move is legal
     ) {
-      if (moveFuncs(state, "attacking", spaceCode)) {
-        attackMoveReducer(spaceCode, teamPiece);
-      } else {
-        pieceMoveReducer(spaceCode, teamPiece);
-      }
+      pieceMoveReducer(spaceCode, teamPiece);
     }
   };
 
