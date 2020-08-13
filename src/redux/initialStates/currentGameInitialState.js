@@ -7,7 +7,7 @@ export const currentGame = {
   newMove: {
     from: "",
     piece: "",
-    to: "",
+    possibleMovespaces: [],
   },
   winner: "",
   playerA: "human",

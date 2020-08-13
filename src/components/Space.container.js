@@ -11,6 +11,11 @@ const mapDispatchToProps = (dispatch) => ({
       type: "SELECT_PIECE",
       payload: { code, piece },
     }),
+  calculatePossibleMovesReducer: (possibleMoves) =>
+    dispatch({
+      type: "CALCULATE_POSSIBLE_MOVES",
+      payload: { possibleMoves },
+    }),
   pieceMoveReducer: (code, piece) =>
     dispatch({
       type: "PIECE_MOVE",

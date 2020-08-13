@@ -1,4 +1,5 @@
 import { currentGame, gameTypes, boards, pieces } from "../initialStates";
+// import moveFuncs from "../../gameEngine/MoveFuncs";
 
 export const currentGameReducer = (state = currentGame, action) => {
   const currentGameType = gameTypes.filter(
@@ -99,12 +100,23 @@ export const currentGameReducer = (state = currentGame, action) => {
       };
     }
     case "SELECT_PIECE": {
+      console.log("SELECT_PIECE");
       return {
         ...state,
         newMove: {
           ...state.newMove,
           from: action.payload.code,
           piece: action.payload.piece,
+        },
+      };
+    }
+    case "CALCULATE_POSSIBLE_MOVES": {
+      console.log("CALCULATE_POSSIBLE_MOVES reducer");
+      return {
+        ...state,
+        newMove: {
+          ...state.newMove,
+          possibleMoves: action.payload.possibleMoves,
         },
       };
     }
