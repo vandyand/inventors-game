@@ -22,19 +22,25 @@ const moveFuncs = (state, funcToCall, arg) => {
     : {};
 
   const legalMove = (spaceCode) => {
-    const possibleMoveSquares = getPossibleMoveSquares();
-    console.log({ possibleMoveSquares });
+    let possibleMoveSpaces = getPossibleSpaces("move");
 
-    return possibleMoveSquares.includes(spaceCode);
+    if (!newMovePieceInfo.movement.attackSameAsMove) {
+      const possibleAttackSpaces = getPossibleSpaces("attack");
+      possibleMoveSpaces = possibleMoveSpaces.concat(possibleAttackSpaces);
+    }
+
+    console.log({ possibleMoveSpaces });
+
+    return possibleMoveSpaces.includes(spaceCode);
   };
 
-  const getPossibleMoveSquares = () => {
+  const getPossibleSpaces = (moveNotAttack) => {
     const currentPos = state.currentGame.newMove.from;
-    const pieceMoveTypes = newMovePieceInfo.movement.possibleMoves;
-    // !newMovePieceInfo.movement.attackSameAsMove && attacking()
-    //   ? newMovePieceInfo.movement.attackMoves
-    // : newMovePieceInfo.movement.possibleMoves;
-    const possibleMoveSquares = flatMap(pieceMoveTypes, (moveType) => {
+    const pieceMoveTypes =
+      moveNotAttack === "move"
+        ? newMovePieceInfo.movement.possibleMoves
+        : newMovePieceInfo.movement.attackMoves;
+    const possibleAttackSpaces = flatMap(pieceMoveTypes, (moveType) => {
       if (moveType.includes("+")) {
         let moveTypes = [];
         for (let i = 1; i < 8; i++) {
@@ -49,25 +55,29 @@ const moveFuncs = (state, funcToCall, arg) => {
         const turnModifier = state.currentGame.whoseTurn === "A" ? 1 : -1;
         return adjacentPos(currentPos, moveType, turnModifier);
       })
-      .filter((possibleMoveSquare) => possibleMoveSquare !== undefined)
+      .filter((possibleAttackSpace) => possibleAttackSpace !== undefined)
+      .filter((possibleAttackSpace) => squareAvailable(possibleAttackSpace))
       .filter(
-        (possibleMoveSquare) =>
-          squareAvailable(possibleMoveSquare) ||
-          attackAvailable(possibleMoveSquare)
+        (possibleAttackSpace) => !jumpCondition(possibleAttackSpace, currentPos)
       )
       .filter(
-        (possibleMoveSquare) => !jumpCondition(possibleMoveSquare, currentPos)
+        (possibleAttackSpace) =>
+          moveNotAttack !== "attack" || enemyOnSpace(possibleAttackSpace)
       );
-    return possibleMoveSquares;
+    return possibleAttackSpaces;
+  };
+
+  const enemyOnSpace = (spaceCode) => {
+    const pieceOnSpace = getPieceOnSpace(spaceCode);
+    return (
+      pieceOnSpace.charAt(0) &&
+      pieceOnSpace.charAt(0) !== state.currentGame.whoseTurn
+    );
   };
 
   const squareAvailable = (spaceCode) => {
     const pieceOnSpace = getPieceOnSpace(spaceCode);
     return pieceOnSpace.charAt(0) !== state.currentGame.whoseTurn;
-  };
-
-  const attackAvailable = (spaceCode) => {
-    return false;
   };
 
   const getPieceOnSpace = (spaceCode) => {
