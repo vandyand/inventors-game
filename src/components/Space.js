@@ -36,7 +36,7 @@ const Space = ({
     <div className={`space ${color}-space`} onClick={handleClick}>
       {!!currentSpacePieceInfo && !!pieceTeam && (
         <img
-          alt="blackKing"
+          alt={`${currentSpacePieceInfo.name}`}
           src={require(`../img/${pieceTeam}${currentSpacePieceInfo.img}.png`)}
           height="80px"
           width="80px"

@@ -100,7 +100,6 @@ export const currentGameReducer = (state = currentGame, action) => {
       };
     }
     case "SELECT_PIECE": {
-      console.log("SELECT_PIECE reducer");
       return {
         ...state,
         newMove: {
@@ -111,7 +110,6 @@ export const currentGameReducer = (state = currentGame, action) => {
       };
     }
     case "CALCULATE_POSSIBLE_MOVES": {
-      console.log("CALCULATE_POSSIBLE_MOVES reducer");
       return {
         ...state,
         newMove: {

@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { connect } from "react-redux";
 import Board from "./components/Board";
 import Controls from "./components/Controls";
-import GameEngine from "./gameEngine/gameEngine";
+import GameEngine from "./gameEngine/GameEngine.container";
 // import Counter from "./components/Counter";
 import "./App.scss";
 

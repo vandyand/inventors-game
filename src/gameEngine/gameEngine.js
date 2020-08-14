@@ -1,58 +1,41 @@
 import React from "react";
-import { connect } from "react-redux";
+import moveFuncs from "./MoveFuncs";
 
-const GameEngine = (state, selectPieceReducer) => {
+const GameEngine = ({
+  state,
+  selectPieceReducer,
+  setPossibleMovesReducer,
+  pieceMoveReducer,
+}) => {
   const handleClick = () => {
-    console.log("computer move button clicked!");
-    const pickPiece = state.currentGame.arrangementSequence
+    const teamPieces = state.currentGame.arrangementSequence
       .slice(-1)
       .pop()
-      .reduce((acc, cur) => {
-        if (acc) {
-          return acc;
-        }
-        if (cur.includes("B")) {
-          return cur;
-        }
-        return "";
-      }, "");
-    console.log(pickPiece);
-    selectPieceReducer(pickPiece.split("-")[0], pickPiece.split("-")[1]);
+      .filter(
+        (teamPieceAndOrSpace) =>
+          teamPieceAndOrSpace.charAt(0) === state.currentGame.whoseTurn
+      );
+
+    let pickPiece,
+      teamPiece,
+      spaceCode = "";
+    let possibleMoves = [];
+    let count = 0;
+    do {
+      count++;
+      pickPiece = teamPieces[Math.floor(Math.random() * teamPieces.length)];
+      [teamPiece, spaceCode] = pickPiece.split("-");
+      possibleMoves = moveFuncs(state, "getLegalMoves", spaceCode, teamPiece);
+    } while (possibleMoves.length === 0 && count < 10000);
+    selectPieceReducer(spaceCode, teamPiece);
+    setPossibleMovesReducer(possibleMoves);
+
+    const chosenMoveSpace =
+      possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+    pieceMoveReducer(chosenMoveSpace, teamPiece);
   };
 
   return <button onClick={handleClick}>Computer Move!</button>;
 };
 
-const mapStateToProps = (state) => ({
-  state,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  selectPieceReducer: (code, piece) =>
-    dispatch({
-      type: "SELECT_PIECE",
-      payload: { code, piece },
-    }),
-  pieceMoveReducer: (code, piece) =>
-    dispatch({
-      type: "PIECE_MOVE",
-      payload: { code, piece },
-    }),
-  attackMoveReducer: (code, piece) =>
-    dispatch({
-      type: "ATTACK_MOVE",
-      payload: { code, piece },
-    }),
-  enPassantMoveReducer: (code, piece) =>
-    dispatch({
-      type: "ENPASSANT_MOVE",
-      payload: { code, piece },
-    }),
-  castlingMoveReducer: (code, piece) =>
-    dispatch({
-      type: "CASTLING_MOVE",
-      payload: { code, piece },
-    }),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(GameEngine);
+export default GameEngine;
