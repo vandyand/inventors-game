@@ -100,7 +100,7 @@ export const currentGameReducer = (state = currentGame, action) => {
       };
     }
     case "SELECT_PIECE": {
-      console.log("SELECT_PIECE");
+      console.log("SELECT_PIECE reducer");
       return {
         ...state,
         newMove: {

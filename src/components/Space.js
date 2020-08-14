@@ -7,12 +7,10 @@ const Space = ({
   color,
   teamPiece,
   state,
-  calculatePossibleMovesReducer,
+  setPossibleMovesReducer,
   selectPieceReducer,
   pieceMoveReducer,
 }) => {
-  // const forceUpdate = React.useReducer(() => ({}))[1];
-  // const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
   const pieceTeam = teamPiece ? teamPiece.charAt(0) : "";
   const currentSpacePieceInfo = teamPiece
     ? state.pieces.filter((piece) => piece.code === teamPiece.slice(1)).pop()
@@ -23,14 +21,12 @@ const Space = ({
     }
     if (state.currentGame.whoseTurn === pieceTeam) {
       selectPieceReducer(spaceCode, teamPiece);
-      // forceUpdate();
-      // setTimeout(
-      //   () => calculatePossibleMovesReducer(moveFuncs(state, "getLegalMoves")),
-      //   1000
-      // );
+      setPossibleMovesReducer(
+        moveFuncs(state, "getLegalMoves", spaceCode, teamPiece)
+      );
     } else if (
       state.currentGame.newMove.piece && // piece has been selected
-      moveFuncs(state, "getLegalMoves").includes(spaceCode) // the move is legal
+      state.currentGame.newMove.possibleMoves.includes(spaceCode) // the move is possible
     ) {
       pieceMoveReducer(spaceCode, teamPiece);
     }

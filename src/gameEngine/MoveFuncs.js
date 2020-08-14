@@ -1,4 +1,4 @@
-const moveFuncs = (state, funcToCall) => {
+const moveFuncs = (state, funcToCall, spaceCode, teamPiece) => {
   const currentGameType = state.gameTypes.filter(
     (gameType) => gameType.code === state.currentGame.code
   )[0];
@@ -13,19 +13,9 @@ const moveFuncs = (state, funcToCall) => {
 
   const flatMap = (xs, f) => xs.reduce((acc, x) => acc.concat(f(x)), []);
 
-  const newMovePieceInfo = state.currentGame.newMove.piece
-    ? state.pieces
-        .filter(
-          (piece) => piece.code === state.currentGame.newMove.piece.slice(1)
-        )
-        .pop()
+  const newMovePieceInfo = teamPiece
+    ? state.pieces.filter((piece) => piece.code === teamPiece.slice(1)).pop()
     : {};
-  console.log(
-    "state.currentGame.newMove.piece",
-    state.currentGame.newMove.piece
-  );
-  console.log(state.pieces);
-  console.log({ newMovePieceInfo });
 
   const getLegalMoves = () => {
     let possibleMoveSpaces = getPossibleMoveSpaces("move");
@@ -38,7 +28,7 @@ const moveFuncs = (state, funcToCall) => {
   };
 
   const getPossibleMoveSpaces = (moveNotAttack) => {
-    const currentPos = state.currentGame.newMove.from;
+    const currentPos = spaceCode;
     const pieceMoveTypes =
       moveNotAttack === "move" || newMovePieceInfo.movement.attackSameAsMove
         ? newMovePieceInfo.movement.possibleMoves
