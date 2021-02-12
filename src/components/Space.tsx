@@ -1,8 +1,18 @@
 import React from "react";
-import moveFuncs from "../gameEngine/MoveFuncs";
+import moveFuncs from "../gameEngine/moveFuncs";
 import "./Space.scss";
 
-const Space = ({
+interface Space {
+  spaceCode: string;
+  color: string;
+  teamPiece: string;
+  state: any;
+  setPossibleMovesReducer: (possibleMoves: Array<any>) => void;
+  selectPieceReducer: (code: string, piece: string) => void;
+  pieceMoveReducer: (code: string, piece: string) => void;
+}
+
+const Space: React.FC<Space> = ({
   spaceCode,
   color,
   teamPiece,
@@ -13,7 +23,9 @@ const Space = ({
 }) => {
   const pieceTeam = teamPiece ? teamPiece.charAt(0) : "";
   const currentSpacePieceInfo = teamPiece
-    ? state.pieces.filter((piece) => piece.code === teamPiece.slice(1)).pop()
+    ? state.pieces
+        .filter((piece: any) => piece.code === teamPiece.slice(1))
+        .pop()
     : {};
   const handleClick = () => {
     if (state.currentGame.winner) {

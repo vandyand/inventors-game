@@ -1,34 +1,41 @@
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import Space from "./Space";
 
-const selectPieceActionCreator = (code, piece) => {
-  return function (dispatch) {
-    dispatch({
-      type: "SELECT_PIECE",
-      payload: { code, piece },
-    });
-  };
-};
+// const selectPieceActionCreator = (code: string, piece: string) => {
+//   return function (dispatch: Dispatch) {
+//     dispatch({
+//       type: "SELECT_PIECE",
+//       payload: { code, piece },
+//     });
+//   };
+// };
 
-const setPossibleMovesActionCreator = (possibleMoves) => {
-  return function (dispatch) {
-    dispatch({
-      type: "CALCULATE_POSSIBLE_MOVES",
-      payload: { possibleMoves: possibleMoves },
-    });
-  };
-};
+// const setPossibleMovesActionCreator = (possibleMoves: Array<string>) => {
+//   return function (dispatch: Dispatch) {
+//     dispatch({
+//       type: "CALCULATE_POSSIBLE_MOVES",
+//       payload: { possibleMoves: possibleMoves },
+//     });
+//   };
+// };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: any) => ({
   state,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  selectPieceReducer: (code, piece) =>
-    dispatch(selectPieceActionCreator(code, piece)),
-  setPossibleMovesReducer: (possibleMoves) =>
-    dispatch(setPossibleMovesActionCreator(possibleMoves)),
-  pieceMoveReducer: (code, piece) =>
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  selectPieceReducer: (code: string, piece: string) =>
+    dispatch({
+      type: "SELECT_PIECE",
+      payload: { code, piece },
+    }),
+  setPossibleMovesReducer: (possibleMoves: Array<any>) =>
+    dispatch({
+      type: "CALCULATE_POSSIBLE_MOVES",
+      payload: possibleMoves,
+    }),
+  pieceMoveReducer: (code: string, piece: string) =>
     dispatch({
       type: "PIECE_MOVE",
       payload: { code, piece },

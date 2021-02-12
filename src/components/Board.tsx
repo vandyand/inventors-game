@@ -3,7 +3,17 @@ import { connect } from "react-redux";
 import Row from "./Row";
 import "./Board.scss";
 
-const Board = ({ boards, currentGameTypeCode, gameTypes, movePiece }) => {
+interface BoardProps {
+  boards: Array<any>;
+  currentGameTypeCode: string;
+  gameTypes: Array<any>;
+}
+
+const Board: React.FC<BoardProps> = ({
+  boards,
+  currentGameTypeCode,
+  gameTypes,
+}) => {
   const gameType = gameTypes.filter(
     (gameType) => gameType.code === currentGameTypeCode
   )[0];
@@ -13,7 +23,7 @@ const Board = ({ boards, currentGameTypeCode, gameTypes, movePiece }) => {
 
   return (
     <div className="board">
-      {[...Array(board.size[0]).keys()].reverse().map((num) => (
+      {[8, 7, 6, 5, 4, 3, 2, 1].map((num) => (
         <Row
           key={num}
           numSpaces={board.size[1]}
@@ -25,7 +35,7 @@ const Board = ({ boards, currentGameTypeCode, gameTypes, movePiece }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: any) => ({
   gameTypes: state.gameTypes,
   boards: state.boards,
   currentGameTypeCode: state.currentGame.code,

@@ -1,20 +1,28 @@
-const moveFuncs = (state, funcToCall, spaceCode, teamPiece) => {
+const moveFuncs = (
+  state: any,
+  funcToCall: string,
+  spaceCode: string,
+  teamPiece: string
+) => {
   const currentGameType = state.gameTypes.filter(
-    (gameType) => gameType.code === state.currentGame.code
+    (gameType: any) => gameType.code === state.currentGame.code
   )[0];
 
   const currentBoardType = state.boards
-    .filter((board) => board.code === currentGameType.boardCode)
+    .filter((board: any) => board.code === currentGameType.boardCode)
     .pop();
 
   const prevBoardAndPieces = state.currentGame.arrangementSequence
     .slice(-1)
     .pop();
 
-  const flatMap = (xs, f) => xs.reduce((acc, x) => acc.concat(f(x)), []);
+  const flatMap = (xs: Array<any>, f: any) =>
+    xs.reduce((acc, x) => acc.concat(f(x)), []);
 
   const newMovePieceInfo = teamPiece
-    ? state.pieces.filter((piece) => piece.code === teamPiece.slice(1)).pop()
+    ? state.pieces
+        .filter((piece: any) => piece.code === teamPiece.slice(1))
+        .pop()
     : {};
 
   const getLegalMoves = () => {
@@ -27,13 +35,13 @@ const moveFuncs = (state, funcToCall, spaceCode, teamPiece) => {
     return possibleMoveSpaces;
   };
 
-  const getPossibleMoveSpaces = (moveNotAttack) => {
+  const getPossibleMoveSpaces = (moveNotAttack: string) => {
     const currentPos = spaceCode;
     const pieceMoveTypes =
       moveNotAttack === "move" || newMovePieceInfo.movement.attackSameAsMove
         ? newMovePieceInfo.movement.possibleMoves
         : newMovePieceInfo.movement.attackMoves;
-    const possibleSpaces = flatMap(pieceMoveTypes, (moveType) => {
+    const possibleSpaces = flatMap(pieceMoveTypes, (moveType: string) => {
       if (moveType.includes("+")) {
         let moveTypes = [];
         for (let i = 1; i < 8; i++) {
@@ -44,25 +52,27 @@ const moveFuncs = (state, funcToCall, spaceCode, teamPiece) => {
         return moveType;
       }
     })
-      .map((moveType) => {
+      .map((moveType: string) => {
         const turnModifier = state.currentGame.whoseTurn === "A" ? 1 : -1;
         return adjacentPos(currentPos, moveType, turnModifier);
       })
-      .filter((possibleSpace) => possibleSpace !== undefined)
-      .filter((possibleSpace) => squareAvailable(possibleSpace))
-      .filter((possibleSpace) => !jumpCondition(possibleSpace, currentPos))
+      .filter((possibleSpace: string) => possibleSpace !== undefined)
+      .filter((possibleSpace: string) => squareAvailable(possibleSpace))
       .filter(
-        (possibleSpace) =>
+        (possibleSpace: string) => !jumpCondition(possibleSpace, currentPos)
+      )
+      .filter(
+        (possibleSpace: string) =>
           moveNotAttack !== "move" || !enemyOnSpace(possibleSpace)
       )
       .filter(
-        (possibleSpace) =>
+        (possibleSpace: string) =>
           moveNotAttack !== "attack" || enemyOnSpace(possibleSpace)
       );
     return possibleSpaces;
   };
 
-  const enemyOnSpace = (spaceCode) => {
+  const enemyOnSpace = (spaceCode: string) => {
     const pieceOnSpace = getPieceOnSpace(spaceCode);
     return (
       pieceOnSpace.charAt(0) &&
@@ -70,14 +80,14 @@ const moveFuncs = (state, funcToCall, spaceCode, teamPiece) => {
     );
   };
 
-  const squareAvailable = (spaceCode) => {
+  const squareAvailable = (spaceCode: string) => {
     const pieceOnSpace = getPieceOnSpace(spaceCode);
     return pieceOnSpace.charAt(0) !== state.currentGame.whoseTurn;
   };
 
-  const getPieceOnSpace = (spaceCode) => {
-    const spaceFromArrangement = prevBoardAndPieces.filter((teamPieceSpace) =>
-      teamPieceSpace.includes(spaceCode)
+  const getPieceOnSpace = (spaceCode: string) => {
+    const spaceFromArrangement = prevBoardAndPieces.filter(
+      (teamPieceSpace: string) => teamPieceSpace.includes(spaceCode)
     )[0];
     if (spaceFromArrangement && spaceFromArrangement.length > 2) {
       return spaceFromArrangement.split("-")[0];
@@ -95,7 +105,7 @@ const moveFuncs = (state, funcToCall, spaceCode, teamPiece) => {
   //   }, false);
   // };
 
-  const getNewRow = (spaceCode, val) => {
+  const getNewRow = (spaceCode: string | undefined, val: number) => {
     if (spaceCode) {
       const newRow = parseInt(spaceCode.charAt(1)) + val;
       if (
@@ -107,7 +117,7 @@ const moveFuncs = (state, funcToCall, spaceCode, teamPiece) => {
     }
   };
 
-  const getNewColumn = (spaceCode, val) => {
+  const getNewColumn = (spaceCode: string | undefined, val: number) => {
     if (spaceCode) {
       const newColSymbolNum = spaceCode.charCodeAt(0) + val;
       if (
@@ -124,7 +134,7 @@ const moveFuncs = (state, funcToCall, spaceCode, teamPiece) => {
     }
   };
 
-  const adjacentPos = (pos, movement, invert) => {
+  const adjacentPos = (pos: string, movement: string, invert: number) => {
     const rowIncDec = movement.includes("f")
       ? (movement.split("f").length - 1) * invert
       : movement.includes("b")
@@ -138,10 +148,10 @@ const moveFuncs = (state, funcToCall, spaceCode, teamPiece) => {
     return getNewRow(getNewColumn(pos, colIncDec), rowIncDec);
   };
 
-  const jumpCondition = (moveTo, moveFrom) => {
+  const jumpCondition = (moveTo: string, moveFrom: string) => {
     const betweenPositions = getBetweenPositions(moveTo, moveFrom);
     const piecePositions = new Set(
-      prevBoardAndPieces.map((pieceAndSpace) => pieceAndSpace.slice(-2))
+      prevBoardAndPieces.map((pieceAndSpace: string) => pieceAndSpace.slice(-2))
     );
     const intersection = new Set(
       [...betweenPositions].filter((x) => piecePositions.has(x))
@@ -149,7 +159,7 @@ const moveFuncs = (state, funcToCall, spaceCode, teamPiece) => {
     return !newMovePieceInfo.movement.canJump && intersection.size !== 0;
   };
 
-  const getBetweenPositions = (moveTo, moveFrom) => {
+  const getBetweenPositions = (moveTo: string, moveFrom: string) => {
     let moveToCoord = posToCoord(moveTo);
     let moveFromCoord = posToCoord(moveFrom);
     let betweenPositions = new Set();
@@ -198,7 +208,7 @@ const moveFuncs = (state, funcToCall, spaceCode, teamPiece) => {
     return betweenPositions;
   };
 
-  const posToCoord = (pos) => {
+  const posToCoord = (pos: string) => {
     return pos.split("").map((posChar, ind) => {
       if (ind < 1) {
         return posChar.charCodeAt(0) - 97;
@@ -208,7 +218,7 @@ const moveFuncs = (state, funcToCall, spaceCode, teamPiece) => {
     });
   };
 
-  const coordToPos = (coord) => {
+  const coordToPos = (coord: Array<number>) => {
     return `${String.fromCharCode(coord[0] + 97)}${coord[1] + 1}`;
   };
 

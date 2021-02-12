@@ -1,7 +1,14 @@
 import React from "react";
-import moveFuncs from "./MoveFuncs";
+import moveFuncs from "./moveFuncs";
 
-const GameEngine = ({
+interface GameEngine {
+  state: any;
+  selectPieceReducer: (code: string, piece: string) => void;
+  setPossibleMovesReducer: (possibleMoves: Array<any>) => void;
+  pieceMoveReducer: (code: string, piece: string) => void;
+}
+
+const GameEngine: React.FC<GameEngine> = ({
   state,
   selectPieceReducer,
   setPossibleMovesReducer,
@@ -12,7 +19,7 @@ const GameEngine = ({
       .slice(-1)
       .pop()
       .filter(
-        (teamPieceAndOrSpace) =>
+        (teamPieceAndOrSpace: string) =>
           teamPieceAndOrSpace.charAt(0) === state.currentGame.whoseTurn
       );
 
