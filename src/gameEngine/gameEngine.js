@@ -39,8 +39,8 @@ const GameEngine = ({
 
   return (
     <>
-      <button onClick={handleClick}>Computer Move!</button>;
-      <button onClick={handleCompitentClick}>Computer Compitent Move!</button>;
+      <button onClick={handleClick}>Computer Move!</button>
+      <button onClick={handleCompitentClick}>Computer Compitent Move!</button>
     </>
   );
 };
