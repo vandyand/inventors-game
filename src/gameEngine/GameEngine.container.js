@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import GameEngine from "./GameEngine";
+import GameEngine from "./gameEngine";
 
 const selectPieceActionCreator = (code, piece) => {
   return function (dispatch) {

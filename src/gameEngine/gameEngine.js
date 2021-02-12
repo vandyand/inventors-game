@@ -16,26 +16,33 @@ const GameEngine = ({
           teamPieceAndOrSpace.charAt(0) === state.currentGame.whoseTurn
       );
 
-    let pickPiece,
+    let randomPiece,
       teamPiece,
       spaceCode = "";
     let possibleMoves = [];
     let count = 0;
     do {
       count++;
-      pickPiece = teamPieces[Math.floor(Math.random() * teamPieces.length)];
-      [teamPiece, spaceCode] = pickPiece.split("-");
+      randomPiece = teamPieces[Math.floor(Math.random() * teamPieces.length)];
+      [teamPiece, spaceCode] = randomPiece.split("-");
       possibleMoves = moveFuncs(state, "getLegalMoves", spaceCode, teamPiece);
     } while (possibleMoves.length === 0 && count < 10000);
     selectPieceReducer(spaceCode, teamPiece);
     setPossibleMovesReducer(possibleMoves);
 
-    const chosenMoveSpace =
+    const randomMoveSpace =
       possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
-    pieceMoveReducer(chosenMoveSpace, teamPiece);
+    pieceMoveReducer(randomMoveSpace, teamPiece);
   };
 
-  return <button onClick={handleClick}>Computer Move!</button>;
+  const handleCompitentClick = () => {};
+
+  return (
+    <>
+      <button onClick={handleClick}>Computer Move!</button>;
+      <button onClick={handleCompitentClick}>Computer Compitent Move!</button>;
+    </>
+  );
 };
 
 export default GameEngine;
