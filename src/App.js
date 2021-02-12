@@ -2,19 +2,20 @@ import React, { useRef } from "react";
 import { connect } from "react-redux";
 import Board from "./components/Board";
 import Controls from "./components/Controls";
+import GameEngine from "./gameEngine/GameEngine.container";
 // import Counter from "./components/Counter";
 import "./App.scss";
 
-const useComponentWillMount = (func) => {
+const useComponentWillMount = (...funcs) => {
   const willMount = useRef(true);
   if (willMount.current) {
-    func();
+    funcs.forEach((func) => func());
   }
   willMount.current = false;
 };
 
-const App = ({ startUpLoadGame, state }) => {
-  useComponentWillMount(startUpLoadGame);
+const App = ({ startUpLoadGame, getPiecesStrength, state }) => {
+  useComponentWillMount(startUpLoadGame, getPiecesStrength);
 
   console.log(state);
   return (
@@ -22,6 +23,8 @@ const App = ({ startUpLoadGame, state }) => {
       <Board />
       <Controls />
       {state.currentGame.winner && `Team ${state.currentGame.winner} wins!`}
+      <br />
+      <GameEngine />
     </div>
   );
 };
@@ -32,6 +35,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   startUpLoadGame: () => dispatch({ type: "STARTUP_LOAD_GAME" }),
+  getPiecesStrength: () => dispatch({ type: "GET_PIECES_STRENGTH" }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

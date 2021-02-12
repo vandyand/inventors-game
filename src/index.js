@@ -4,7 +4,8 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 import { Provider } from "react-redux";
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 // import devToolsEnhancer from "remote-redux-devtools";
 import {
   piecesReducer,
@@ -29,7 +30,7 @@ const combinedReducer = combineReducers({
 //   };
 // };
 
-const store = createStore(combinedReducer);
+const store = createStore(combinedReducer, applyMiddleware(thunk));
 // const store = createStore(countReducer, devToolsEnhancer({ realtime: true }));
 
 ReactDOM.render(

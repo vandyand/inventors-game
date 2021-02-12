@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import Space from "./Space";
+import GameEngine from "./GameEngine";
 
 const selectPieceActionCreator = (code, piece) => {
   return function (dispatch) {
@@ -35,4 +35,4 @@ const mapDispatchToProps = (dispatch) => ({
     }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Space);
+export default connect(mapStateToProps, mapDispatchToProps)(GameEngine);
