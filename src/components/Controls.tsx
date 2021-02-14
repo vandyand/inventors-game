@@ -1,14 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
-const Controls = ({
+interface Controls {
+  currentArrangementSeqNum: number;
+  updateCurrentArrangementSeqNum: (seqNum: number) => void;
+}
+
+const Controls: React.FC<Controls> = ({
   currentArrangementSeqNum,
   updateCurrentArrangementSeqNum,
 }) => {
-  // const updateCurrentArrangementHelper = (incOrDec) => {
-  //   updateCurrentArrangementSeqNum(incOrDec);
-  // };
-
   return (
     <div>
       <button onClick={() => updateCurrentArrangementSeqNum(-1)}>{"<"}</button>
@@ -18,15 +20,15 @@ const Controls = ({
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: any) => ({
   currentArrangementSeqNum: state.currentGame.currentArrangementSeqNum,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  updateCurrentArrangementSeqNum: (payload) => {
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  updateCurrentArrangementSeqNum: (seqNum: number) => {
     return dispatch({
       type: "UPDATE_CURRENT_ARRANGEMENT_SEQ_NUM",
-      payload,
+      seqNum,
     });
   },
 });

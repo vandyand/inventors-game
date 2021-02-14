@@ -2,9 +2,9 @@ import React, { useRef } from "react";
 import { connect } from "react-redux";
 import Board from "./components/Board";
 import Controls from "./components/Controls";
-import GameEngine from "./gameEngine/GameEngine.container";
+import GameEngine from "./gameEngine/gameEngine.container";
 // import Counter from "./components/Counter";
-import "./App.scss";
+import "./app.scss";
 
 const useComponentWillMount = (...funcs) => {
   const willMount = useRef(true);

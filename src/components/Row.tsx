@@ -3,7 +3,20 @@ import { connect } from "react-redux";
 import Space from "./Space.container";
 import "./Row.scss";
 
-const Row = ({
+export interface OwnProps {
+  colorIndent: number;
+  numSpaces: number;
+  rowNum: number;
+}
+
+interface StateProps {
+  arrangementSequence: Array<any>;
+  currentArrangementSeqNum: number;
+}
+
+type RowProps = OwnProps & StateProps;
+
+const Row: React.FC<RowProps> = ({
   colorIndent,
   numSpaces,
   rowNum,
@@ -19,13 +32,13 @@ const Row = ({
           const currentSetup = arrangementSequence[currentArrangementSeqNum];
 
           const teamPiece = currentSetup
-            .map((teamPieceSpace) => {
+            .map((teamPieceSpace: string) => {
               if (spaceCode === teamPieceSpace.split("-")[1]) {
                 return teamPieceSpace.split("-")[0];
               }
               return "";
             })
-            .filter((item) => item !== "")[0];
+            .filter((item: string) => item !== "")[0];
 
           return (
             <Space
@@ -40,11 +53,11 @@ const Row = ({
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
   return {
     arrangementSequence: state.currentGame.arrangementSequence,
     currentArrangementSeqNum: state.currentGame.currentArrangementSeqNum,
   };
 };
 
-export default connect(mapStateToProps, null)(Row);
+export default connect(mapStateToProps)(Row);
