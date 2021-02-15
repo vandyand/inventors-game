@@ -7,9 +7,9 @@ interface Space {
   color: string;
   teamPiece: string;
   state: any;
-  setPossibleMovesReducer: (possibleMoves: Array<any>) => void;
-  selectPieceReducer: (code: string, piece: string) => void;
-  pieceMoveReducer: (code: string, piece: string) => void;
+  setPossibleMoves: (possibleMoves: Array<any>) => void;
+  selectPiece: (code: string, piece: string) => void;
+  pieceMove: (code: string, piece: string) => void;
 }
 
 const Space: React.FC<Space> = ({
@@ -17,9 +17,9 @@ const Space: React.FC<Space> = ({
   color,
   teamPiece,
   state,
-  setPossibleMovesReducer,
-  selectPieceReducer,
-  pieceMoveReducer,
+  setPossibleMoves,
+  selectPiece,
+  pieceMove,
 }) => {
   const pieceTeam = teamPiece ? teamPiece.charAt(0) : "";
   const currentSpacePieceInfo = teamPiece
@@ -31,16 +31,21 @@ const Space: React.FC<Space> = ({
     if (state.currentGame.winner) {
       return;
     }
+
     if (state.currentGame.whoseTurn === pieceTeam) {
-      selectPieceReducer(spaceCode, teamPiece);
-      setPossibleMovesReducer(
-        moveFuncs(state, "getLegalMoves", spaceCode, teamPiece)
+      selectPiece(spaceCode, teamPiece);
+      const possibleMoves = moveFuncs(
+        state,
+        "getLegalMoves",
+        spaceCode,
+        teamPiece
       );
+      setPossibleMoves(possibleMoves);
     } else if (
       state.currentGame.newMove.piece && // piece has been selected
       state.currentGame.newMove.possibleMoves.includes(spaceCode) // the move is possible
     ) {
-      pieceMoveReducer(spaceCode, teamPiece);
+      pieceMove(spaceCode, teamPiece);
     }
   };
 

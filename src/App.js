@@ -17,7 +17,6 @@ const useComponentWillMount = (...funcs) => {
 const App = ({ startUpLoadGame, getPiecesStrength, state }) => {
   useComponentWillMount(startUpLoadGame, getPiecesStrength);
 
-  console.log(state);
   return (
     <div className="app">
       <Board />

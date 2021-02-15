@@ -25,17 +25,17 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  selectPieceReducer: (code: string, piece: string) =>
+  selectPiece: (code: string, piece: string) =>
     dispatch({
       type: "SELECT_PIECE",
       payload: { code, piece },
     }),
-  setPossibleMovesReducer: (possibleMoves: Array<any>) =>
+  setPossibleMoves: (possibleMoves: Array<any>) =>
     dispatch({
       type: "CALCULATE_POSSIBLE_MOVES",
       payload: possibleMoves,
     }),
-  pieceMoveReducer: (code: string, piece: string) =>
+  pieceMove: (code: string, piece: string) =>
     dispatch({
       type: "PIECE_MOVE",
       payload: { code, piece },

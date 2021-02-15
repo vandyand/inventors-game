@@ -29,9 +29,6 @@ const moveFuncs = (
     let possibleMoveSpaces = getPossibleMoveSpaces("move");
     const possibleAttackSpaces = getPossibleMoveSpaces("attack");
     possibleMoveSpaces = possibleMoveSpaces.concat(possibleAttackSpaces);
-
-    console.log({ possibleMoveSpaces });
-
     return possibleMoveSpaces;
   };
 

@@ -114,7 +114,7 @@ export const currentGameReducer = (state = currentGame, action) => {
         ...state,
         newMove: {
           ...state.newMove,
-          possibleMoves: action.payload.possibleMoves,
+          possibleMoves: action.payload,
         },
       };
     }
