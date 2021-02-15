@@ -93,15 +93,6 @@ const moveFuncs = (
     }
   };
 
-  // const attacking = (spaceCode) => {
-  //   return prevBoardAndPieces.reduce((acc, pieceAndPos) => {
-  //     if (pieceAndPos.slice(-2) === spaceCode) {
-  //       return true;
-  //     }
-  //     return acc;
-  //   }, false);
-  // };
-
   const getNewRow = (spaceCode: string | undefined, val: number) => {
     if (spaceCode) {
       const newRow = parseInt(spaceCode.charAt(1)) + val;

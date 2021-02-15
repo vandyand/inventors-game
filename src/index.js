@@ -6,7 +6,6 @@ import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-// import devToolsEnhancer from "remote-redux-devtools";
 import {
   piecesReducer,
   boardsReducer,
@@ -21,17 +20,7 @@ const combinedReducer = combineReducers({
   currentGame: currentGameReducer,
 });
 
-// const fullStateCombinedReducer = (state = {}, action) => {
-//   return {
-//     pieces: piecesReducer(state.pieces, action, state),
-//     boards: boardsReducer(state.boards, action, state),
-//     gameTypes: gameTypesReducer(state.gameTypes, action, state),
-//     currentGame: currentGameReducer(state.currentGame, action, state),
-//   };
-// };
-
 const store = createStore(combinedReducer, applyMiddleware(thunk));
-// const store = createStore(countReducer, devToolsEnhancer({ realtime: true }));
 
 ReactDOM.render(
   <Provider store={store}>

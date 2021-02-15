@@ -2,24 +2,6 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import GameEngine from "./gameEngine";
 
-// const selectPieceActionCreator = (code: string, piece: string) => {
-//   return function (dispatch: Dispatch) {
-//     dispatch({
-//       type: "SELECT_PIECE",
-//       payload: { code, piece },
-//     });
-//   };
-// };
-
-// const setPossibleMovesActionCreator = (possibleMoves: Array<any>) => {
-//   return function (dispatch: Dispatch) {
-//     dispatch({
-//       type: "CALCULATE_POSSIBLE_MOVES",
-//       payload: { possibleMoves: possibleMoves },
-//     });
-//   };
-// };
-
 const mapStateToProps = (state: any) => ({
   state,
 });

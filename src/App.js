@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import Board from "./components/Board";
 import Controls from "./components/Controls";
 import GameEngine from "./gameEngine/gameEngine.container";
-// import Counter from "./components/Counter";
 import "./app.scss";
 
 const useComponentWillMount = (...funcs) => {

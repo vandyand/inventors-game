@@ -1,5 +1,4 @@
 import { currentGame, gameTypes, boards, pieces } from "../initialStates";
-// import moveFuncs from "../../gameEngine/moveFuncs";
 
 export const currentGameReducer = (state = currentGame, action) => {
   const currentGameType = gameTypes.filter(
