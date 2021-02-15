@@ -3,16 +3,16 @@ import moveFuncs from "./moveFuncs";
 
 interface GameEngine {
   state: any;
-  selectPieceReducer: (code: string, piece: string) => void;
-  setPossibleMovesReducer: (possibleMoves: Array<any>) => void;
-  pieceMoveReducer: (code: string, piece: string) => void;
+  onSelectPiece: (code: string, piece: string) => void;
+  onSetPossibleMoves: (possibleMoves: Array<any>) => void;
+  onPieceMove: (code: string, piece: string) => void;
 }
 
 const GameEngine: React.FC<GameEngine> = ({
   state,
-  selectPieceReducer,
-  setPossibleMovesReducer,
-  pieceMoveReducer,
+  onSelectPiece,
+  onSetPossibleMoves,
+  onPieceMove,
 }) => {
   const handleClick = () => {
     const teamPieces = state.currentGame.arrangementSequence
@@ -34,12 +34,12 @@ const GameEngine: React.FC<GameEngine> = ({
       [teamPiece, spaceCode] = randomPiece.split("-");
       possibleMoves = moveFuncs(state, "getLegalMoves", spaceCode, teamPiece);
     } while (possibleMoves.length === 0 && count < 10000);
-    selectPieceReducer(spaceCode, teamPiece);
-    setPossibleMovesReducer(possibleMoves);
+    onSelectPiece(spaceCode, teamPiece);
+    onSetPossibleMoves(possibleMoves);
 
     const randomMoveSpace =
       possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
-    pieceMoveReducer(randomMoveSpace, teamPiece);
+    onPieceMove(randomMoveSpace, teamPiece);
   };
 
   const handleCompitentClick = () => {};
