@@ -1,4 +1,22 @@
-export const gameTypes = [
+interface winCondition {
+  type: string;
+  killPiece?: string;
+}
+
+interface settings {
+  winCondition: winCondition;
+}
+
+interface gameType {
+  name: string;
+  code: string;
+  boardCode: string;
+  pieceCodes: Array<string>;
+  startingPiecePositions: Array<string>;
+  settings: settings;
+}
+
+export const gameTypes: Array<gameType> = [
   {
     name: "gameType1",
     code: "sps",

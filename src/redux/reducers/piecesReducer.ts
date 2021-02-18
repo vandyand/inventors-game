@@ -1,6 +1,6 @@
-import { pieces } from "../initialStates";
+import { pieces } from "../initialStates/pieces";
 
-export const piecesReducer = (state = pieces, action) => {
+export const piecesReducer = (state = pieces, action: any) => {
   switch (action.type) {
     case "GET_PIECES_STRENGTH": {
       const scoredPieces = pieces.map((pieceInfo) => {

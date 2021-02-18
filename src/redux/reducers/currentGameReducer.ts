@@ -1,12 +1,22 @@
-import { currentGame, gameTypes, boards, pieces } from "../initialStates";
+import { currentGame } from "../initialStates/currentGame";
+import { gameTypes } from "../initialStates/gameTypes";
+import { boards } from "../initialStates/boards";
+import { pieces } from "../initialStates/pieces";
 
-export const currentGameReducer = (state = currentGame, action) => {
+export const currentGameReducer = (state = currentGame, action: any) => {
   const currentGameType = gameTypes.filter(
     (gameType) => gameType.code === state.code
   )[0];
   const currentBoard = boards
     .filter((board) => board.code === currentGameType.boardCode)
     .pop();
+
+  const currentPiece = pieces
+    .filter((piece) => piece.code === state.newMove.piece.slice(1))
+    .pop();
+
+  const currentPromotion =
+    (currentPiece && currentPiece.promotion) || undefined;
 
   const calculateMove = () => {
     return {
@@ -25,6 +35,7 @@ export const currentGameReducer = (state = currentGame, action) => {
       whoseTurn: state.whoseTurn === "A" ? "B" : "A",
     };
   };
+
   const getNewMoveCode = () =>
     `${state.newMove.piece}-${state.newMove.from}>${action.payload.code}`;
 
@@ -35,8 +46,10 @@ export const currentGameReducer = (state = currentGame, action) => {
 
     return [
       prevArrangement
-        .filter((piecePos) => updatedPiecePos.slice(-2) !== piecePos.slice(-2)) // Capturing logic
-        .map((piecePos) => {
+        .filter(
+          (piecePos: string) => updatedPiecePos.slice(-2) !== piecePos.slice(-2)
+        ) // Capturing logic
+        .map((piecePos: string) => {
           if (piecePos === prevPiecePos) {
             return updatedPiecePos;
           }
@@ -49,14 +62,14 @@ export const currentGameReducer = (state = currentGame, action) => {
     let updatedPiecePos = `${state.newMove.piece}-${action.payload.code}`;
 
     // Promotion logic
-    const lastRow = currentBoard.rowCodes.slice(-1).pop();
-    const firstRow = currentBoard.rowCodes.slice(0, 1).pop();
-    const currentPromotion = pieces
-      .filter((piece) => piece.code === state.newMove.piece.slice(1))
-      .pop().promotion;
+    const lastRow = currentBoard && currentBoard.rowCodes.slice(-1).pop();
+    const firstRow = currentBoard && currentBoard.rowCodes.slice(0, 1).pop();
+    // window.console.log(pieces);
+
     if (
-      currentPromotion.conditionCode === "nfm" ||
-      (currentPromotion.conditionCode === "lr" &&
+      (currentPromotion && currentPromotion.conditionCode === "nfm") ||
+      (currentPromotion &&
+        currentPromotion.conditionCode === "lr" &&
         ((state.whoseTurn === "A" && action.payload.code.includes(lastRow)) ||
           (state.whoseTurn === "B" && action.payload.code.includes(firstRow))))
     ) {
@@ -69,7 +82,7 @@ export const currentGameReducer = (state = currentGame, action) => {
   // Winner logic
   const getWinner = () => {
     return currentGameType.settings.winCondition.type === "annihilation"
-      ? getNewArrangement()[0].reduce((acc, curVal) => {
+      ? getNewArrangement()[0].reduce((acc: string, curVal: string) => {
           if (curVal[0] === "A") {
             return acc.replace("B", "");
           } else if (curVal[0] === "B") {
@@ -78,7 +91,7 @@ export const currentGameReducer = (state = currentGame, action) => {
           return acc;
         }, "AB")
       : currentGameType.settings.winCondition.type === "kill piece"
-      ? getNewArrangement()[0].reduce((acc, curVal) => {
+      ? getNewArrangement()[0].reduce((acc: string, curVal: string) => {
           const team = curVal.split("-")[0][0];
           const piece = curVal.split("-")[0].slice(1);
           if (piece === currentGameType.settings.winCondition.killPiece) {

@@ -1,4 +1,27 @@
-export const pieces = [
+interface movement {
+  code: string;
+  possibleMoves: Array<string>;
+  attackMoves: Array<string>;
+  attackSameAsMove: boolean;
+  canJump: boolean;
+}
+
+export interface promotion {
+  to: string;
+  condition: string;
+  conditionCode: string;
+}
+
+interface piece {
+  name: string;
+  code: string;
+  img: string;
+  movement: movement;
+  promotion: promotion;
+  strength: number;
+}
+
+export const pieces: Array<piece> = [
   {
     name: "super pawn",
     code: "sp",
@@ -28,7 +51,11 @@ export const pieces = [
       attackSameAsMove: true,
       canJump: false,
     },
-    promotion: {},
+    promotion: {
+      to: "",
+      condition: "",
+      conditionCode: "",
+    },
     strength: 0,
   },
   {
@@ -42,7 +69,11 @@ export const pieces = [
       attackSameAsMove: true,
       canJump: false,
     },
-    promotion: {},
+    promotion: {
+      to: "",
+      condition: "",
+      conditionCode: "",
+    },
     strength: 0,
   },
   {
@@ -56,7 +87,11 @@ export const pieces = [
       attackSameAsMove: true,
       canJump: false,
     },
-    promotion: {},
+    promotion: {
+      to: "",
+      condition: "",
+      conditionCode: "",
+    },
     strength: 0,
   },
   {
@@ -106,7 +141,11 @@ export const pieces = [
       attackSameAsMove: true,
       canJump: false,
     },
-    promotion: {},
+    promotion: {
+      to: "",
+      condition: "",
+      conditionCode: "",
+    },
     strength: 0,
   },
   {
@@ -120,7 +159,11 @@ export const pieces = [
       attackSameAsMove: true,
       canJump: false,
     },
-    promotion: {},
+    promotion: {
+      to: "",
+      condition: "",
+      conditionCode: "",
+    },
     strength: 0,
   },
   {
@@ -134,7 +177,11 @@ export const pieces = [
       attackSameAsMove: true,
       canJump: false,
     },
-    promotion: {},
+    promotion: {
+      to: "",
+      condition: "",
+      conditionCode: "",
+    },
     strength: 0,
   },
   {
@@ -148,7 +195,11 @@ export const pieces = [
       attackSameAsMove: true,
       canJump: true,
     },
-    promotion: {},
+    promotion: {
+      to: "",
+      condition: "",
+      conditionCode: "",
+    },
     strength: 0,
   },
 ];
