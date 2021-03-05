@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Space from "./Space.container";
 import "./Row.scss";
 
-export type OwnProps = {
+type OwnProps = {
   colorIndent: number;
   numSpaces: number;
   rowNum: number;

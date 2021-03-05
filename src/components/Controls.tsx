@@ -2,10 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-interface Controls {
+type Controls = {
   currentArrangementSeqNum: number;
   updateCurrentArrangementSeqNum: (seqNum: number) => void;
-}
+};
 
 const Controls: React.FC<Controls> = ({
   currentArrangementSeqNum,

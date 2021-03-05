@@ -3,11 +3,15 @@ import { connect } from "react-redux";
 import Row from "./Row";
 import "./Board.scss";
 
-type BoardProps = {
+// type OwnProps = {};
+
+type StateProps = {
   boards: Array<any>;
   currentGameTypeCode: string;
   gameTypes: Array<any>;
 };
+
+type BoardProps = StateProps | any;
 
 const Board: React.FC<BoardProps> = ({
   boards,
@@ -15,10 +19,10 @@ const Board: React.FC<BoardProps> = ({
   gameTypes,
 }) => {
   const gameType = gameTypes.filter(
-    (gameType) => gameType.code === currentGameTypeCode
+    (gameType: any) => gameType.code === currentGameTypeCode
   )[0];
   const board = boards
-    .filter((board) => board.code === gameType.boardCode)
+    .filter((board: any) => board.code === gameType.boardCode)
     .pop();
 
   return (

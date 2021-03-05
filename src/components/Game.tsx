@@ -4,9 +4,13 @@ import Board from "./Board";
 import Controls from "./Controls";
 import GameEngine from "../gameEngine/gameEngine.container";
 
-const Game = () => (
+const Game = (state: any) => (
   <div className="app">
-    <Board />
+    <Board
+    // boards={undefined}
+    // currentGameTypeCode={undefined}
+    // gameTypes={undefined}
+    />
     <Controls />
     {state.currentGame.winner && `Team ${state.currentGame.winner} wins!`}
     <br />
