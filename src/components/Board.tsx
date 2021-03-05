@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import Row from "./Row";
 import "./Board.scss";
 
-interface BoardProps {
+type BoardProps = {
   boards: Array<any>;
   currentGameTypeCode: string;
   gameTypes: Array<any>;
-}
+};
 
 const Board: React.FC<BoardProps> = ({
   boards,
@@ -36,9 +36,9 @@ const Board: React.FC<BoardProps> = ({
 };
 
 const mapStateToProps = (state: any) => ({
-  gameTypes: state.gameTypes,
   boards: state.boards,
   currentGameTypeCode: state.currentGame.code,
+  gameTypes: state.gameTypes,
 });
 
 export default connect(mapStateToProps, null)(Board);

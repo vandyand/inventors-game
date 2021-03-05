@@ -3,16 +3,16 @@ import { connect } from "react-redux";
 import Space from "./Space.container";
 import "./Row.scss";
 
-export interface OwnProps {
+export type OwnProps = {
   colorIndent: number;
   numSpaces: number;
   rowNum: number;
-}
+};
 
-interface StateProps {
+type StateProps = {
   arrangementSequence: Array<any>;
   currentArrangementSeqNum: number;
-}
+};
 
 type RowProps = OwnProps & StateProps;
 

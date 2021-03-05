@@ -2,7 +2,7 @@ import React from "react";
 import moveFuncs from "../gameEngine/moveFuncs";
 import "./Space.scss";
 
-interface Space {
+type Space = {
   spaceCode: string;
   color: string;
   teamPiece: string;
@@ -10,7 +10,7 @@ interface Space {
   setPossibleMoves: (possibleMoves: Array<any>) => void;
   selectPiece: (code: string, piece: string) => void;
   pieceMove: (code: string, piece: string) => void;
-}
+};
 
 const Space: React.FC<Space> = ({
   spaceCode,

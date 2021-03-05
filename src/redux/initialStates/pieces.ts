@@ -1,25 +1,25 @@
-interface movement {
+type movement = {
   code: string;
   possibleMoves: Array<string>;
   attackMoves: Array<string>;
   attackSameAsMove: boolean;
   canJump: boolean;
-}
+};
 
-export interface promotion {
+export type promotion = {
   to: string;
   condition: string;
   conditionCode: string;
-}
+};
 
-interface piece {
+type piece = {
   name: string;
   code: string;
   img: string;
   movement: movement;
   promotion: promotion;
   strength: number;
-}
+};
 
 export const pieces: Array<piece> = [
   {

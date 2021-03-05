@@ -1,8 +1,6 @@
 import React, { useRef } from "react";
 import { connect } from "react-redux";
-import Board from "./components/Board";
-import Controls from "./components/Controls";
-import GameEngine from "./gameEngine/gameEngine.container";
+import Game from "./components/Game";
 import "./app.scss";
 
 const useComponentWillMount = (...funcs) => {
@@ -16,24 +14,12 @@ const useComponentWillMount = (...funcs) => {
 const App = ({ startUpLoadGame, getPiecesStrength, state }) => {
   useComponentWillMount(startUpLoadGame, getPiecesStrength);
 
-  return (
-    <div className="app">
-      <Board />
-      <Controls />
-      {state.currentGame.winner && `Team ${state.currentGame.winner} wins!`}
-      <br />
-      <GameEngine />
-    </div>
-  );
+  return <Game />;
 };
-
-const mapStateToProps = (state) => ({
-  state,
-});
 
 const mapDispatchToProps = (dispatch) => ({
   startUpLoadGame: () => dispatch({ type: "STARTUP_LOAD_GAME" }),
   getPiecesStrength: () => dispatch({ type: "GET_PIECES_STRENGTH" }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);

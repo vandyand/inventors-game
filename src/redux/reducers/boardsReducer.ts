@@ -1,6 +1,6 @@
 import { boards } from "../initialStates/boards";
 
-// interface boardType {
+// type boardType = {
 //   name: string;
 //   code: string;
 //   size: Array<number>;

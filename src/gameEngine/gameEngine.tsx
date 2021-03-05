@@ -1,12 +1,12 @@
 import React from "react";
 import moveFuncs from "./moveFuncs";
 
-interface GameEngine {
+type GameEngine = {
   state: any;
   onSelectPiece: (code: string, piece: string) => void;
   onSetPossibleMoves: (possibleMoves: Array<any>) => void;
   onPieceMove: (code: string, piece: string) => void;
-}
+};
 
 const GameEngine: React.FC<GameEngine> = ({
   state,

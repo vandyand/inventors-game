@@ -1,20 +1,20 @@
-interface winCondition {
+type winCondition = {
   type: string;
   killPiece?: string;
-}
+};
 
-interface settings {
+type settings = {
   winCondition: winCondition;
-}
+};
 
-interface gameType {
+type gameType = {
   name: string;
   code: string;
   boardCode: string;
   pieceCodes: Array<string>;
   startingPiecePositions: Array<string>;
   settings: settings;
-}
+};
 
 export const gameTypes: Array<gameType> = [
   {

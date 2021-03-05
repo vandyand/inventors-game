@@ -1,4 +1,4 @@
-interface board {
+type board = {
   name: string;
   code: string;
   shape: string;
@@ -9,7 +9,7 @@ interface board {
   columnCodes: Array<string>;
   rowNums: Array<number>;
   columnNums: Array<number>;
-}
+};
 
 export const boards: Array<board> = [
   {

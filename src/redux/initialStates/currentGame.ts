@@ -1,10 +1,10 @@
-interface move {
+type move = {
   from: string;
   piece: string;
   possibleMoves: Array<string>;
-}
+};
 
-interface currentGameType {
+type currentGameType = {
   arrangementSequence: Array<any>;
   currentArrangementSeqNum: number;
   code: string;
@@ -14,7 +14,7 @@ interface currentGameType {
   winner: string;
   playerA: string;
   playerB: string;
-}
+};
 
 export const currentGame: currentGameType = {
   arrangementSequence: [],
