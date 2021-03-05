@@ -23,6 +23,13 @@ const Row: React.FC<RowProps> = ({
   arrangementSequence,
   currentArrangementSeqNum,
 }) => {
+  console.log(
+    colorIndent,
+    numSpaces,
+    rowNum,
+    arrangementSequence,
+    currentArrangementSeqNum
+  );
   return (
     <div className="row">
       {[..."abcdefghijklmnopqrstuvwxyz"]

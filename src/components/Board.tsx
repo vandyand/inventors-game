@@ -1,36 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
+import { getBoardSizeByGameType } from "../redux/selectors/boardSelectors";
 import Row from "./Row";
 import "./Board.scss";
 
 // type OwnProps = {};
 
-type StateProps = {
-  boards: Array<any>;
-  currentGameTypeCode: string;
-  gameTypes: Array<any>;
-};
+// type StateProps = {
+//   boardSize: Array<number>;
+// };
 
-type BoardProps = StateProps | any;
+// type BoardProps = StateProps | OwnProps;
 
-const Board: React.FC<BoardProps> = ({
-  boards,
-  currentGameTypeCode,
-  gameTypes,
-}) => {
-  const gameType = gameTypes.filter(
-    (gameType: any) => gameType.code === currentGameTypeCode
-  )[0];
-  const board = boards
-    .filter((board: any) => board.code === gameType.boardCode)
-    .pop();
-
+const Board: React.FC<any> = ({ boardSize }) => {
+  console.log(boardSize);
   return (
     <div className="board">
-      {[7, 6, 5, 4, 3, 2, 1, 0].map((num) => (
+      {[...Array(boardSize[0]).keys()].reverse().map((num) => (
         <Row
           key={num}
-          numSpaces={board.size[1]}
+          numSpaces={boardSize[1]}
           colorIndent={(num + 1) % 2}
           rowNum={num + 1}
         />
@@ -40,9 +29,7 @@ const Board: React.FC<BoardProps> = ({
 };
 
 const mapStateToProps = (state: any) => ({
-  boards: state.boards,
-  currentGameTypeCode: state.currentGame.code,
-  gameTypes: state.gameTypes,
+  boardSize: getBoardSizeByGameType(state),
 });
 
 export default connect(mapStateToProps, null)(Board);
