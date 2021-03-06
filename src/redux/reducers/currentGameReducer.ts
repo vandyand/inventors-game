@@ -1,112 +1,19 @@
 import { currentGame } from "../initialStates/currentGame";
 import { gameTypes } from "../initialStates/gameTypes";
-import { boards } from "../initialStates/boards";
-import { pieces } from "../initialStates/pieces";
+// import { boards } from "../initialStates/boards";
+// import { pieces } from "../initialStates/pieces";
+
+const currentGameType = gameTypes.filter(
+  (gameType) => gameType.code === currentGame.code
+)[0];
 
 export const currentGameReducer = (state = currentGame, action: any) => {
-  const currentGameType = gameTypes.filter(
-    (gameType) => gameType.code === state.code
-  )[0];
-  const currentBoard = boards
-    .filter((board) => board.code === currentGameType.boardCode)
-    .pop();
-
-  const currentPiece = pieces
-    .filter((piece) => piece.code === state.newMove.piece.slice(1))
-    .pop();
-
-  const currentPromotion =
-    (currentPiece && currentPiece.promotion) || undefined;
-
-  const calculateMove = () => {
-    return {
-      ...state,
-      moves: state.moves.concat(getNewMoveCode()),
-      arrangementSequence: state.arrangementSequence.concat(
-        getNewArrangement()
-      ),
-      currentArrangementSeqNum: state.currentArrangementSeqNum + 1,
-      newMove: {
-        to: "",
-        from: "",
-        piece: "",
-      },
-      winner: getWinner(),
-      whoseTurn: state.whoseTurn === "A" ? "B" : "A",
-    };
-  };
-
-  const getNewMoveCode = () =>
-    `${state.newMove.piece}-${state.newMove.from}>${action.payload.code}`;
-
-  const getNewArrangement = () => {
-    const prevArrangement = state.arrangementSequence.slice(-1).pop();
-    const prevPiecePos = `${state.newMove.piece}-${state.newMove.from}`;
-    const updatedPiecePos = getUpdatedPiecePos();
-
-    return [
-      prevArrangement
-        .filter(
-          (piecePos: string) => updatedPiecePos.slice(-2) !== piecePos.slice(-2)
-        ) // Capturing logic
-        .map((piecePos: string) => {
-          if (piecePos === prevPiecePos) {
-            return updatedPiecePos;
-          }
-          return piecePos;
-        }),
-    ];
-  };
-
-  const getUpdatedPiecePos = () => {
-    let updatedPiecePos = `${state.newMove.piece}-${action.payload.code}`;
-
-    // Promotion logic
-    const lastRow = currentBoard && currentBoard.rowCodes.slice(-1).pop();
-    const firstRow = currentBoard && currentBoard.rowCodes.slice(0, 1).pop();
-    // window.console.log(pieces);
-
-    if (
-      (currentPromotion && currentPromotion.conditionCode === "nfm") ||
-      (currentPromotion &&
-        currentPromotion.conditionCode === "lr" &&
-        ((state.whoseTurn === "A" && action.payload.code.includes(lastRow)) ||
-          (state.whoseTurn === "B" && action.payload.code.includes(firstRow))))
-    ) {
-      updatedPiecePos = `${state.whoseTurn}${currentPromotion.to}-${action.payload.code}`;
-    }
-
-    return updatedPiecePos;
-  };
-
-  // Winner logic
-  const getWinner = () => {
-    return currentGameType.settings.winCondition.type === "annihilation"
-      ? getNewArrangement()[0].reduce((acc: string, curVal: string) => {
-          if (curVal[0] === "A") {
-            return acc.replace("B", "");
-          } else if (curVal[0] === "B") {
-            return acc.replace("A", "");
-          }
-          return acc;
-        }, "AB")
-      : currentGameType.settings.winCondition.type === "kill piece"
-      ? getNewArrangement()[0].reduce((acc: string, curVal: string) => {
-          const team = curVal.split("-")[0][0];
-          const piece = curVal.split("-")[0].slice(1);
-          if (piece === currentGameType.settings.winCondition.killPiece) {
-            return acc.replace(team === "A" ? "B" : "A", "");
-          }
-          return acc;
-        }, "AB")
-      : "";
-  };
-
   switch (action.type) {
     case "STARTUP_LOAD_GAME": {
       return {
         ...state,
         arrangementSequence: state.arrangementSequence.concat([
+          action.payload,
           currentGameType.startingPiecePositions,
         ]),
       };
@@ -131,7 +38,10 @@ export const currentGameReducer = (state = currentGame, action: any) => {
       };
     }
     case "PIECE_MOVE": {
-      return calculateMove();
+      return {
+        ...state,
+        ...action.payload,
+      };
     }
     case "UPDATE_CURRENT_ARRANGEMENT_SEQ_NUM": {
       let newCurrentArrangementSeqNum =

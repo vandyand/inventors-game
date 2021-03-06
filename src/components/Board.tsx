@@ -12,7 +12,9 @@ import "./Board.scss";
 
 // type BoardProps = StateProps | OwnProps;
 
-const Board: React.FC<any> = ({ boardSize }) => {
+export type Board = any;
+
+const Board: React.FC<Board> = ({ boardSize }) => {
   console.log(boardSize);
   return (
     <div className="board">
