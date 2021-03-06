@@ -1,5 +1,4 @@
 import { createSelector } from "reselect";
-import type { Board } from "../../components/Board";
 import { alphabet } from "../../helpers/alphabet";
 
 const getBoards = (state: any) => state.boards;
@@ -10,11 +9,7 @@ export const getBoardSizeByGameType = createSelector(
   getBoards,
   getGameTypes,
   getCurrentGameTypeCode,
-  (
-    boards: Array<Board>,
-    gameTypes: Array<any>,
-    currentGameTypeCode: string
-  ) => {
+  (boards: Array<any>, gameTypes: Array<any>, currentGameTypeCode: string) => {
     const gameType = gameTypes.filter(
       (gameType: any) => gameType.code === currentGameTypeCode
     )[0];

@@ -10,7 +10,7 @@ type OwnProps = {
 };
 
 type StateProps = {
-  arrangementSequence: Array<any>;
+  arrangementSequence: Array<Array<string>>;
   currentArrangementSeqNum: number;
 };
 

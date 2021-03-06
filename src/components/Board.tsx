@@ -4,17 +4,17 @@ import { getBoardSizeByGameType } from "../redux/selectors/boardSelectors";
 import Row from "./Row";
 import "./Board.scss";
 
-// type OwnProps = {};
+type OwnProps = any;
 
-// type StateProps = {
-//   boardSize: Array<number>;
-// };
+type StateProps = {
+  boardSize: Array<number>;
+};
 
-// type BoardProps = StateProps | OwnProps;
+export type BoardProps = StateProps & OwnProps;
 
-export type Board = any;
+// export type Board = any;
 
-const Board: React.FC<Board> = ({ boardSize }) => {
+const Board: React.FC<BoardProps> = ({ boardSize }) => {
   console.log(boardSize);
   return (
     <div className="board">

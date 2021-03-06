@@ -1,6 +1,11 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import Space from "./Space";
+import {
+  SELECT_PIECE,
+  CALCULATE_POSSIBLE_MOVES,
+  PIECE_MOVE,
+} from "../redux/actions/actionTypes";
 
 const mapStateToProps = (state: any) => ({
   state,
@@ -9,17 +14,17 @@ const mapStateToProps = (state: any) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   selectPiece: (code: string, piece: string) =>
     dispatch({
-      type: "SELECT_PIECE",
+      type: SELECT_PIECE,
       payload: { code, piece },
     }),
   setPossibleMoves: (possibleMoves: Array<any>) =>
     dispatch({
-      type: "CALCULATE_POSSIBLE_MOVES",
+      type: CALCULATE_POSSIBLE_MOVES,
       payload: possibleMoves,
     }),
   pieceMove: (code: string, piece: string) =>
     dispatch({
-      type: "PIECE_MOVE",
+      type: PIECE_MOVE,
       payload: { code, piece },
     }),
 });
