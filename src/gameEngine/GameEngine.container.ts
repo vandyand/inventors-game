@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { last } from "lodash";
 import GameEngine from "./gameEngine";
 import { currentGame } from "../redux/initialStates/currentGame";
 import { boards } from "../redux/initialStates/boards";
@@ -47,9 +48,11 @@ const getNewMoveCode = (code: string) =>
   `${currentGame.newMove.piece}-${currentGame.newMove.from}>${code}`;
 
 const getNewArrangement = (code: string) => {
-  const prevArrangement = currentGame.arrangementSequence.slice(-1).pop();
+  const prevArrangement = last(currentGame.arrangementSequence);
   const prevPiecePos = `${currentGame.newMove.piece}-${currentGame.newMove.from}`;
   const updatedPiecePos = getUpdatedPiecePos(code);
+
+  // console.log(prevArrangement, currentGame);
 
   if (!updatedPiecePos) {
     return [];

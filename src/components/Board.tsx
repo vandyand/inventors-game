@@ -15,7 +15,6 @@ export type BoardProps = StateProps & OwnProps;
 // export type Board = any;
 
 const Board: React.FC<BoardProps> = ({ boardSize }) => {
-  console.log(boardSize);
   return (
     <div className="board">
       {[...Array(boardSize[0]).keys()].reverse().map((num) => (

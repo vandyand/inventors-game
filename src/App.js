@@ -15,7 +15,7 @@ const useComponentWillMount = (...funcs) => {
   willMount.current = false;
 };
 
-const App = ({ startUpLoadGame, getPiecesStrength, state }) => {
+const App = ({ startUpLoadGame, getPiecesStrength }) => {
   useComponentWillMount(startUpLoadGame, getPiecesStrength);
 
   return <Game />;

@@ -5,6 +5,7 @@ import Controls from "./Controls";
 import GameEngine from "../gameEngine/gameEngine.container";
 
 const Game = (state: any) => {
+  console.log(state);
   return (
     <div className="app">
       <Board />
