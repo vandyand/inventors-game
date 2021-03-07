@@ -1,10 +1,6 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import GameEngine from "./gameEngine";
-// import { currentGame } from "../redux/initialStates/currentGame";
-// import { boards } from "../redux/initialStates/boards";
-// import { gameTypes } from "../redux/initialStates/gameTypes";
-// import { pieces } from "../redux/initialStates/pieces";
 import {
   SELECT_PIECE,
   CALCULATE_POSSIBLE_MOVES,

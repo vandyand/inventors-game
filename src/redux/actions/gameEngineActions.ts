@@ -7,12 +7,6 @@ import {
 } from "../selectors/gameEngineSelectors";
 import { PIECE_MOVE } from "./actionTypes";
 
-// const currentGameType = gameTypes.filter(
-//   (gameType) => gameType.code === currentGame.code
-// )[0];
-
-// console.log(current);
-
 export const calculateMove = (state: any, code: string) => {
   const currentGame = getCurrentGame(state);
 
@@ -74,10 +68,7 @@ const getUpdatedPiecePos = (state: any, code: string) => {
   const currentBoardRowCodes = getCurrentBoardRowCodes(state);
   const currentPromotion = getCurrentPromotion(state);
 
-  // const currentPromotion = getCurrentPiece.promotion;
-
   let updatedPiecePos = `${currentGame.newMove.piece}-${code}`;
-
   let promoteAfterFirstMovePawn = currentPromotion.conditionCode === "nfm";
 
   // Promotion logic

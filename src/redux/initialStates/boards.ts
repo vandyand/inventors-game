@@ -7,8 +7,6 @@ type board = {
   spaceShape: string;
   rowCodes: Array<string>;
   columnCodes: Array<string>;
-  // rowNums: Array<number>;
-  // columnNums: Array<number>;
 };
 
 export const boards: Array<board> = [
@@ -21,7 +19,5 @@ export const boards: Array<board> = [
     spaceShape: "square",
     rowCodes: ["1", "2", "3", "4", "5", "6", "7", "8"],
     columnCodes: ["a", "b", "c", "d", "e", "f", "g", "h"],
-    // rowNums: [...Array(8).keys()],
-    // columnNums: [...Array(8).keys()],
   },
 ];

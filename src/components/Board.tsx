@@ -12,8 +12,6 @@ type StateProps = {
 
 export type BoardProps = StateProps & OwnProps;
 
-// export type Board = any;
-
 const Board: React.FC<BoardProps> = ({ boardSize }) => {
   return (
     <div className="board">

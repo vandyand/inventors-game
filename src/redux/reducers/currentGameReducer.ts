@@ -19,7 +19,6 @@ export const currentGameReducer = (state = currentGame, action: any) => {
       return {
         ...state,
         arrangementSequence: state.arrangementSequence.concat([
-          // action.payload,
           currentGameType.startingPiecePositions,
         ]),
       };
