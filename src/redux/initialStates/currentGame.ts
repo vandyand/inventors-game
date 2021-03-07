@@ -19,7 +19,7 @@ type currentGameType = {
 export const currentGame: currentGameType = {
   arrangementSequence: [],
   currentArrangementSeqNum: 0,
-  code: "chess",
+  code: "chess", //"chess", "pwp"
   moves: [],
   whoseTurn: "A",
   newMove: {

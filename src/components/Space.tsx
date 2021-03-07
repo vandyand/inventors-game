@@ -7,9 +7,9 @@ type Space = {
   color: string;
   teamPiece: string;
   state: any;
-  setPossibleMoves: (possibleMoves: Array<any>) => void;
-  selectPiece: (code: string, piece: string) => void;
-  pieceMove: (code: string, piece: string) => void;
+  onSetPossibleMoves: (possibleMoves: Array<any>) => void;
+  onSelectPiece: (code: string, piece: string) => void;
+  onUserPieceMove: (state: any, code: string) => void;
 };
 
 const Space: React.FC<Space> = ({
@@ -17,9 +17,9 @@ const Space: React.FC<Space> = ({
   color,
   teamPiece,
   state,
-  setPossibleMoves,
-  selectPiece,
-  pieceMove,
+  onSetPossibleMoves,
+  onSelectPiece,
+  onUserPieceMove,
 }) => {
   const pieceTeam = teamPiece ? teamPiece.charAt(0) : "";
   const currentSpacePieceInfo = teamPiece
@@ -33,19 +33,19 @@ const Space: React.FC<Space> = ({
     }
 
     if (state.currentGame.whoseTurn === pieceTeam) {
-      selectPiece(spaceCode, teamPiece);
+      onSelectPiece(spaceCode, teamPiece);
       const possibleMoves = moveFuncs(
         state,
         "getLegalMoves",
         spaceCode,
         teamPiece
       );
-      setPossibleMoves(possibleMoves);
+      onSetPossibleMoves(possibleMoves);
     } else if (
       state.currentGame.newMove.piece && // piece has been selected
       state.currentGame.newMove.possibleMoves.includes(spaceCode) // the move is possible
     ) {
-      pieceMove(spaceCode, teamPiece);
+      onUserPieceMove(state, spaceCode);
     }
   };
 

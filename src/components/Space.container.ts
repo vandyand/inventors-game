@@ -4,29 +4,26 @@ import Space from "./Space";
 import {
   SELECT_PIECE,
   CALCULATE_POSSIBLE_MOVES,
-  PIECE_MOVE,
 } from "../redux/actions/actionTypes";
+import { onPieceMoveActionCreator } from "../redux/actions/gameEngineActions";
 
 const mapStateToProps = (state: any) => ({
   state,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  selectPiece: (code: string, piece: string) =>
+  onSelectPiece: (code: string, piece: string) =>
     dispatch({
       type: SELECT_PIECE,
       payload: { code, piece },
     }),
-  setPossibleMoves: (possibleMoves: Array<any>) =>
+  onSetPossibleMoves: (possibleMoves: Array<any>) =>
     dispatch({
       type: CALCULATE_POSSIBLE_MOVES,
       payload: possibleMoves,
     }),
-  pieceMove: (code: string, piece: string) =>
-    dispatch({
-      type: PIECE_MOVE,
-      payload: { code, piece },
-    }),
+  onUserPieceMove: (state: any, code: string) =>
+    dispatch(onPieceMoveActionCreator(state, code)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Space);

@@ -39,7 +39,7 @@ const GameEngine: React.FC<GameEngine> = ({
 
     const randomMoveSpace =
       possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
-    onPieceMove(randomMoveSpace, teamPiece);
+    onPieceMove(state, randomMoveSpace);
   };
 
   const handleCompitentClick = () => {};
