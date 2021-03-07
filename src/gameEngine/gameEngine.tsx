@@ -34,11 +34,14 @@ const GameEngine: React.FC<GameEngine> = ({
       [teamPiece, spaceCode] = randomPiece.split("-");
       possibleMoves = moveFuncs(state, "getLegalMoves", spaceCode, teamPiece);
     } while (possibleMoves.length === 0 && count < 10000);
+    // console.log("selecting piece...");
     onSelectPiece(spaceCode, teamPiece);
+    // console.log("calculating possible moves...");
     onSetPossibleMoves(possibleMoves);
 
     const randomMoveSpace =
       possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+    // console.log("moving piece...");
     onPieceMove(state, randomMoveSpace);
   };
 

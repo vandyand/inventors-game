@@ -24,7 +24,7 @@ export const currentGameReducer = (state = currentGame, action: any) => {
       };
     }
     case SELECT_PIECE: {
-      console.log("SELECT_PIECE reducer state and action:", state, action);
+      console.log("SELECT_PIECE reducer called. state, action:", state, action);
       return {
         ...state,
         newMove: {
@@ -44,14 +44,12 @@ export const currentGameReducer = (state = currentGame, action: any) => {
       };
     }
     case PIECE_MOVE: {
-      console.log("PIECE_MOVE reducer state and action:", state, action);
       return {
         ...state,
         ...action.payload,
       };
     }
     case USER_PIECE_MOVE: {
-      console.log("USER_PIECE_MOVE reducer state and action:", state, action);
       return {
         ...state,
         ...action.payload,

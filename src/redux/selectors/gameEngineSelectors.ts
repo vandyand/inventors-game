@@ -3,6 +3,7 @@ import { first, last } from "lodash";
 
 const getGameTypes = (state: any) => state.gameTypes;
 export const getCurrentGame = (state: any) => state.currentGame;
+const getNewMovePiece = (state: any) => state.currentGame.newMove;
 const getBoards = (state: any) => state.boards;
 const getPieces = (state: any) => state.pieces;
 
@@ -23,9 +24,18 @@ export const getCurrentBoardRowCodes = createSelector(
 
 export const getCurrentPromotion = createSelector(
   getPieces,
-  getCurrentGame,
-  (pieces: Array<any>, currentGame: any) =>
-    pieces
-      .filter((piece) => piece.code === currentGame.newMove.piece.slice(1))
-      .pop().promotion
+  getNewMovePiece,
+  (pieces: Array<any>, newMovePiece: any) => {
+    console.log(
+      "getCurrentPromotion selector pieces, newMovePiece:",
+      pieces,
+      newMovePiece
+    );
+    const rtn = pieces
+      .filter((piece) => piece.code === newMovePiece.piece.slice(1))
+      .pop();
+
+    console.log("piece getting promotion attribute:", rtn);
+    return rtn ? rtn.promotion : "";
+  }
 );

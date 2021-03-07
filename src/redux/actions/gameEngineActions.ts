@@ -39,8 +39,6 @@ const getNewArrangement = (state: any, code: string) => {
   const prevPiecePos = `${currentGame.newMove.piece}-${currentGame.newMove.from}`;
   const updatedPiecePos = getUpdatedPiecePos(state, code);
 
-  console.log(prevArrangement, currentGame);
-
   if (!updatedPiecePos) {
     return [];
   }

@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   updateCurrentArrangementSeqNum: (seqNum: number) => {
     return dispatch({
       type: UPDATE_CURRENT_ARRANGEMENT_SEQ_NUM,
-      seqNum,
+      payload: seqNum,
     });
   },
 });

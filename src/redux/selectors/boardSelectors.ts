@@ -10,13 +10,9 @@ export const getBoardSizeByGameType = createSelector(
   getGameTypes,
   getCurrentGameCode,
   (boards: Array<any>, gameTypes: Array<any>, currentGameTypeCode: string) => {
-    console.log("boards from selector:", boards);
-    console.log("gameTypes from selector:", gameTypes);
-    console.log("currentGameTypeCode from selector:", currentGameTypeCode);
     const gameType = gameTypes.filter(
       (gameType: any) => gameType.code === currentGameTypeCode
     )[0];
-    console.log("gameType from selector:", gameType);
     return boards
       .filter((board: any) => board.code === gameType.boardCode)
       .pop().size;
