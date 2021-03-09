@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Board from "./Board";
 import Controls from "./Controls";
-import GameEngine from "../gameEngine/gameEngine.container";
+import Engine from "../engine/Engine.container";
 
 const Game = (state: any) => {
   console.log(state);
@@ -12,7 +12,7 @@ const Game = (state: any) => {
       <Controls />
       {state.currentGame.winner && `Team ${state.currentGame.winner} wins!`}
       <br />
-      <GameEngine />
+      <Engine />
     </div>
   );
 };

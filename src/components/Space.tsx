@@ -1,5 +1,5 @@
 import React from "react";
-import moveFuncs from "../gameEngine/moveFuncs";
+import moveFuncs from "../engine/MoveFuncs";
 import "./Space.scss";
 
 type Space = {

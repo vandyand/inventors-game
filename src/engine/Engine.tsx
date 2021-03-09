@@ -1,14 +1,14 @@
 import React from "react";
-import moveFuncs from "./moveFuncs";
+import moveFuncs from "./MoveFuncs";
 
-type GameEngine = {
+type Engine = {
   state: any;
   onSelectPiece: (code: string, piece: string) => void;
   onSetPossibleMoves: (possibleMoves: Array<any>) => void;
   onPieceMove: (code: string, piece: string) => void;
 };
 
-const GameEngine: React.FC<GameEngine> = ({
+const Engine: React.FC<Engine> = ({
   state,
   onSelectPiece,
   onSetPossibleMoves,
@@ -52,4 +52,4 @@ const GameEngine: React.FC<GameEngine> = ({
   );
 };
 
-export default GameEngine;
+export default Engine;

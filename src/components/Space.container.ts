@@ -5,7 +5,7 @@ import {
   SELECT_PIECE,
   CALCULATE_POSSIBLE_MOVES,
 } from "../redux/actions/actionTypes";
-import { onPieceMoveActionCreator } from "../redux/actions/gameEngineActions";
+import { onPieceMoveActionCreator } from "../redux/actions/engineActions";
 
 const mapStateToProps = (state: any) => ({
   state,
