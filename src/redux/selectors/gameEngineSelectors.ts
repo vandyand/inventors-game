@@ -26,16 +26,10 @@ export const getCurrentPromotion = createSelector(
   getPieces,
   getNewMovePiece,
   (pieces: Array<any>, newMovePiece: any) => {
-    console.log(
-      "getCurrentPromotion selector pieces, newMovePiece:",
-      pieces,
-      newMovePiece
-    );
     const rtn = pieces
       .filter((piece) => piece.code === newMovePiece.piece.slice(1))
       .pop();
 
-    console.log("piece getting promotion attribute:", rtn);
     return rtn ? rtn.promotion : "";
   }
 );

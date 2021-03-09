@@ -24,7 +24,6 @@ export const currentGameReducer = (state = currentGame, action: any) => {
       };
     }
     case SELECT_PIECE: {
-      console.log("SELECT_PIECE reducer called. state, action:", state, action);
       return {
         ...state,
         newMove: {
