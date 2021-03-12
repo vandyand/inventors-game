@@ -15,12 +15,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onSelectPiece: (code: string, piece: string) =>
     dispatch({
       type: SELECT_PIECE,
-      payload: { code, piece },
+      code,
+      piece,
     }),
   onSetPossibleMoves: (possibleMoves: Array<any>) =>
     dispatch({
       type: CALCULATE_POSSIBLE_MOVES,
-      payload: possibleMoves,
+      possibleMoves,
     }),
   onUserPieceMove: (state: any, code: string) =>
     dispatch(onPieceMoveActionCreator(state, code)),

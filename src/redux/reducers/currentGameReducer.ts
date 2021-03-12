@@ -5,7 +5,6 @@ import {
   SELECT_PIECE,
   CALCULATE_POSSIBLE_MOVES,
   PIECE_MOVE,
-  USER_PIECE_MOVE,
   UPDATE_CURRENT_ARRANGEMENT_SEQ_NUM,
 } from "../actions/actionTypes";
 
@@ -28,8 +27,8 @@ export const currentGameReducer = (state = currentGame, action: any) => {
         ...state,
         newMove: {
           ...state.newMove,
-          from: action.payload.code,
-          piece: action.payload.piece,
+          from: action.code,
+          piece: action.piece,
         },
       };
     }
@@ -38,25 +37,19 @@ export const currentGameReducer = (state = currentGame, action: any) => {
         ...state,
         newMove: {
           ...state.newMove,
-          possibleMoves: action.payload,
+          possibleMoves: action.possibleMoves,
         },
       };
     }
     case PIECE_MOVE: {
       return {
         ...state,
-        ...action.payload,
-      };
-    }
-    case USER_PIECE_MOVE: {
-      return {
-        ...state,
-        ...action.payload,
+        ...action.newState,
       };
     }
     case UPDATE_CURRENT_ARRANGEMENT_SEQ_NUM: {
       let newCurrentArrangementSeqNum =
-        state.currentArrangementSeqNum + action.payload;
+        state.currentArrangementSeqNum + action.seqNum;
 
       if (newCurrentArrangementSeqNum < 0) {
         newCurrentArrangementSeqNum = 0;

@@ -119,5 +119,5 @@ const getWinner = (state: any, code: string) => {
 
 export const onPieceMoveActionCreator = (state, code: string) => ({
   type: PIECE_MOVE,
-  payload: calculateMove(state, code),
+  newState: calculateMove(state, code),
 });
