@@ -1,6 +1,10 @@
-import { boards } from "../initialStates/boards";
+// import { boards } from "../initialStates/boards";
 
-export const boardsReducer = (state = boards, action: any) => {
+import { getBoards } from "../../api";
+
+const initialState = getBoards();
+
+export const boardsReducer = (state = initialState, action: any) => {
   switch (action.type) {
     default:
       return state;
