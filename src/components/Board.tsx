@@ -1,6 +1,4 @@
-import React from "react";
-import { connect } from "react-redux";
-import { getBoardSizeByGameType } from "../redux/selectors/boardSelectors";
+import React, { useEffect } from "react";
 import Row from "./Row";
 import "./Board.scss";
 
@@ -12,13 +10,19 @@ type StateProps = {
 
 export type BoardProps = StateProps & OwnProps;
 
-const Board: React.FC<BoardProps> = ({ boardSize }) => {
+const Board: React.FC<BoardProps> = ({ boardSize, onLoadBoard }) => {
+  useEffect(() => {
+    onLoadBoard(1);
+  });
+
+  window.console.log("boardSize:", boardSize);
+
   return (
     <div className="board">
-      {[...Array(boardSize[0]).keys()].reverse().map((num) => (
+      {[...Array(boardSize).keys()].reverse().map((num) => (
         <Row
           key={num}
-          numSpaces={boardSize[1]}
+          numSpaces={boardSize}
           colorIndent={(num + 1) % 2}
           rowNum={num + 1}
         />
@@ -27,8 +31,4 @@ const Board: React.FC<BoardProps> = ({ boardSize }) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  boardSize: getBoardSizeByGameType(state),
-});
-
-export default connect(mapStateToProps, null)(Board);
+export default Board;

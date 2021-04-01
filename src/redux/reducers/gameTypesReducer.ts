@@ -1,6 +1,4 @@
-import { gameTypes } from "../initialStates/gameTypes";
-
-export const gameTypesReducer = (state = gameTypes, action: any) => {
+export const gameTypesReducer = (state = [], action: any) => {
   switch (action.type) {
     default:
       return state;

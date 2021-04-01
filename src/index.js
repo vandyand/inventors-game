@@ -8,14 +8,14 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import {
   piecesReducer,
-  boardsReducer,
+  boardReducer,
   gameTypesReducer,
   currentGameReducer,
 } from "./redux/reducers";
 
 const combinedReducer = combineReducers({
   pieces: piecesReducer,
-  boards: boardsReducer,
+  board: boardReducer,
   gameTypes: gameTypesReducer,
   currentGame: currentGameReducer,
 });

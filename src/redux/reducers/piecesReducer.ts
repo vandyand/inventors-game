@@ -1,10 +1,9 @@
-import { pieces } from "../initialStates/pieces";
 import { GET_PIECES_STRENGTH } from "../actions/actionTypes";
 
-export const piecesReducer = (state = pieces, action: any) => {
+export const piecesReducer = (state = [], action: any) => {
   switch (action.type) {
     case GET_PIECES_STRENGTH: {
-      const scoredPieces = pieces.map((pieceInfo) => {
+      const scoredPieces = state.map((pieceInfo) => {
         const allMoves = new Set([
           ...pieceInfo.movement.possibleMoves,
           ...pieceInfo.movement.attackMoves,

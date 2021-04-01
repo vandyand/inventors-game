@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import Board from "./Board";
+import Board from "./Board.container";
 import Controls from "./Controls";
 import Engine from "../engine/Engine.container";
 
