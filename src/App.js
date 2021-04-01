@@ -1,10 +1,7 @@
 import React, { useRef } from "react";
 import { connect } from "react-redux";
 import Game from "./components/Game";
-import {
-  STARTUP_LOAD_GAME,
-  GET_PIECES_STRENGTH,
-} from "./redux/actions/actionTypes";
+import { LOAD_GAME, GET_PIECES_STRENGTH } from "./redux/actions/actionTypes";
 import "./app.scss";
 
 const useComponentWillMount = (...funcs) => {
@@ -22,7 +19,7 @@ const App = ({ startUpLoadGame, getPiecesStrength }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  startUpLoadGame: () => dispatch({ type: STARTUP_LOAD_GAME }),
+  startUpLoadGame: () => dispatch({ type: LOAD_GAME }),
   getPiecesStrength: () => dispatch({ type: GET_PIECES_STRENGTH }),
 });
 

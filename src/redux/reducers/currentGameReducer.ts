@@ -1,7 +1,7 @@
 import { currentGame } from "../initialStates/currentGame";
 import { gameTypes } from "../initialStates/gameTypes";
 import {
-  STARTUP_LOAD_GAME,
+  LOAD_GAME,
   SELECT_PIECE,
   CALCULATE_POSSIBLE_MOVES,
   PIECE_MOVE,
@@ -14,7 +14,7 @@ const currentGameType = gameTypes.filter(
 
 export const currentGameReducer = (state = currentGame, action: any) => {
   switch (action.type) {
-    case STARTUP_LOAD_GAME: {
+    case LOAD_GAME: {
       return {
         ...state,
         arrangementSequence: state.arrangementSequence.concat([
