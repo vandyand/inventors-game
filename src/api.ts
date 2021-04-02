@@ -12,13 +12,27 @@ export const getBoard = (id: number) => {
   });
 };
 
-export const getPieces = () => {
+export const getAllPieces = () => {
   return window.fetch(`${api_url}/pieces`).then((res) => {
     return res.json();
   });
 };
 
-export const getPiece = (id: number) => {
+export const getPiecesByIds = (ids) => {
+  return window.fetch(`${api_url}/pieces/?ids=${ids.join(",")}`).then((res) => {
+    return res.json();
+  });
+};
+
+export const getPiecesByCodes = (codes) => {
+  return window
+    .fetch(`${api_url}/pieces/?codes=${codes.join(",")}`)
+    .then((res) => {
+      return res.json();
+    });
+};
+
+export const getPieceById = (id: number) => {
   return window.fetch(`${api_url}/pieces/${id}`).then((res) => {
     return res.json();
   });

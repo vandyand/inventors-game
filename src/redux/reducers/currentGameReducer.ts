@@ -9,7 +9,7 @@ import {
 } from "../actions/actionTypes";
 
 const currentGameType = gameTypes.filter(
-  (gameType) => gameType.code === currentGame.code
+  (gameType) => gameType.code === currentGame.gameTypeCode
 )[0];
 
 export const currentGameReducer = (state = currentGame, action: any) => {

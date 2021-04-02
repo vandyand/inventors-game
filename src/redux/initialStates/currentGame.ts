@@ -7,7 +7,7 @@ type move = {
 type currentGameType = {
   arrangementSequence: Array<any>;
   currentArrangementSeqNum: number;
-  code: string;
+  gameTypeCode: string;
   moves: Array<string>;
   whoseTurn: string;
   newMove: move;
@@ -19,7 +19,7 @@ type currentGameType = {
 export const currentGame: currentGameType = {
   arrangementSequence: [],
   currentArrangementSeqNum: 0,
-  code: "chess", //"chess", "pwp"
+  gameTypeCode: "chess", //"chess", "pwp" (playing with pawns)
   moves: [],
   whoseTurn: "A",
   newMove: {
