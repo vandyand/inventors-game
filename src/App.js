@@ -5,9 +5,10 @@ import { LOAD_GAME, GET_PIECES_STRENGTH } from "./redux/actions/actionTypes";
 import { useComponentWillMount } from "./helpers";
 import "./app.scss";
 
-const App = ({ onLoadGame, onGetPiecesStrength }) => {
+const App = ({ onLoadGame, onGetPiecesStrength, state }) => {
   useComponentWillMount(onLoadGame, onGetPiecesStrength);
 
+  console.log("state:", state);
   return <Game />;
 };
 
@@ -16,4 +17,6 @@ const mapDispatchToProps = (dispatch) => ({
   onGetPiecesStrength: () => dispatch({ type: GET_PIECES_STRENGTH }),
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect((state) => {
+  return { state };
+}, mapDispatchToProps)(App);

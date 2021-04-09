@@ -4,29 +4,37 @@ import "./Board.scss";
 
 type OwnProps = any;
 
+type board = {
+  id: string;
+  name: string;
+  code: string;
+  shape: string;
+  size: number;
+  spaceShape: string;
+};
+
 type StateProps = {
-  boardSize: Array<number>;
+  board: board;
+  onLoadBoard: (id: number) => void;
+  // onLoadPieces: (codes: Array<string>) => void;
 };
 
 export type BoardProps = StateProps & OwnProps;
 
-const Board: React.FC<BoardProps> = ({ boardSize, onLoadBoard }) => {
+const Board: React.FC<BoardProps> = ({ board, onLoadBoard }) => {
   useEffect(() => {
     onLoadBoard(1);
-  });
-
-  window.console.log("boardSize:", boardSize);
+  }, []);
 
   return (
     <div className="board">
-      {[...Array(boardSize).keys()].reverse().map((num) => (
-        <Row
-          key={num}
-          numSpaces={boardSize}
-          colorIndent={(num + 1) % 2}
-          rowNum={num + 1}
-        />
-      ))}
+      {board &&
+        board.size &&
+        [...Array(board.size[0]).keys()]
+          .reverse()
+          .map((num) => (
+            <Row key={num} numSpaces={board.size[1]} rowNum={num + 1} />
+          ))}
     </div>
   );
 };

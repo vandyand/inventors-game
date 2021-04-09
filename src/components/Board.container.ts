@@ -5,7 +5,7 @@ import { loadBoard } from "../redux/actions/boardActions";
 import { loadPiecesByCodes } from "../redux/actions/piecesActions";
 
 const mapStateToProps = (state: any) => ({
-  boardSize: state.board && state.board.size,
+  board: state.board,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

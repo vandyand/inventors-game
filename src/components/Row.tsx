@@ -4,7 +4,6 @@ import Space from "./Space.container";
 import "./Row.scss";
 
 type OwnProps = {
-  colorIndent: number;
   numSpaces: number;
   rowNum: number;
 };
@@ -17,7 +16,6 @@ type StateProps = {
 type RowProps = OwnProps & StateProps;
 
 const Row: React.FC<RowProps> = ({
-  colorIndent,
   numSpaces,
   rowNum,
   arrangementSequence,
@@ -42,7 +40,7 @@ const Row: React.FC<RowProps> = ({
 
           return (
             <Space
-              color={(ind + colorIndent) % 2 === 0 ? "light" : "dark"}
+              color={(ind + rowNum) % 2 === 0 ? "light" : "dark"}
               key={ind}
               spaceCode={spaceCode}
               teamPiece={teamPiece}
