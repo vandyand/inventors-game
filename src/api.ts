@@ -6,7 +6,7 @@ export const getBoards = async () => {
   });
 };
 
-export const getBoard = (id: number) => {
+export const getBoardById = (id: number) => {
   return window.fetch(`${api_url}/boards/${id}`).then((res) => {
     return res.json();
   });
@@ -44,7 +44,7 @@ export const getGameTypes = () => {
   });
 };
 
-export const getGameType = (id: number) => {
+export const getGameTypeById = (id: number) => {
   return window.fetch(`${api_url}/gameTypes/${id}`).then((res) => {
     return res.json();
   });

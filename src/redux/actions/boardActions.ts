@@ -9,7 +9,7 @@ export function loadBoard(id): any {
     });
 
     return api
-      .getBoard(id)
+      .getBoardById(id)
       .then((response) => {
         dispatch({
           type: LOAD_BOARD_SUCCESS,
