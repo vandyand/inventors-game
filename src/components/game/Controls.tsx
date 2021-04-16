@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { UPDATE_CURRENT_ARRANGEMENT_SEQ_NUM } from "../redux/actions/actionTypes";
+import { UPDATE_CURRENT_ARRANGEMENT_SEQ_NUM } from "../../redux/actions/actionTypes";
 
 type Controls = {
   currentArrangementSeqNum: number;

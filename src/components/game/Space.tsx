@@ -1,5 +1,5 @@
 import React from "react";
-import moveFuncs from "../engine/MoveFuncs";
+import moveFuncs from "../../engine/MoveFuncs";
 import "./Space.scss";
 
 type Space = {

@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import Game from "./Game";
-import { loadGameType } from "../redux/actions/gameTypeActions";
+import { loadGameType } from "../../redux/actions/gameTypeActions";
 
 const mapStateToProps = (state: any) => ({
   state,

@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import Board from "./Board";
-import { loadBoard } from "../redux/actions/boardActions";
-import { loadPiecesByCodes } from "../redux/actions/piecesActions";
+import { loadBoard } from "../../redux/actions/boardActions";
+import { loadPiecesByCodes } from "../../redux/actions/piecesActions";
 
 const mapStateToProps = (state: any) => ({
   board: state.board,
