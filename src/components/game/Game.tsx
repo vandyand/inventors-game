@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
-import TriangleGrid from "../grids/grids";
+import TriangleGrid from "../grids/TriangleGrid";
+import SquareGrid from "../grids/SquareGrid";
+import HexagonGrid from "../grids/HexagonGrid";
 // import Board from "./Board.container";
 // import Controls from "./Controls";
 // import Engine from "../engine/Engine.container";
@@ -17,23 +19,25 @@ const Game: React.FC<GameProps> = ({ state, onLoadGameType }) => {
 
   return (
     <>
-      <h1>test</h1>
+      {/* <h1>test</h1> */}
 
-      <svg width="100" height="100">
+      {/* <svg width="100" height="100">
         <rect x="25" y="25" height="100" width="200" stroke="red" fill="none" />
+      </svg> */}
 
-        {/* <polygon points="0,0 50,50, 60, 30" /> */}
+      {/* <polygon points="0,0 50,50, 60, 30" /> */}
 
-        {/* <div className="app">
+      {/* <div className="app">
         <Board />
         <Controls />
         {state.currentGame.winner && `Team ${state.currentGame.winner} wins!`}
         <br />
         <Engine />
       </div> */}
-      </svg>
 
       <TriangleGrid height={20} width={20} startingOrientation={0} />
+      <SquareGrid height={20} width={20} startingOrientation={0} />
+      <HexagonGrid height={20} width={20} startingOrientation={0} />
     </>
   );
 };
