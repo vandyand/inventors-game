@@ -3,23 +3,19 @@ import React from "react";
 import { flatten, range } from "lodash";
 // import Triangle from "./shapes";
 
-type Props = {
-  height: number;
-  startingOrientation: number;
-  width: number;
-};
+type Props = any;
 
-const SquareGrid = ({ height, startingOrientation, width }: Props) => {
-  const sidelength: any = 75;
-  const num_wide = 8;
-  const num_high = 10;
+const SquareGrid = (props: Props) => {
+  const sidelength: any = 100;
+  const num_wide = 20;
+  const num_high = 20;
 
   const xs = range(num_wide).map((x) => x * sidelength);
   const ys = range(num_high).map((y) => y * sidelength);
 
   // console.log(even_row_xs, odd_row_xs, ys);
 
-  const nodes = flatten(
+  const centers = flatten(
     range(num_high).map((y) => {
       return range(num_wide).map((x) => {
         return [xs[x], ys[y]];
@@ -27,25 +23,41 @@ const SquareGrid = ({ height, startingOrientation, width }: Props) => {
     })
   );
 
-  // console.log(nodes);
+  const dx = 1;
+  const dy = 1;
+
+  const node_offsets = [
+    [dx / 2, dy / 2],
+    [dx / 2, -dy / 2],
+    [-dx / 2, -dy / 2],
+    [-dx / 2, dy / 2],
+  ];
+
+  const pointss = centers.map((center) => {
+    let path = "";
+    node_offsets.map(
+      (offset) =>
+        (path += `${center[0] + offset[0] * sidelength},${
+          center[1] + offset[1] * sidelength
+        } `)
+    );
+    return path;
+  });
 
   return (
-    <svg height="1000" width="1000">
-      {nodes.map((coords, ind) => {
-        const [x, y] = coords;
+    <svg height="500" width="600">
+      {pointss.map((points, ind) => {
+        // const center = centers[ind];
         return (
-          <>
-            <polygon
-              key={ind}
-              onClick={() => alert(`space ${x}, ${y} clicked!`)}
-              fill="#eee"
-              stroke="black"
-              points={`${x},${y} ${x + sidelength},${y} ${x + sidelength},${
-                y + sidelength
-              } ${x},${y + sidelength}`}
-              // transform="rotate(30 100 100)"
-            />
-          </>
+          <polygon
+            key={ind}
+            onClick={() => alert(`space ${ind} clicked!`)}
+            fill="#eee"
+            stroke="black"
+            points={points}
+            // transform={`rotate(45, ${center[0]}, ${center[1]})`}
+            // transform="rotate(45, 500, 500)"
+          />
         );
       })}
     </svg>

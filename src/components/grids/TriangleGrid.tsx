@@ -66,6 +66,7 @@ const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
     <svg height="1000" width="1000">
       {pointss.map((points, ind) => {
         // const [x, y] = coords;
+        const center = centers[ind];
         return (
           <polygon
             key={ind}
@@ -74,6 +75,7 @@ const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
             stroke="black"
             strokeWidth="0.5"
             points={points}
+            transform={`rotate(45, ${center[0]}, ${center[1]})`}
           />
         );
       })}

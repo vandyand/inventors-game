@@ -1,15 +1,38 @@
 import React from "react";
 import { connect } from "react-redux";
-import Game from "./components/game/Game.container";
+// import Game from "./components/game/Game.container";
 import { LOAD_GAME, GET_PIECES_STRENGTH } from "./redux/actions/actionTypes";
-import { useComponentWillMount } from "./helpers";
+// import { useComponentWillMount } from "./helpers";
 import "./app.scss";
 
-const App = ({ onLoadGame, onGetPiecesStrength, state }) => {
-  useComponentWillMount(onLoadGame, onGetPiecesStrength);
+import { Route, BrowserRouter as Router } from "react-router-dom";
+import Main from "./components/pages/Main";
+import Play from "./components/pages/Play";
+import Game from "./components/game/Game";
+import InventGame from "./components/pages/InventGame";
+import InventBoard from "./components/invent/Board";
+import InventPieces from "./components/invent/Pieces";
+import Life from "./components/secret/Life";
 
+const App = ({ onLoadGame, onGetPiecesStrength, state }) => {
   console.log("state:", state);
-  return <Game />;
+  return (
+    <Router>
+      <div>
+        <Route path="/" exact component={Main} />
+        <Route path="/Play" exact component={Play} />
+        <Route path="/Game" exact component={Game} />
+        <Route path="/Invent" exact component={InventGame} />
+        <Route path="/Invent/Board" exact component={InventBoard} />
+        <Route path="/Invent/Pieces" exact component={InventPieces} />
+        <Route path="/Secret/Life" exact component={Life} />
+      </div>
+    </Router>
+  );
+
+  // useComponentWillMount(onLoadGame, onGetPiecesStrength);
+  // console.log("state:", state);
+  // return <Game />;
 };
 
 const mapDispatchToProps = (dispatch) => ({

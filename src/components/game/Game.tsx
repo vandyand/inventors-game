@@ -15,6 +15,7 @@ type GameProps = {
 const Game: React.FC<GameProps> = ({ state, onLoadGameType }) => {
   useEffect(() => {
     onLoadGameType(1);
+    // eslint-disable-next-line
   }, []);
 
   return (
