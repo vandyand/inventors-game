@@ -1,12 +1,25 @@
 import React from "react";
 import GridWindow from "./GridWindow";
-import BoardOptionsSidebarContainer from "./BoardOptionsSidebar.container";
+import BoardOptionsSidebar from "./BoardOptionsSidebar";
 
-const Board = () => {
+export type gridType = "square" | "triangle" | "hexagon";
+
+type Props = {
+  formValues: {
+    gridType: gridType;
+    rotation: number;
+  };
+};
+
+const Board = ({ formValues }: Props) => {
+  window.console.log("board props:", formValues);
   return (
     <div className="InventBoard" style={{ display: "flex" }}>
-      <GridWindow />
-      <BoardOptionsSidebarContainer />
+      <GridWindow
+        gridType={formValues ? formValues.gridType : "square"}
+        rotation={formValues ? formValues.rotation : 0}
+      />
+      <BoardOptionsSidebar />
     </div>
   );
 };

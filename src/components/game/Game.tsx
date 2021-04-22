@@ -36,9 +36,9 @@ const Game: React.FC<GameProps> = ({ state, onLoadGameType }) => {
         <Engine />
       </div> */}
 
-      <TriangleGrid height={20} width={20} startingOrientation={0} />
-      <SquareGrid height={20} width={20} startingOrientation={0} />
-      <HexagonGrid height={20} width={20} startingOrientation={0} />
+      <TriangleGrid rotation="0" />
+      <SquareGrid />
+      <HexagonGrid />
     </>
   );
 };

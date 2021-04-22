@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { degreesToRadians } from "../../helpers";
 import { flatten, range } from "lodash";
 // import Triangle from "./shapes";
 
 type Props = {
-  height: number;
-  startingOrientation: number;
-  width: number;
+  rotation: string;
 };
 
-const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
+const TriangleGrid = ({ rotation = "0" }: Props) => {
   const dx = 0.5; // cos(60 degrees)
   const dy = Math.sin(degreesToRadians(60));
 
@@ -35,17 +33,28 @@ const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
     })
   );
 
+  const other_centers = flatten(
+    range(num_high).map((y) => {
+      return range(num_wide).map((x) => {
+        if (y % 2 === 0) {
+          return [odd_row_xs[x], ys[y]];
+        }
+        return [even_row_xs[x], ys[y]];
+      });
+    })
+  );
+
   const shape_1_offsets = [
-    [dx, -dy / 2],
-    [-dx, -dy / 2],
-    [0, dy / 2],
+    [dx, -dy * 0.5],
+    [-dx, -dy * 0.5],
+    [0, dy * 0.5],
   ];
 
-  // const shape_2_offsets = [
-  //   [0, -dy * 2],
-  //   [dx, -dy],
-  //   [-dx, -dy],
-  // ];
+  const shape_2_offsets = [
+    [0, -dy * 0.5],
+    [dx, dy * 0.5],
+    [-dx, dy * 0.5],
+  ];
 
   // console.log(node_offsets);
 
@@ -60,26 +69,86 @@ const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
     return path;
   });
 
-  console.log(pointss);
+  // console.log(pointss);
+
+  const other_pointss = other_centers.map((center) => {
+    let path = "";
+    shape_2_offsets.map(
+      (offset) =>
+        (path += `${center[0] + offset[0] * sidelength},${
+          center[1] + offset[1] * sidelength
+        } `)
+    );
+    return path;
+  });
+
+  const downIndexMap = range(num_high * num_wide).map((ind) => {
+    if (Math.floor(ind / num_wide) % 2 === 0) {
+      // even row
+      return ind * 2;
+    }
+    return ind * 2 + 1;
+  });
+
+  const upIndexMap = range(num_high * num_wide).map((ind) => {
+    if (Math.floor(ind / num_wide) % 2 === 1) {
+      // odd row
+      return ind * 2;
+    }
+    return ind * 2 + 1;
+  });
+
+  const [cells, setCells] = useState(new Array(num_wide * 2 * num_high));
+
+  const toggleCell = (targetInd) => {
+    // console.log(`cell ${targetInd} toggled`);
+    setCells(
+      cells.map((cell, ind) => {
+        if (ind === targetInd) {
+          return cell ? 0 : 1;
+        }
+        return cell;
+      })
+    );
+  };
 
   return (
-    <svg height="1000" width="1000">
-      {pointss.map((points, ind) => {
-        // const [x, y] = coords;
-        const center = centers[ind];
-        return (
-          <polygon
-            key={ind}
-            onClick={() => alert(`space ${ind} clicked!`)}
-            fill="white"
-            stroke="black"
-            strokeWidth="0.5"
-            points={points}
-            transform={`rotate(45, ${center[0]}, ${center[1]})`}
-          />
-        );
-      })}
-    </svg>
+    <>
+      <svg viewBox="-100 -100 800 800" height="700" width="700">
+        {pointss.map((points, ind) => {
+          const cellNum = downIndexMap[ind];
+          return (
+            <>
+              <polygon
+                key={cellNum}
+                onClick={() => toggleCell(cellNum)}
+                fill={cells[cellNum] === 1 ? "light-blue" : "white"}
+                stroke="black"
+                strokeWidth="0.5"
+                points={points}
+                transform={`rotate(${rotation}, 0, 0)`}
+              />
+            </>
+          );
+        })}
+        {other_pointss.map((points, ind) => {
+          const cellNum = upIndexMap[ind];
+          return (
+            <>
+              <polygon
+                key={cellNum}
+                onClick={() => toggleCell(cellNum)}
+                fill={cells[cellNum] === 1 ? "light-blue" : "white"}
+                stroke="black"
+                strokeWidth="0.5"
+                points={points}
+                transform={`rotate(${rotation}, 0, 0)`}
+              />
+            </>
+          );
+        })}
+      </svg>
+    </>
   );
 };
 

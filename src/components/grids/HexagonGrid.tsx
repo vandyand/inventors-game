@@ -3,13 +3,13 @@ import { degreesToRadians } from "../../helpers";
 import { flatten, range } from "lodash";
 // import Triangle from "./shapes";
 
-type Props = {
-  height: number;
-  startingOrientation: number;
-  width: number;
-};
+// type Props = {
+//   height: number;
+//   startingOrientation: number;
+//   width: number;
+// };
 
-const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
+const HexagonGrid = () => {
   const dx = 0.5; // cos(60 degrees)
   const dy = Math.sin(degreesToRadians(60));
   const dy1 = Math.tan(degreesToRadians(30)) * dx;
@@ -87,4 +87,4 @@ const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
   );
 };
 
-export default TriangleGrid;
+export default HexagonGrid;

@@ -5,6 +5,7 @@ import * as serviceWorker from "./serviceWorker";
 
 import { Provider } from "react-redux";
 import { createStore, combineReducers, applyMiddleware } from "redux";
+import { reducer as formReducer } from "redux-form";
 import thunk from "redux-thunk";
 import {
   piecesReducer,
@@ -18,6 +19,7 @@ const combinedReducer = combineReducers({
   board: boardReducer,
   gameTypes: gameTypesReducer,
   currentGame: currentGameReducer,
+  form: formReducer,
 });
 
 const store = createStore(combinedReducer, applyMiddleware(thunk));
