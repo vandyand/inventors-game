@@ -1,34 +1,132 @@
-export {};
+import React from "react";
+import { degreesToRadians } from "../../helpers";
+import { flatten, range } from "lodash";
+import Polygon from "./Polygon";
 
-// import React from "react";
-// // import { degreesToRadians } from "../../helpers";
-// // import { flatten, range } from "lodash";
-// // import Triangle from "./shapes";
+type Props = {
+  numCols?: number;
+  numRows?: number;
+  type?: "squares" | "triangles" | "hexagons";
+  rotation?: number;
+};
 
-// type Props = {
-//   height: number;
-//   startingOrientation: number;
-//   width: number;
+const expand = (array1, array2) => {
+  return flatten(
+    array1.map((ar1Val) => array2.map((ar2Val) => [ar1Val, ar2Val]))
+  );
+};
+
+const TAN_30 = Math.tan(degreesToRadians(30));
+const SIN_60 = Math.sin(degreesToRadians(60));
+
+const offsets = {
+  square: [
+    [0.5, 0.5],
+    [0.5, -0.5],
+    [-0.5, -0.5],
+    [-0.5, 0.5],
+  ],
+  hexagon: [
+    [0, TAN_30],
+    [0.5, TAN_30 * 0.5],
+    [0.5, -TAN_30 * 0.5],
+    [0, -TAN_30],
+    [-0.5, -TAN_30 * 0.5],
+    [-0.5, TAN_30 * 0.5],
+  ],
+  triangle: [
+    [0, -TAN_30],
+    [0.5, TAN_30 * 0.5],
+    [-0.5, TAN_30 * 0.5],
+  ],
+  upside_down_triangle: [
+    [0, TAN_30],
+    [0.5, -TAN_30 * 0.5],
+    [-0.5, -TAN_30 * 0.5],
+  ],
+};
+
+const Grid = ({
+  numCols = 10,
+  numRows = 10,
+  rotation = 0,
+  type = "squares",
+}: Props) => {
+  const patterns = {
+    triangles: [
+      {
+        offsets: offsets.triangle,
+        center: [0, 0],
+      },
+      {
+        offsets: offsets.upside_down_triangle,
+        center: [0.5, -TAN_30 * 0.5],
+      },
+    ],
+    squares: [{ offsets: offsets.square, center: [0, 0] }],
+    hexagons: [
+      {
+        offsets: offsets.hexagon,
+        center: [0, 0],
+      },
+    ],
+  };
+
+  const triHexCenters = flatten(
+    range(numRows).map((rowNum) =>
+      range(numCols).map((colNum) => [
+        rowNum % 2 === 0 ? colNum : colNum + 0.5,
+        rowNum * SIN_60,
+      ])
+    )
+  );
+
+  const getPatternCenters = (type) => {
+    switch (type) {
+      case "squares":
+        return expand(range(numRows), range(numCols));
+      case "triangles":
+      case "hexagons":
+        return triHexCenters;
+    }
+  };
+
+  const patternCenters = getPatternCenters(type);
+
+  return (
+    <svg height="800" width="800">
+      {patternCenters.map((center, ind) =>
+        patterns[type].map((shape, shapeInd) => {
+          const id = ind * patterns[type].length + shapeInd;
+          return (
+            <Polygon
+              center={[
+                center[0] + shape.center[0],
+                center[1] + shape.center[1],
+              ]}
+              gridRotation={rotation ? rotation : 0}
+              id={id}
+              key={id}
+              offsets={shape.offsets}
+              onClick={() => console.log(`shape ${id} clicked`)}
+              scale={64}
+            />
+          );
+        })
+      )}
+    </svg>
+  );
+};
+
+export default Grid;
+
+// type PolygonProps = {
+//   center: Array<number>;
+//   color?: string;
+//   gridRotation?: number;
+//   id: number;
+//   offsets: Array<Array<number>>;
+//   onClick?: () => void;
+//   scale?: number;
+//   shapeRotation?: number;
 // };
-
-// const Grid = (props: Props) => {
-//   const grid = getGrid("square");
-
-//   return (
-//     <svg height="1000" width="1000">
-//       {grid.map((points, ind) => {
-//         return (
-//           <polygon
-//             key={ind}
-//             onClick={() => alert(`space ${ind} clicked!`)}
-//             fill="#eee"
-//             stroke="black"
-//             points={points}
-//           />
-//         );
-//       })}
-//     </svg>
-//   );
-// };
-
-// export default Grid;

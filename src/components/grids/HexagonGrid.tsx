@@ -3,19 +3,17 @@ import { degreesToRadians } from "../../helpers";
 import { flatten, range } from "lodash";
 // import Triangle from "./shapes";
 
-// type Props = {
-//   height: number;
-//   startingOrientation: number;
-//   width: number;
-// };
+type Props = {
+  rotation?: number;
+};
 
-const HexagonGrid = () => {
+const HexagonGrid = ({ rotation = 0 }: Props) => {
   const dx = 0.5; // cos(60 degrees)
   const dy = Math.sin(degreesToRadians(60));
   const dy1 = Math.tan(degreesToRadians(30)) * dx;
   const dy2 = dy1 * 2;
 
-  const sidelength: any = 10;
+  const sidelength: any = 100;
   const num_wide = 8;
   const num_high = 10;
 
@@ -36,15 +34,6 @@ const HexagonGrid = () => {
       });
     })
   );
-
-  // const node_offsets = [
-  //   [-dx, -dy],
-  //   [dx, -dy],
-  //   [1, 0],
-  //   [dx, dy],
-  //   [-dx, dy],
-  //   [-1, 0],
-  // ];
 
   const node_offsets = [
     [0, dy2],
@@ -80,6 +69,7 @@ const HexagonGrid = () => {
             stroke="black"
             strokeWidth="0.5"
             points={points}
+            transform={`rotate(${rotation}, 0, 0)`}
           />
         );
       })}

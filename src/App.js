@@ -11,6 +11,7 @@ import Play from "./components/pages/Play";
 import Game from "./components/game/Game";
 import InventGame from "./components/pages/InventGame";
 import InventBoard from "./components/invent/Board.container";
+import Grid from "./components/grids/Grid";
 import InventPieces from "./components/invent/Pieces";
 import Life from "./components/secret/Life";
 
@@ -24,6 +25,7 @@ const App = ({ onLoadGame, onGetPiecesStrength, state }) => {
         <Route path="/Game" exact component={Game} />
         <Route path="/Invent" exact component={InventGame} />
         <Route path="/Invent/Board" exact component={InventBoard} />
+        <Route path="/Invent/Grid" exact component={Grid} />
         <Route path="/Invent/Pieces" exact component={InventPieces} />
         <Route path="/Secret/Life" exact component={Life} />
       </div>

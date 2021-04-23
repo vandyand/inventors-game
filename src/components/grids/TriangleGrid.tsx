@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { degreesToRadians } from "../../helpers";
 import { flatten, range } from "lodash";
-// import Triangle from "./shapes";
+import Triangle from "./Polygon";
 
 type Props = {
-  rotation: string;
+  rotation?: number;
 };
 
-const TriangleGrid = ({ rotation = "0" }: Props) => {
+const TriangleGrid = ({ rotation = 0 }: Props) => {
   const dx = 0.5; // cos(60 degrees)
   const dy = Math.sin(degreesToRadians(60));
 
@@ -58,6 +58,10 @@ const TriangleGrid = ({ rotation = "0" }: Props) => {
 
   // console.log(node_offsets);
 
+  // const num_shape_orients = 2;
+
+  // const pointsss = range(num_shape_orients).map((shape_orient) => {});
+
   const pointss = centers.map((center) => {
     let path = "";
     shape_1_offsets.map(
@@ -98,7 +102,9 @@ const TriangleGrid = ({ rotation = "0" }: Props) => {
     return ind * 2 + 1;
   });
 
-  const [cells, setCells] = useState(new Array(num_wide * 2 * num_high));
+  const [cells, setCells] = useState(
+    new Array(num_wide * 2 * num_high).fill(0)
+  );
 
   const toggleCell = (targetInd) => {
     // console.log(`cell ${targetInd} toggled`);
@@ -118,34 +124,41 @@ const TriangleGrid = ({ rotation = "0" }: Props) => {
         {pointss.map((points, ind) => {
           const cellNum = downIndexMap[ind];
           return (
-            <>
-              <polygon
-                key={cellNum}
-                onClick={() => toggleCell(cellNum)}
-                fill={cells[cellNum] === 1 ? "light-blue" : "white"}
-                stroke="black"
-                strokeWidth="0.5"
-                points={points}
-                transform={`rotate(${rotation}, 0, 0)`}
-              />
-            </>
+            <Triangle
+              center={centers[ind]}
+              color="white"
+              id={cellNum}
+              gridRotation={rotation}
+              offsets={shape_1_offsets}
+              onClick={() => console.log(`cell ${cellNum} clicked`)}
+              scale={sidelength}
+              shapeRotation={rotation}
+            />
+            // <polygon
+            //   key={cellNum}
+            //   onClick={() => toggleCell(cellNum)}
+            //   fill={cells[cellNum] === 1 ? "light-blue" : "white"}
+            //   stroke="black"
+            //   strokeWidth="0.5"
+            //   points={points}
+            //   transform={`rotate(${rotation}, 0, 0)`}
+            // />
           );
         })}
         {other_pointss.map((points, ind) => {
           const cellNum = upIndexMap[ind];
-          return (
-            <>
-              <polygon
-                key={cellNum}
-                onClick={() => toggleCell(cellNum)}
-                fill={cells[cellNum] === 1 ? "light-blue" : "white"}
-                stroke="black"
-                strokeWidth="0.5"
-                points={points}
-                transform={`rotate(${rotation}, 0, 0)`}
-              />
-            </>
-          );
+          return <div onClick={() => toggleCell(0)}>{cellNum}</div>;
+          // return (
+          //   <polygon
+          //     key={cellNum}
+          //     onClick={() => toggleCell(cellNum)}
+          //     fill={cells[cellNum] === 1 ? "light-blue" : "white"}
+          //     stroke="black"
+          //     strokeWidth="0.5"
+          //     points={points}
+          //     transform={`rotate(${rotation}, 0, 0)`}
+          //   />
+          // );
         })}
       </svg>
     </>

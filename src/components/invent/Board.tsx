@@ -1,8 +1,9 @@
 import React from "react";
-import GridWindow from "./GridWindow";
+// import Grid from "../grids/Grid";
+import Grid from "../grids/Grid";
 import BoardOptionsSidebar from "./BoardOptionsSidebar";
 
-export type gridType = "square" | "triangle" | "hexagon";
+export type gridType = "squares" | "triangles" | "hexagons";
 
 type Props = {
   formValues: {
@@ -12,11 +13,11 @@ type Props = {
 };
 
 const Board = ({ formValues }: Props) => {
-  window.console.log("board props:", formValues);
+  // window.console.log("board props:", formValues);
   return (
     <div className="InventBoard" style={{ display: "flex" }}>
-      <GridWindow
-        gridType={formValues ? formValues.gridType : "square"}
+      <Grid
+        type={formValues ? formValues.gridType : "triangles"}
         rotation={formValues ? formValues.rotation : 0}
       />
       <BoardOptionsSidebar />

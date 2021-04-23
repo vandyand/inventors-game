@@ -13,9 +13,9 @@ const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
   const dx = 0.5; // cos(60 degrees)
   const dy = Math.sin(degreesToRadians(60));
 
-  const sidelength: any = 5;
-  const num_wide = 80;
-  const num_high = 100;
+  const sidelength: any = 20;
+  const num_wide = 40;
+  const num_high = 50;
 
   const even_row_xs = range(num_wide).map((x) => x * sidelength);
   const odd_row_xs = even_row_xs.map((x) => x + dx * sidelength);
@@ -91,7 +91,7 @@ const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
 
   const getRandomAliveCells = (numCells) => {
     let cells = new Array(numCells).fill(0);
-    cells = cells.map((val) => Math.floor(Math.random() * 1.2));
+    cells = cells.map((val) => Math.floor(Math.random() * 1.01));
     return cells;
   };
 

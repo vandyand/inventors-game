@@ -15,9 +15,9 @@ const BoardOptionsSidebar = (props: Props) => {
         <div>
           <label>Grid Type</label>
           <Field name="gridType" component="select" value="square">
-            <option value="square">Square</option>
-            <option value="triangle">Triangle</option>
-            <option value="hexagon">Hexagon</option>
+            <option value="squares">Square</option>
+            <option value="triangles">Triangle</option>
+            <option value="hexagons">Hexagon</option>
           </Field>
         </div>
         <div>
@@ -37,5 +37,5 @@ const BoardOptionsSidebar = (props: Props) => {
 
 export default reduxForm({
   form: "invent-board-form",
-  initialValues: { gridType: "square" },
+  initialValues: { gridType: "squares" },
 })(BoardOptionsSidebar);
