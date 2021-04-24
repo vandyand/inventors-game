@@ -8,6 +8,7 @@ type Props = {
   numRows?: number;
   type?: "squares" | "triangles" | "hexagons";
   rotation?: number;
+  scale?: number;
 };
 
 const expand = (array1, array2) => {
@@ -47,11 +48,16 @@ const offsets = {
 };
 
 const Grid = ({
-  numCols = 10,
-  numRows = 10,
+  numCols = 30,
+  numRows = 30,
   rotation = 0,
+  scale = 80,
   type = "squares",
 }: Props) => {
+  const gridSize = [numCols * scale, numRows * scale];
+  const gridRotationOrigin = `${gridSize[0] / 2}, ${gridSize[1] / 2}`;
+  const gridRotation = `${rotation}, ${gridRotationOrigin}`;
+
   const patterns = {
     triangles: [
       {
@@ -94,7 +100,7 @@ const Grid = ({
   const patternCenters = getPatternCenters(type);
 
   return (
-    <svg height="800" width="800">
+    <svg viewBox={`${gridRotationOrigin}, 800, 800`} height="800" width="800">
       {patternCenters.map((center, ind) =>
         patterns[type].map((shape, shapeInd) => {
           const id = ind * patterns[type].length + shapeInd;
@@ -104,12 +110,12 @@ const Grid = ({
                 center[0] + shape.center[0],
                 center[1] + shape.center[1],
               ]}
-              gridRotation={rotation ? rotation : 0}
+              gridRotation={gridRotation}
               id={id}
               key={id}
               offsets={shape.offsets}
               onClick={() => console.log(`shape ${id} clicked`)}
-              scale={64}
+              scale={scale}
             />
           );
         })

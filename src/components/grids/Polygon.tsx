@@ -4,10 +4,11 @@ type Props = {
   center: any;
   color?: string;
   displayCenters?: boolean;
-  gridRotation?: number;
+  gridRotation?: string;
   id: number;
   offsets: Array<Array<number>>;
   onClick?: () => void;
+  rotateOrigin?: string;
   scale?: number;
   shapeRotation?: number;
 };
@@ -16,10 +17,11 @@ const Polygon = ({
   center,
   color = "white",
   displayCenters = false,
-  gridRotation = 0,
+  gridRotation = "0, 0, 0",
   id,
   offsets,
   onClick,
+  rotateOrigin = "0, 0",
   scale = 1,
   shapeRotation = 0,
 }: Props) => {
@@ -40,7 +42,7 @@ const Polygon = ({
         stroke="black"
         strokeWidth="0.5"
         points={points}
-        transform={`rotate(${gridRotation}, 0, 0) rotate(${shapeRotation}, ${center[0]}, ${center[1]})`}
+        transform={`rotate(${gridRotation}) rotate(${shapeRotation}, ${center[0]}, ${center[1]})`}
       />
       {displayCenters && (
         <polygon

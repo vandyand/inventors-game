@@ -7,8 +7,6 @@ import { SUBMIT_NEW_BOARD } from "../../redux/actions/actionTypes";
 
 const mapStateToProps = (state: any) => {
   const formValues = getFormValues("invent-board-form")(state);
-  window.console.log("state from invent board container:", state);
-  window.console.log("formValues:", formValues);
   return {
     state,
     formValues,

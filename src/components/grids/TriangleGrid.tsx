@@ -20,8 +20,6 @@ const TriangleGrid = ({ rotation = 0 }: Props) => {
 
   const ys = range(num_high).map((y) => y * dy * sidelength);
 
-  // console.log(even_row_xs, odd_row_xs, ys);
-
   const centers = flatten(
     range(num_high).map((y) => {
       return range(num_wide).map((x) => {
@@ -56,12 +54,6 @@ const TriangleGrid = ({ rotation = 0 }: Props) => {
     [-dx, dy * 0.5],
   ];
 
-  // console.log(node_offsets);
-
-  // const num_shape_orients = 2;
-
-  // const pointsss = range(num_shape_orients).map((shape_orient) => {});
-
   const pointss = centers.map((center) => {
     let path = "";
     shape_1_offsets.map(
@@ -72,8 +64,6 @@ const TriangleGrid = ({ rotation = 0 }: Props) => {
     );
     return path;
   });
-
-  // console.log(pointss);
 
   const other_pointss = other_centers.map((center) => {
     let path = "";
@@ -107,7 +97,6 @@ const TriangleGrid = ({ rotation = 0 }: Props) => {
   );
 
   const toggleCell = (targetInd) => {
-    // console.log(`cell ${targetInd} toggled`);
     setCells(
       cells.map((cell, ind) => {
         if (ind === targetInd) {
@@ -128,7 +117,7 @@ const TriangleGrid = ({ rotation = 0 }: Props) => {
               center={centers[ind]}
               color="white"
               id={cellNum}
-              gridRotation={rotation}
+              // gridRotation={rotation}
               offsets={shape_1_offsets}
               onClick={() => console.log(`cell ${cellNum} clicked`)}
               scale={sidelength}

@@ -12,8 +12,6 @@ import HexagonGrid from "../grids/HexagonGrid";
 type Props = any;
 
 const GridWindow = ({ gridType, rotation = 0 }: Props) => {
-  // console.log("gridwindow props:", { gridType, rotation });
-
   const renderGrid = (gridType) => {
     switch (gridType) {
       case "square":

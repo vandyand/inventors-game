@@ -13,7 +13,6 @@ type Props = {
 };
 
 const Board = ({ formValues }: Props) => {
-  // window.console.log("board props:", formValues);
   return (
     <div className="InventBoard" style={{ display: "flex" }}>
       <Grid

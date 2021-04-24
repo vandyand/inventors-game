@@ -8,16 +8,12 @@ type Props = {
 };
 
 const SquareGrid = ({ rotation = 0 }: Props) => {
-  console.log("SquareGrid rotation:", rotation);
-
   const sidelength: any = 100;
   const num_wide = 20;
   const num_high = 20;
 
   const xs = range(num_wide).map((x) => x * sidelength);
   const ys = range(num_high).map((y) => y * sidelength);
-
-  // console.log(even_row_xs, odd_row_xs, ys);
 
   const centers = flatten(
     range(num_high).map((y) => {

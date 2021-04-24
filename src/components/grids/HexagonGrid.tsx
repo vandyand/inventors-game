@@ -22,8 +22,6 @@ const HexagonGrid = ({ rotation = 0 }: Props) => {
 
   const ys = range(num_high).map((y) => y * dy * sidelength);
 
-  // console.log(even_row_xs, odd_row_xs, ys);
-
   const centers = flatten(
     range(num_high).map((y) => {
       return range(num_wide).map((x) => {
@@ -54,8 +52,6 @@ const HexagonGrid = ({ rotation = 0 }: Props) => {
     );
     return path;
   });
-
-  // console.log(centers, pointss);
 
   return (
     <svg height="1000" width="1000">

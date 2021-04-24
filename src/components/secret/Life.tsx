@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { degreesToRadians } from "../../helpers";
 import { flatten, range } from "lodash";
-// import Triangle from "./shapes";
 
 type Props = {
   height: number;
@@ -21,8 +20,6 @@ const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
   const odd_row_xs = even_row_xs.map((x) => x + dx * sidelength);
 
   const ys = range(num_high).map((y) => y * (dy * sidelength));
-
-  // console.log(even_row_xs, odd_row_xs, ys);
 
   const centers = flatten(
     range(num_high).map((y) => {
@@ -58,8 +55,6 @@ const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
     [-dx, dy * 0.5],
   ];
 
-  // console.log(node_offsets);
-
   const pointss = centers.map((center) => {
     let path = "";
     shape_1_offsets.map(
@@ -70,8 +65,6 @@ const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
     );
     return path;
   });
-
-  // console.log(pointss);
 
   const other_pointss = other_centers.map((center) => {
     let path = "";
@@ -84,11 +77,6 @@ const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
     return path;
   });
 
-  // console.log(pointss);
-
-  // let alive = getRandomAliveCells(num_wide * 2 * num_high);
-  // console.log(alive);
-
   const getRandomAliveCells = (numCells) => {
     let cells = new Array(numCells).fill(0);
     cells = cells.map((val) => Math.floor(Math.random() * 1.01));
@@ -100,7 +88,6 @@ const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
   );
 
   const sequenceLife = () => {
-    console.log("going");
     const newCells = cells.map((cell, ind) => {
       const neighbors = getNumAliveNeighbors(ind);
       if (cell === 0) {
@@ -122,7 +109,6 @@ const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
   // const getSimpleNumAliveNeighbors = (ind) => {
   //   const rowNum = Math.floor(ind / (num_wide * 2));
   //   const delta = ((rowNum % 2) * 2 - 1) * (num_wide * 2);
-  //   // console.log(rowNum, delta);
   //   return (
   //     cells[ind - 1] +
   //     cells[ind + 1] +
@@ -135,7 +121,6 @@ const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
   const getNumAliveNeighbors = (ind) => {
     const rowNum = Math.floor(ind / (num_wide * 2));
     const delta = ((rowNum % 2) * 2 - 1) * (num_wide * 2);
-    // console.log(rowNum, delta);
     const nextRowCell =
       ind % 2 === 0 ? (ind + delta) % (num_high * num_wide * 2) : ind - delta;
     const otherRowCell =
@@ -157,7 +142,6 @@ const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
   };
 
   const toggleCell = (targetInd) => {
-    // console.log(`cell ${targetInd} toggled`);
     setCells(
       cells.map((cell, ind) => {
         if (ind === targetInd) {
@@ -183,9 +167,6 @@ const TriangleGrid = ({ height, startingOrientation, width }: Props) => {
     }
     return ind * 2 + 1;
   });
-
-  // console.log("upIndexMap:", upIndexMap);
-  // console.log("downIndexMap:", downIndexMap);
 
   return (
     <>
