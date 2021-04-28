@@ -10,7 +10,7 @@ import Main from "./components/pages/Main";
 import Play from "./components/pages/Play";
 import Game from "./components/game/Game";
 import InventGame from "./components/pages/InventGame";
-import InventBoard from "./components/invent/Board.container";
+import InventBoard from "./components/invent/InventBoard.container";
 import Grid from "./components/grids/Grid";
 import InventPieces from "./components/invent/Pieces";
 import Life from "./components/secret/Life";

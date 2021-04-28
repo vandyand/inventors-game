@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { degreesToRadians } from "../../helpers";
-import { defer, flatten, range } from "lodash";
+import { flatten, range } from "lodash";
 import Polygon from "./Polygon";
 
 type Props = {
@@ -56,7 +56,7 @@ const Grid = ({
   type = "squares",
   updateBoardBox,
 }: Props) => {
-  const [cells, setCells] = useState(Array(numCols * numRows).fill(0));
+  const [selectedCells, updateSelectedCells] = useState([]);
 
   const gridSize = [numCols * scale, numRows * scale];
   const gridRotationOrigin = `${gridSize[0] / 2}, ${gridSize[1] / 2}`;
@@ -104,90 +104,47 @@ const Grid = ({
   const patternCenters = getPatternCenters(type);
 
   const handleClick = (id) => {
-    const hodler = cells;
     toggleCell(id);
-    console.log(hodler === cells);
-    defer(updateBoardBox, getBoardBox()); //TODO: cells aren't changing before updating board /shrug
-    defer(() => console.log(hodler === cells));
   };
 
-  const toggleCell = (targetInd) => {
-    setCells(
-      cells.map((cell, ind) => {
-        if (ind === targetInd) {
-          return cell ? 0 : 1;
-        }
-        return cell;
-      })
-    );
-  };
+  const toggleCell = (targetId) => {
+    if (selectedCells.includes(targetId)) {
+      updateSelectedCells(selectedCells.filter((x) => x !== targetId));
+      return;
+    }
 
-  const getBoardBox = () => {
-    return cells.reduce(
-      (acc, val, ind) => {
-        const rowInd = Math.floor(ind / numRows);
-        const colInd = ind % numCols;
-        if (val === 1) {
-          if (
-            acc ===
-            [
-              [-1, -1],
-              [-1, -1],
-            ]
-          ) {
-            return [
-              [rowInd, colInd],
-              [rowInd, colInd],
-            ];
-          }
-          if (acc[0][1] > colInd) {
-            acc[0][1] = colInd;
-          }
-          if (acc[1][0] < rowInd) {
-            acc[1][0] = rowInd;
-          }
-          if (acc[1][1] < colInd) {
-            acc[1][1] = colInd;
-          }
-        }
-        return acc;
-      },
-      [
-        [-1, -1],
-        [-1, -1],
-      ]
-    );
+    updateSelectedCells([...selectedCells, targetId]);
   };
 
   // const getBoardBox = () => {
-  //   return chunk(cells, numRows).reduce(
-  //     (acc, row, rowInd) => {
-  //       return row.reduce((acc2, val, colInd) => {
-  //         if (val === 1) {
-  //           if (
-  //             acc2 ===
-  //             [
-  //               [-1, -1],
-  //               [-1, -1],
-  //             ]
-  //           ) {
-  //             return [
-  //               [rowInd, colInd],
-  //               [rowInd, colInd],
-  //             ];
-  //           }
-  //           if (acc2[0][1] > colInd) {
-  //             acc2[0][1] = colInd;
-  //           }
-  //           if (acc2[1][0] < rowInd) {
-  //             acc2[1][0] = rowInd;
-  //           }
-  //           if (acc2[1][1] < colInd) {
-  //             acc2[1][1] = colInd;
-  //           }
+  //   return cells.reduce(
+  //     (acc, val, ind) => {
+  //       const rowInd = Math.floor(ind / numRows);
+  //       const colInd = ind % numCols;
+  //       if (val === 1) {
+  //         if (
+  //           acc ===
+  //           [
+  //             [-1, -1],
+  //             [-1, -1],
+  //           ]
+  //         ) {
+  //           return [
+  //             [rowInd, colInd],
+  //             [rowInd, colInd],
+  //           ];
   //         }
-  //         return acc2;
-  //       }, acc);
+  //         if (acc[0][1] > colInd) {
+  //           acc[0][1] = colInd;
+  //         }
+  //         if (acc[1][0] < rowInd) {
+  //           acc[1][0] = rowInd;
+  //         }
+  //         if (acc[1][1] < colInd) {
+  //           acc[1][1] = colInd;
+  //         }
+  //       }
+  //       return acc;
   //     },
   //     [
   //       [-1, -1],
@@ -201,6 +158,7 @@ const Grid = ({
       {patternCenters.map((center, ind) =>
         patterns[type].map((shape, shapeInd) => {
           const id = ind * patterns[type].length + shapeInd;
+          // console.log(selectedCells.includes(id))
           // const color = getColor(id);
           return (
             <Polygon
@@ -208,7 +166,8 @@ const Grid = ({
                 center[0] + shape.center[0],
                 center[1] + shape.center[1],
               ]}
-              color={cells[id] === 1 ? "pink" : "white"}
+              color={selectedCells.includes(id) ? "pink" : "white"}
+              // color="pink"
               // displayCellNumber={true}
               displayRowColNumbers={true}
               gridRotation={gridRotation}
