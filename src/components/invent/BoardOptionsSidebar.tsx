@@ -3,8 +3,8 @@ import { Field, reduxForm } from "redux-form";
 
 type Props = {
   // onSubmit: () => void;
+  cellIds: Array<number>;
   handleSubmit;
-  state: any;
 };
 
 const BoardOptionsSidebar = (props: Props) => {
@@ -28,6 +28,10 @@ const BoardOptionsSidebar = (props: Props) => {
             type="number"
             placeholder={0}
           />
+        </div>
+        <div>
+          <label>cell ids</label>
+          <Field name="cell_ids" component="textarea" value={props.cellIds} />
         </div>
         <button type="submit">Submit</button>
       </form>

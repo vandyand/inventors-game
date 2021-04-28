@@ -8,7 +8,7 @@ import { SUBMIT_NEW_BOARD } from "../../redux/actions/actionTypes";
 const mapStateToProps = (state: any) => {
   const formValues = getFormValues("invent-board-form")(state);
   return {
-    state,
+    cellIds: state.cellIds,
     formValues,
   };
 };
