@@ -6,17 +6,17 @@ import InventBoardForm from "./InventBoardForm";
 export type gridType = "squares" | "triangles" | "hexagons";
 
 type Props = {
-  cellIds: Array<number>;
   formValues: {
     gridType: gridType;
     rotation: number;
+    selectedCells: Array<number>;
   };
 };
 
-const Board = ({ cellIds, formValues }: Props) => {
+const Board = (props: Props) => {
   return (
     <div className="InventBoard" style={{ display: "flex" }}>
-      <InventBoardForm cellIds={cellIds} />
+      <InventBoardForm {...props} />
     </div>
   );
 };

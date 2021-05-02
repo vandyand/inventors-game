@@ -19,10 +19,7 @@ export const boardReducer = (state = [], action: any) => {
       };
     }
     case SUBMIT_NEW_BOARD: {
-      return {
-        ...state,
-        ...action.payload,
-      };
+      return [...state, action.payload];
     }
     default:
       return state;

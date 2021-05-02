@@ -1,5 +1,5 @@
 import React from "react";
-import { degreesToRadians } from "../../helpers";
+import { degreesToRadians } from "../../helpers/miscHelpers";
 import { flatten, range } from "lodash";
 // import Triangle from "./shapes";
 

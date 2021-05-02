@@ -7,8 +7,9 @@ const GridField = (props: Props) => {
   return (
     <div>
       <Grid
-      type={"squares"}
-      rotation={0}
+      type={props.gridType}
+      rotation={props.rotation}
+      input={props.input}
       />
     </div>
   );

@@ -1,20 +1,27 @@
-import React, { useState } from "react";
-import { degreesToRadians } from "../../helpers";
+import React from "react";
+import { degreesToRadians } from "../../helpers/miscHelpers";
 import { flatten, range } from "lodash";
 import Polygon from "./Polygon";
 
+type input = {
+  onChange: (newSelectedCells: Array<number>) => void;
+  value: Array<number>;
+};
+
 type Props = {
-  numCols?: number;
-  numRows?: number;
+  input: input;
+  gridSize?: Array<number>;
   type?: "squares" | "triangles" | "hexagons";
   rotation?: number;
   scale?: number;
   updateBoardBox?: (boardBox: Array<number>) => void;
+  // value?: Array<number>;
+  windowSize?: Array<number>;
 };
 
 const expand = (array1, array2) => {
   return flatten(
-    array1.map((ar1Val) => array2.map((ar2Val) => [ar1Val, ar2Val]))
+    array1.map((ar1Val) => array2.map((ar2Val) => [ar2Val, ar1Val]))
   );
 };
 
@@ -49,18 +56,23 @@ const offsets = {
 };
 
 const Grid = ({
-  numCols = 30,
-  numRows = 30,
+  input,
+  gridSize = [12, 12],
   rotation = 0,
   scale = 80,
   type = "squares",
   updateBoardBox,
+  windowSize = [800, 800],
 }: Props) => {
-  const [selectedCells, updateSelectedCells] = useState([]);
+  const [numCols, numRows] = gridSize;
+  const selectedCells = input.value;
+  const updateSelectedCells = (newSelectedCells) => {
+    input.onChange(newSelectedCells);
+  };
 
-  const gridSize = [numCols * scale, numRows * scale];
-  const gridRotationOrigin = `${gridSize[0] / 2}, ${gridSize[1] / 2}`;
-  const gridRotation = `${rotation}, ${gridRotationOrigin}`;
+  const gridRotation = `${rotation}, ${windowSize[0] / 2}, ${
+    windowSize[1] / 2
+  }`;
 
   const patterns = {
     triangles: [
@@ -105,6 +117,7 @@ const Grid = ({
 
   const handleClick = (id) => {
     toggleCell(id);
+    // onChange(selectedCells);
   };
 
   const toggleCell = (targetId) => {
@@ -116,45 +129,8 @@ const Grid = ({
     updateSelectedCells([...selectedCells, targetId]);
   };
 
-  // const getBoardBox = () => {
-  //   return cells.reduce(
-  //     (acc, val, ind) => {
-  //       const rowInd = Math.floor(ind / numRows);
-  //       const colInd = ind % numCols;
-  //       if (val === 1) {
-  //         if (
-  //           acc ===
-  //           [
-  //             [-1, -1],
-  //             [-1, -1],
-  //           ]
-  //         ) {
-  //           return [
-  //             [rowInd, colInd],
-  //             [rowInd, colInd],
-  //           ];
-  //         }
-  //         if (acc[0][1] > colInd) {
-  //           acc[0][1] = colInd;
-  //         }
-  //         if (acc[1][0] < rowInd) {
-  //           acc[1][0] = rowInd;
-  //         }
-  //         if (acc[1][1] < colInd) {
-  //           acc[1][1] = colInd;
-  //         }
-  //       }
-  //       return acc;
-  //     },
-  //     [
-  //       [-1, -1],
-  //       [-1, -1],
-  //     ]
-  //   );
-  // };
-
   return (
-    <svg viewBox={`${gridRotationOrigin}, 800, 800`} height="800" width="800">
+    <svg height={`${windowSize[0]}`} width={`${windowSize[1]}`}>
       {patternCenters.map((center, ind) =>
         patterns[type].map((shape, shapeInd) => {
           const id = ind * patterns[type].length + shapeInd;
@@ -168,8 +144,8 @@ const Grid = ({
               ]}
               color={selectedCells.includes(id) ? "pink" : "white"}
               // color="pink"
-              // displayCellNumber={true}
-              displayRowColNumbers={true}
+              displayCellNumber={true}
+              // displayRowColNumbers={true}
               gridRotation={gridRotation}
               id={id}
               key={id}

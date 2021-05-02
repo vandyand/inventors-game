@@ -1,21 +1,25 @@
 import React from "react";
-import { Field, reduxForm } from "redux-form";
+import { Field, Form, reduxForm } from "redux-form";
 import GridField from "./GridField";
 
 type Props = {
-  // onSubmit: () => void;
-  cellIds: Array<number>;
   handleSubmit;
+  formValues;
 };
 
 const InventBoardForm = (props: Props) => {
   return (
     <div style={{ float: "left" }}>
       <h3>Invent your board! </h3>
-      <form onSubmit={props.handleSubmit} style={{ display: "flex" }}>
+      <Form onSubmit={props.handleSubmit} style={{ display: "flex" }}>
         <div>
           <label>Grid</label>
-          <Field name="grid" component={GridField} value="square"/>
+          <Field
+            name="selectedCells"
+            component={GridField}
+            gridType={props.formValues ? props.formValues.gridType : "squares"}
+            rotation={props.formValues ? props.formValues.rotation : 0}
+          />
         </div>
         <div>
           <div>
@@ -35,13 +39,9 @@ const InventBoardForm = (props: Props) => {
               placeholder={0}
             />
           </div>
-          <div>
-            <label>cell ids</label>
-            <Field name="cell_ids" component="textarea" value={props.cellIds} />
-          </div>
           <button type="submit">Submit</button>
         </div>
-      </form>
+      </Form>
     </div>
   );
 };

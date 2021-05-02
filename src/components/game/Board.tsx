@@ -4,13 +4,12 @@ import "./Board.scss";
 
 type OwnProps = any;
 
-type board = {
+export type board = {
   id: string;
   name: string;
   code: string;
-  shape: string;
-  size: number;
-  spaceShape: string;
+  gridTypeId: number;
+  size: Array<number>;
 };
 
 type StateProps = {

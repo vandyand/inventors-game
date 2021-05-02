@@ -1,10 +1,15 @@
 import React from "react";
+import PlayForm from "../game/PlayForm.container";
 
-const Play = () => {
+type Props = {
+  handleSubmit: (values: any) => void;
+};
+
+const Play = (props: Props) => {
   return (
     <div className="Play">
       <h1>Select game to play</h1>
-      <span>Come back later when there are games here.....</span>
+      <PlayForm />
     </div>
   );
 };
