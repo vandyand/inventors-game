@@ -1,5 +1,5 @@
 import React from "react";
-import { boards } from "../../redux/initialStates/boards";
+// import { boards } from "../../redux/initialStates/boards";
 import { board } from "../game/Board";
 import BoardOption from "./BoardOption";
 
@@ -9,12 +9,17 @@ type Props = {
 };
 
 const SelectBoard = (props: Props) => {
+  console.log("SelectBoard props:", props);
   return (
     <div className="SelectBoard">
-      <span>{props.title}</span>
-      {boards.map((board, ind) => (
-        <BoardOption board={board} key={ind} />
-      ))}
+      <h4>{props.title}</h4>
+      {props.boards ? (
+        props.boards.map((board, ind) => (
+          <BoardOption board={board} key={ind} />
+        ))
+      ) : (
+        <div>No boards here. Please invent one!</div>
+      )}
     </div>
   );
 };

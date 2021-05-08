@@ -6,6 +6,8 @@ import SelectPieces from "../select/SelectPieces";
 import { board } from "../game/Board";
 // import { piece } from "../game/Piece";
 
+import "./InventGame.scss";
+
 type Props = {
   boards: Array<board>;
   // pieces: Array<piece>;

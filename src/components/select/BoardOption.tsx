@@ -8,8 +8,7 @@ type Props = {
 const BoardOption = ({ board }: Props) => {
   return (
     <div className="BoardOption">
-      <div className="BoardOption__name">{board.name}</div>
-      <img alt={`${board.name} board`} src={board.pic} />
+      <img alt={`${board.name}`} src={board.pic} />
     </div>
   );
 };
