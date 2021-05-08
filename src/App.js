@@ -31,10 +31,6 @@ const App = ({ onLoadGame, onGetPiecesStrength, state }) => {
       </div>
     </Router>
   );
-
-  // useComponentWillMount(onLoadGame, onGetPiecesStrength);
-  // console.log("state:", state);
-  // return <Game />;
 };
 
 const mapDispatchToProps = (dispatch) => ({

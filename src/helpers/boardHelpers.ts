@@ -3,6 +3,9 @@ export const getRowNum = (cellId, numCols) => Math.floor(cellId / numCols);
 export const getColNum = (cellId, numRows) => cellId % numRows;
 
 export const getBoardDimensions = (selectedCells, gridSize) => {
+  if (!selectedCells) {
+    return [0, 0];
+  }
   const numGridRows = gridSize[1];
   const numGridCols = gridSize[0];
   const topRow = selectedCells.reduce((acc, cellId) => {

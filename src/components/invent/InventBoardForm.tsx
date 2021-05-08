@@ -48,5 +48,5 @@ const InventBoardForm = (props: Props) => {
 
 export default reduxForm({
   form: "invent-board-form",
-  initialValues: { gridType: "squares" },
+  initialValues: { gridType: "squares", rotation: 0 },
 })(InventBoardForm);

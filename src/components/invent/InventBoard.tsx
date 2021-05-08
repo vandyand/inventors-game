@@ -1,5 +1,5 @@
 // import React, {useState} from "react";
-import React from 'react';
+import React from "react";
 // import Grid from "../grids/Grid";
 import InventBoardForm from "./InventBoardForm";
 
@@ -13,7 +13,7 @@ type Props = {
   };
 };
 
-const Board = (props: Props) => {
+const InventBoard = (props: Props) => {
   return (
     <div className="InventBoard" style={{ display: "flex" }}>
       <InventBoardForm {...props} />
@@ -21,4 +21,4 @@ const Board = (props: Props) => {
   );
 };
 
-export default Board;
+export default InventBoard;
