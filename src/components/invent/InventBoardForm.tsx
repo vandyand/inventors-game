@@ -1,5 +1,6 @@
 import React from "react";
 import { Field, Form, reduxForm } from "redux-form";
+// import { Link } from "react-router-dom";
 import GridField from "./GridField";
 
 type Props = {
@@ -39,7 +40,10 @@ const InventBoardForm = (props: Props) => {
               placeholder={0}
             />
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit">
+            Submit
+            {/* <Link to="./">Submit</Link> */}
+          </button>
         </div>
       </Form>
     </div>

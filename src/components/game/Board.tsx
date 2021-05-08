@@ -7,8 +7,10 @@ type OwnProps = any;
 export type board = {
   id: string;
   name: string;
+  pic?: string;
   code: string;
-  gridTypeId: number;
+  gridType?: string;
+  gridTypeId?: number;
   size: Array<number>;
 };
 

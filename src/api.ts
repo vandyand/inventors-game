@@ -1,3 +1,4 @@
+import { board } from "./components/game/Board";
 const api_url = "http://localhost:3001";
 
 export const getBoards = async () => {
@@ -9,6 +10,13 @@ export const getBoards = async () => {
 export const getBoardById = (id: number) => {
   return window.fetch(`${api_url}/boards/${id}`).then((res) => {
     return res.json();
+  });
+};
+
+export const createNewBoard = (newBoard: board) => {
+  return window.fetch(`${api_url}/boards`, {
+    method: "POST",
+    body: JSON.stringify(newBoard),
   });
 };
 

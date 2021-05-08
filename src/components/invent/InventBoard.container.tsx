@@ -12,7 +12,7 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: any) => {
   return {
     onSubmit: (formValues) => dispatch(createNewBoard(formValues)),
   };
