@@ -1,5 +1,5 @@
 import * as api from "../../api";
-import { board } from "../../types/board";
+import { board } from "../../types/GameComponents";
 
 // import type { board } from "../../components/game/Board";
 

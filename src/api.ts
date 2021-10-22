@@ -1,5 +1,5 @@
 import { API_URL } from "./config";
-import { board } from "./types/board";
+import { board } from "./types/GameComponents";
 
 // import { board } from "./components/game/Board";
 

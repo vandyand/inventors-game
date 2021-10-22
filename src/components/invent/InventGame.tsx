@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
-import { board } from "../../types/board";
+import { board } from "../../types/GameComponents";
 import SelectBoard from "./select/SelectBoard";
 import SelectPieces from "./select/SelectPieces";
-// import { piece } from "../game/Piece";
 
 import "./InventGame.scss";
 
@@ -26,12 +25,16 @@ const InventGameForm = (props: Props) => {
         />
         <Link to="/Invent/Board">Invent a new board</Link>
       </div>
-      <SelectPieces title="Select your pieces" />
-      <Link to="/Invent/Pieces">Invent new pieces</Link>
+      <div className="InventGame__Piece">
+        <Field
+          component={SelectPieces}
+          title="Select your pieces" />
+        <Link to="/Invent/Pieces">Invent new pieces</Link>
+      </div>
     </form>
   );
 };
 
 export default reduxForm({
-  form: "invent-game-form",
+  form: "invent-game",
 })(InventGameForm);
