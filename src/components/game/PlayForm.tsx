@@ -12,7 +12,7 @@ type Props = {
 const PlayForm = (props: Props) => {
   return (
     <div style={{ float: "left" }}>
-      <h3>Invent your board! </h3>
+      <h3>Select game type and opponent type! </h3>
       <Form onSubmit={props.handleSubmit}>
         <Field name="gameType" component="select">
           {gameTypes.map((gameType, ind) => (
