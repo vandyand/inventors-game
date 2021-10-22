@@ -1,10 +1,9 @@
 // import React, {useState} from "react";
 import React from "react";
+import { APP_URL } from "../../config";
 // import { Redirect } from "react-router-dom";
 // import Grid from "../grids/Grid";
 import InventBoardForm from "./InventBoardForm";
-
-const app_url = "http://localhost:3000";
 
 export type gridType = "squares" | "triangles" | "hexagons";
 type formValues = {
@@ -21,7 +20,7 @@ type Props = {
 const InventBoard = (props: Props) => {
   const submitAndRedirect = (values) => {
     props.onSubmit(values);
-    window.location.href = `${app_url}/Invent`;
+    window.location.href = `${APP_URL}/Invent`;
     // return <Redirect to="/Invent" />;
   };
 
