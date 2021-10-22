@@ -1,7 +1,7 @@
 import React from "react";
 import { Field, Form, reduxForm } from "redux-form";
 // import { Link } from "react-router-dom";
-import GridField from "./GridField";
+import GridField from "../grids/GridField";
 
 type Props = {
   handleSubmit;
