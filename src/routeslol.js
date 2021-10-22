@@ -7,7 +7,7 @@ import "./app.scss";
 
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import Main from "./components/Main";
-import Play from "./components/Play";
+import Play from "./components/play/Play";
 // import Game from "./components/game/Game";
 import InventGame from "./components/InventGame";
 import InventBoard from "./components/invent/InventBoard.container";
