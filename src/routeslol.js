@@ -6,10 +6,10 @@ import React from "react";
 import "./app.scss";
 
 import { Route, BrowserRouter as Router } from "react-router-dom";
-import Main from "./components/pages/Main";
-import Play from "./components/pages/Play";
+import Main from "./components/Main";
+import Play from "./components/Play";
 import Game from "./components/game/Game";
-import InventGame from "./components/pages/InventGame";
+import InventGame from "./components/InventGame";
 import InventBoard from "./components/invent/InventBoard.container";
 import Grid from "./components/grids/Grid";
 import InventPieces from "./components/invent/Pieces";

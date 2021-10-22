@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
-import SelectBoard from "../select/SelectBoard";
-import SelectPieces from "../select/SelectPieces";
-import { board } from "../game/Board";
+import SelectBoard from "./select/SelectBoard";
+import SelectPieces from "./select/SelectPieces";
+import { board } from "./game/Board";
 // import { piece } from "../game/Piece";
 
 import "./InventGame.scss";

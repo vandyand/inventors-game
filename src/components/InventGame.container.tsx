@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 // import { getFormValues } from "redux-form";
 // import { Dispatch } from "redux";
 import InventGame from "./InventGame";
-import { loadBoards } from "../../redux/actions/boardActions";
+import { loadBoards } from "../redux/actions/boardActions";
 
 const mapStateToProps = (state: any) => {
   loadBoards();
