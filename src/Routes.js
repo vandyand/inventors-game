@@ -13,7 +13,6 @@ import InventGame from "./components/pages/InventGame";
 import InventBoard from "./components/invent/InventBoard.container";
 import Grid from "./components/grids/Grid";
 import InventPieces from "./components/invent/Pieces";
-import Life from "./components/secret/Life";
 
 const App = ({ onLoadGame, onGetPiecesStrength, state }) => {
   return (
@@ -26,7 +25,6 @@ const App = ({ onLoadGame, onGetPiecesStrength, state }) => {
         <Route path="/Invent/Board" exact component={InventBoard} />
         <Route path="/Invent/Grid" exact component={Grid} />
         <Route path="/Invent/Pieces" exact component={InventPieces} />
-        <Route path="/Secret/Life" exact component={Life} />
       </div>
     </Router>
   );
