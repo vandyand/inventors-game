@@ -1,7 +1,8 @@
 import * as api from "../../api";
 import { getBoardDimensions } from "../../helpers/boardHelpers";
+import { board } from "../../types/board";
 
-import type { board } from "../../components/game/Board";
+// import type { board } from "../../components/game/Board";
 
 export const SUBMIT_NEW_BOARD = "SUBMIT_NEW_BOARD";
 export const LOAD_BOARD_SUCCESS = "LOAD_BOARD_SUCCESS";

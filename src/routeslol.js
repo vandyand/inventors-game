@@ -8,7 +8,7 @@ import "./app.scss";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import Main from "./components/Main";
 import Play from "./components/Play";
-import Game from "./components/game/Game";
+// import Game from "./components/game/Game";
 import InventGame from "./components/InventGame";
 import InventBoard from "./components/invent/InventBoard.container";
 import Grid from "./components/grids/Grid";
@@ -20,7 +20,7 @@ const App = ({ onLoadGame, onGetPiecesStrength, state }) => {
       <div>
         <Route path="/" exact component={Main} />
         <Route path="/Play" exact component={Play} />
-        <Route path="/Game" exact component={Game} />
+        {/* <Route path="/Game" exact component={Game} /> */}
         <Route path="/Invent" exact component={InventGame} />
         <Route path="/Invent/Board" exact component={InventBoard} />
         <Route path="/Invent/Grid" exact component={Grid} />

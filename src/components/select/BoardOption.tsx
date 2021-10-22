@@ -1,5 +1,5 @@
 import React from "react";
-import { board } from "../game/Board";
+import { board } from "../../types/board";
 
 type Props = {
   board: board;

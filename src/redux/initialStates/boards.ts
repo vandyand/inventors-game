@@ -1,4 +1,6 @@
-import { board } from "../../components/game/Board";
+// import { board } from "../../components/game/Board";
+
+import { board } from "../../types/board";
 
 export const boards: Array<board> = [
   {

@@ -1,6 +1,7 @@
 import React from "react";
+import { board } from "../../types/board";
 // import { boards } from "../../redux/initialStates/boards";
-import { board } from "../game/Board";
+// import { board } from "../game/Board";
 import BoardOption from "./BoardOption";
 
 type Props = {

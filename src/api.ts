@@ -1,4 +1,6 @@
-import { board } from "./components/game/Board";
+import { board } from "./types/board";
+
+// import { board } from "./components/game/Board";
 const api_url = "http://localhost:3001";
 
 export const getBoards = async () => {
