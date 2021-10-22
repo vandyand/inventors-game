@@ -12,7 +12,7 @@ import Play from "./components/Play";
 import InventGame from "./components/InventGame";
 import InventBoard from "./components/invent/InventBoard.container";
 import Grid from "./components/grids/Grid";
-import InventPieces from "./components/invent/Pieces";
+import InventPieces from "./components/Pieces";
 
 const App = ({ onLoadGame, onGetPiecesStrength, state }) => {
   return (
