@@ -14,7 +14,7 @@ import InventBoard from "./components/invent/InventBoard.container";
 import Grid from "./components/grids/Grid";
 import InventPieces from "./components/Pieces";
 
-const App = ({ onLoadGame, onGetPiecesStrength, state }) => {
+const Routes = () => {
   return (
     <Router>
       <div>
@@ -30,7 +30,7 @@ const App = ({ onLoadGame, onGetPiecesStrength, state }) => {
   );
 };
 
-export default App;
+export default Routes;
 
 // const mapDispatchToProps = (dispatch) => ({
 //   onLoadGame: () => dispatch({ type: LOAD_GAME }),
