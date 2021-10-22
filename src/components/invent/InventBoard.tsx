@@ -20,7 +20,6 @@ type Props = {
 
 const InventBoard = (props: Props) => {
   const submitAndRedirect = (values) => {
-    console.log("submitAndRedirect...");
     props.onSubmit(values);
     window.location.href = `${app_url}/Invent`;
     // return <Redirect to="/Invent" />;

@@ -58,8 +58,7 @@ const TriangleGrid = ({ rotation = 0 }: Props) => {
     let path = "";
     shape_1_offsets.map(
       (offset) =>
-        (path += `${center[0] + offset[0] * sidelength},${
-          center[1] + offset[1] * sidelength
+      (path += `${center[0] + offset[0] * sidelength},${center[1] + offset[1] * sidelength
         } `)
     );
     return path;
@@ -69,8 +68,7 @@ const TriangleGrid = ({ rotation = 0 }: Props) => {
     let path = "";
     shape_2_offsets.map(
       (offset) =>
-        (path += `${center[0] + offset[0] * sidelength},${
-          center[1] + offset[1] * sidelength
+      (path += `${center[0] + offset[0] * sidelength},${center[1] + offset[1] * sidelength
         } `)
     );
     return path;
@@ -119,7 +117,7 @@ const TriangleGrid = ({ rotation = 0 }: Props) => {
               id={cellNum}
               // gridRotation={rotation}
               offsets={shape_1_offsets}
-              onClick={() => console.log(`cell ${cellNum} clicked`)}
+              onClick={() => undefined}
               scale={sidelength}
               shapeRotation={rotation}
             />

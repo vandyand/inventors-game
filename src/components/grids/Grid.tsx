@@ -70,9 +70,8 @@ const Grid = ({
     input.onChange(newSelectedCells);
   };
 
-  const gridRotation = `${rotation}, ${windowSize[0] / 2}, ${
-    windowSize[1] / 2
-  }`;
+  const gridRotation = `${rotation}, ${windowSize[0] / 2}, ${windowSize[1] / 2
+    }`;
 
   const patterns = {
     triangles: [
@@ -134,7 +133,6 @@ const Grid = ({
       {patternCenters.map((center, ind) =>
         patterns[type].map((shape, shapeInd) => {
           const id = ind * patterns[type].length + shapeInd;
-          // console.log(selectedCells.includes(id))
           // const color = getColor(id);
           return (
             <Polygon

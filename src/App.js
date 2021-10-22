@@ -16,7 +16,6 @@ import InventPieces from "./components/invent/Pieces";
 import Life from "./components/secret/Life";
 
 const App = ({ onLoadGame, onGetPiecesStrength, state }) => {
-  console.log("state:", state);
   return (
     <Router>
       <div>

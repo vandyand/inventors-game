@@ -46,7 +46,6 @@ export function loadBoards(): any {
 }
 
 export function createNewBoard(values) {
-  console.log("creating new board... ");
   const newBoard: board = {
     id: "12",
     name: "board-12",

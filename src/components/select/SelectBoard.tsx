@@ -9,7 +9,6 @@ type Props = {
 };
 
 const SelectBoard = (props: Props) => {
-  console.log("SelectBoard props:", props);
   return (
     <div className="SelectBoard">
       <h4>{props.title}</h4>
