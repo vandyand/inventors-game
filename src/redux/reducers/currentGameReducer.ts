@@ -1,12 +1,12 @@
 import { currentGame } from "../initialStates/currentGame";
 import { gameTypes } from "../initialStates/gameTypes";
-import {
-  LOAD_GAME,
-  SELECT_PIECE,
-  CALCULATE_POSSIBLE_MOVES,
-  PIECE_MOVE,
-  UPDATE_CURRENT_ARRANGEMENT_SEQ_NUM,
-} from "../actions/actionTypes";
+
+export const UPDATE_CURRENT_ARRANGEMENT_SEQ_NUM: string =
+  "UPDATE_CURRENT_ARRANGEMENT_SEQ_NUM";
+export const PIECE_MOVE: string = "PIECE_MOVE";
+export const CALCULATE_POSSIBLE_MOVES: string = "CALCULATE_POSSIBLE_MOVES";
+export const SELECT_PIECE: string = "SELECT_PIECE";
+export const LOAD_GAME: string = "LOAD_GAME";
 
 const currentGameType = gameTypes.filter(
   (gameType) => gameType.code === currentGame.gameTypeCode

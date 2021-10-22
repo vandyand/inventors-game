@@ -3,7 +3,7 @@ import {
   LOADING_BOARDS,
   LOAD_BOARD_SUCCESS,
   SUBMIT_NEW_BOARD,
-} from "../actions/actionTypes";
+} from "../actions/boardActions";
 
 export const boardReducer = (state = [], action: any) => {
   switch (action.type) {

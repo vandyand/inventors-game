@@ -1,5 +1,7 @@
 import * as api from "../../api";
-import { LOADING_GAME_TYPE, LOAD_GAME_TYPE_SUCCESS } from "./actionTypes";
+
+export const LOADING_GAME_TYPE = "LOADING_GAME_TYPE";
+export const LOAD_GAME_TYPE_SUCCESS = "LOAD_GAME_TYPE_SUCCESS";
 
 export function loadGameType(id): any {
   return (dispatch) => {

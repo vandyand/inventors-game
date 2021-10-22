@@ -1,11 +1,11 @@
 import { first, last } from "lodash";
+import { PIECE_MOVE } from "../reducers/currentGameReducer";
 import {
   getCurrentGameType,
   getCurrentBoardRowCodes,
   getCurrentPromotion,
   getCurrentGame,
 } from "../selectors/gameEngineSelectors";
-import { PIECE_MOVE } from "./actionTypes";
 
 export const calculateMove = (state: any, code: string) => {
   const currentGame = getCurrentGame(state);

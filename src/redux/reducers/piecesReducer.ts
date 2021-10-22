@@ -1,5 +1,6 @@
-import { LOADING_PIECES, LOAD_PIECES_SUCCESS } from "../actions/actionTypes";
-// import { GET_PIECES_STRENGTH } from "../actions/actionTypes";
+// const GET_PIECES_STRENGTH: string = "GET_PIECES_STRENGTH";
+export const LOAD_PIECES_SUCCESS = "LOAD_PIECES_SUCCESS";
+export const LOADING_PIECES = "LOADING_PIECES";
 
 export const piecesReducer = (state = [], action: any) => {
   switch (action.type) {
