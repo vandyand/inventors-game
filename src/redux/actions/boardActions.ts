@@ -1,6 +1,7 @@
 import * as api from "../../api";
 import {
   LOADING_BOARD,
+  LOADING_BOARDS,
   LOAD_BOARD_SUCCESS,
   SUBMIT_NEW_BOARD,
 } from "./actionTypes";
@@ -33,13 +34,13 @@ export function loadBoard(id): any {
 
 export function loadBoards(): any {
   return (dispatch) => {
-    dispatch({ type: LOADING_BOARD, payload: true });
+    dispatch({ type: LOADING_BOARDS, payload: true });
 
     return api
       .getBoards()
       .then((response) => {
         dispatch({ type: LOAD_BOARD_SUCCESS, payload: response });
-        dispatch({ type: LOADING_BOARD, payload: false });
+        dispatch({ type: LOADING_BOARDS, payload: false });
       })
       .catch((err) => console.log(err.message));
   };
