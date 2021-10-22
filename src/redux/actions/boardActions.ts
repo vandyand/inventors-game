@@ -1,13 +1,12 @@
 import * as api from "../../api";
-import {
-  LOADING_BOARD,
-  LOADING_BOARDS,
-  LOAD_BOARD_SUCCESS,
-  SUBMIT_NEW_BOARD,
-} from "./actionTypes";
 import { getBoardDimensions } from "../../helpers/boardHelpers";
 
 import type { board } from "../../components/game/Board";
+
+export const SUBMIT_NEW_BOARD = "SUBMIT_NEW_BOARD";
+export const LOAD_BOARD_SUCCESS = "LOAD_BOARD_SUCCESS";
+export const LOADING_BOARD = "LOADING_BOARD";
+export const LOADING_BOARDS = "LOADING_BOARDS";
 
 export function loadBoard(id): any {
   return (dispatch) => {

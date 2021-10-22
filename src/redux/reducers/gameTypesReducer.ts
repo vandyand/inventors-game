@@ -1,7 +1,7 @@
 import {
   LOADING_GAME_TYPE,
   LOAD_GAME_TYPE_SUCCESS,
-} from "../actions/actionTypes";
+} from "../actions/gameTypeActions";
 
 export const gameTypesReducer = (state = [], action: any) => {
   switch (action.type) {

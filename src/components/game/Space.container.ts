@@ -1,11 +1,11 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import Space from "./Space";
-import {
-  SELECT_PIECE,
-  CALCULATE_POSSIBLE_MOVES,
-} from "../../redux/actions/actionTypes";
 import { onPieceMoveActionCreator } from "../../redux/actions/engineActions";
+import {
+  CALCULATE_POSSIBLE_MOVES,
+  SELECT_PIECE,
+} from "../../redux/reducers/currentGameReducer";
 
 const mapStateToProps = (state: any) => ({
   state,

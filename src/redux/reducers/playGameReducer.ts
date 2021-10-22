@@ -1,4 +1,4 @@
-import { START_NEW_GAME } from "../actions/actionTypes";
+import { START_NEW_GAME } from "../actions/playGameActions";
 
 export const boardReducer = (state = [], action: any) => {
   switch (action.type) {
