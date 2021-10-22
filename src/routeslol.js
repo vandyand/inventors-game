@@ -19,7 +19,6 @@ const Routes = () => {
       <div>
         <Route path="/" exact component={Main} />
         <Route path="/Play" exact component={Play} />
-        {/* <Route path="/Game" exact component={Game} /> */}
         <Route path="/Invent" exact component={InventGame} />
         <Route path="/Invent/Board" exact component={InventBoard} />
         <Route path="/Invent/Grid" exact component={Grid} />

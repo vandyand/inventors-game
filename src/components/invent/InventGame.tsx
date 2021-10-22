@@ -5,7 +5,8 @@ import { board, piece } from "../../types/GameComponents";
 import SelectBoard from "./select/SelectBoard";
 import SelectPieces from "./select/SelectPieces";
 
-import "./InventGame.scss";
+import "./InventGameStyles.scss";
+import InventGameWindow from "./InventGameWindow";
 
 type Props = {
   boards: Array<board>;
@@ -16,26 +17,33 @@ const InventGame = (props: Props) => {
   return (
     <>
       <Link to="/">Main Menu</Link>
-      <form className="InventGame">
-        <h1>Invent a game here </h1>
-        <div className="InventGame__Board">
-          <Field
-            component={SelectBoard}
-            title="Select a board"
-            boards={props.boards}
-            name="SelectBoard"
-          />
-          <Link to="/Invent/Board">Invent a new board</Link>
-        </div>
-        <div className="InventGame__Piece">
-          <Field
-            component={SelectPieces}
-            title="Select your pieces"
-            pieces={props.pieces}
-          />
-          <Link to="/Invent/Pieces">Invent new pieces</Link>
-        </div>
-      </form>
+      <h1>Invent a game here </h1>
+      <div className="InventGame">
+        <InventGameWindow />
+        <form className="InventGame__Form">
+          <div className="InventGame__Form__Board">
+            <Field
+              component={SelectBoard}
+              title="Select a board"
+              boards={props.boards}
+              name="SelectBoard"
+            />
+            <div className="InventGame__Form__Board__Link">
+              <Link to="/Invent/Board">Invent a new board</Link>
+            </div>
+          </div>
+          <div className="InventGame__Form__Piece">
+            <Field
+              component={SelectPieces}
+              title="Select your pieces"
+              pieces={props.pieces}
+            />
+            <div className="InventGame__Form__Piece__Link">
+              <Link to="/Invent/Pieces">Invent new pieces</Link>
+            </div>
+          </div>
+        </form>
+      </div>
     </>
   );
 };

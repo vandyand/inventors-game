@@ -1,10 +1,9 @@
 import React from "react";
 import PieceOption from "./SelectPieceOption";
 
-
 const SelectPieces = (props: any) => {
   return (
-    <div className="SelectBoard">
+    <div className="SelectPieces">
       <h4>{props.title}</h4>
       {props.pieces ? (
         props.pieces.map((piece) => (

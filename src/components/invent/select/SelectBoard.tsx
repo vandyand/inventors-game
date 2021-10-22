@@ -2,6 +2,8 @@ import React from "react";
 import { board } from "../../../types/GameComponents";
 import BoardOption from "./SelectBoardOption";
 
+import "./SelectStyles.scss";
+
 type Props = {
   boards: Array<board>;
   title: string;

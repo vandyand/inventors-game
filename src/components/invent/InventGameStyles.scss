@@ -1,0 +1,18 @@
+.InventGame {
+  display: flex;
+  justify-content: space-around;
+
+  &Window {
+    border: 1px solid black;
+    width: 60%;
+    min-height: 500px;
+  }
+
+  &__Form {
+    border: 1px solid red;
+
+    &__Board__Link {
+      margin-bottom: 20px;
+    }
+  }
+}
