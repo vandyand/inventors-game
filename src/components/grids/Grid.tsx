@@ -1,5 +1,4 @@
 import React from "react";
-import { degreesToRadians } from "../../helpers/miscHelpers";
 import { flatten, range } from "lodash";
 import Polygon from "./Polygon";
 
@@ -24,6 +23,8 @@ const expand = (array1, array2) => {
     array1.map((ar1Val) => array2.map((ar2Val) => [ar2Val, ar1Val]))
   );
 };
+
+export const degreesToRadians = (degrees: number) => (degrees * Math.PI) / 180;
 
 const TAN_30 = Math.tan(degreesToRadians(30));
 const SIN_60 = Math.sin(degreesToRadians(60));

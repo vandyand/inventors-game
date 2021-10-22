@@ -1,5 +1,4 @@
 import React from "react";
-// import { degreesToRadians } from "../../helpers";
 import { flatten, range } from "lodash";
 // import Triangle from "./shapes";
 
@@ -37,8 +36,7 @@ const SquareGrid = ({ rotation = 0 }: Props) => {
     let path = "";
     node_offsets.map(
       (offset) =>
-        (path += `${center[0] + offset[0] * sidelength},${
-          center[1] + offset[1] * sidelength
+      (path += `${center[0] + offset[0] * sidelength},${center[1] + offset[1] * sidelength
         } `)
     );
     return path;
@@ -56,7 +54,7 @@ const SquareGrid = ({ rotation = 0 }: Props) => {
             stroke="black"
             points={points}
             transform={`rotate(${rotation}, 0, 0) rotate(${rotation}, ${center[0]}, ${center[1]})`}
-            // transform={`rotate(45, ${center[0]}, ${center[1]})`}
+          // transform={`rotate(45, ${center[0]}, ${center[1]})`}
           />
         );
       })}

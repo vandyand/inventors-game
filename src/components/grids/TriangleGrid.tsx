@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { degreesToRadians } from "../../helpers/miscHelpers";
 import { flatten, range } from "lodash";
 import Triangle from "./Polygon";
+import { degreesToRadians } from "./Grid";
 
 type Props = {
   rotation?: number;

@@ -1,6 +1,6 @@
 import React from "react";
-import { degreesToRadians } from "../../helpers/miscHelpers";
 import { flatten, range } from "lodash";
+import { degreesToRadians } from "./Grid";
 // import Triangle from "./shapes";
 
 type Props = {
@@ -46,8 +46,7 @@ const HexagonGrid = ({ rotation = 0 }: Props) => {
     let path = "";
     node_offsets.map(
       (offset) =>
-        (path += `${center[0] + offset[0] * sidelength},${
-          center[1] + offset[1] * sidelength
+      (path += `${center[0] + offset[0] * sidelength},${center[1] + offset[1] * sidelength
         } `)
     );
     return path;
