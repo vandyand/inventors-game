@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
-import { board } from "../../types/GameComponents";
+import { board, piece } from "../../types/GameComponents";
 import SelectBoard from "./select/SelectBoard";
 import SelectPieces from "./select/SelectPieces";
 
@@ -9,10 +9,10 @@ import "./InventGame.scss";
 
 type Props = {
   boards: Array<board>;
-  // pieces: Array<piece>;
+  pieces: Array<piece>;
 };
 
-const InventGameForm = (props: Props) => {
+const InventGame = (props: Props) => {
   return (
     <>
       <Link to="/">Main Menu</Link>
@@ -30,7 +30,9 @@ const InventGameForm = (props: Props) => {
         <div className="InventGame__Piece">
           <Field
             component={SelectPieces}
-            title="Select your pieces" />
+            title="Select your pieces"
+            pieces={props.pieces}
+          />
           <Link to="/Invent/Pieces">Invent new pieces</Link>
         </div>
       </form>
@@ -40,4 +42,4 @@ const InventGameForm = (props: Props) => {
 
 export default reduxForm({
   form: "invent-game",
-})(InventGameForm);
+})(InventGame);
