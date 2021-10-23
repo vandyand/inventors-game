@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Field, reduxForm } from "redux-form";
 import { board, piece } from "../../types/GameComponents";
 import SelectBoard from "./select/SelectBoard";
 import SelectPieces from "./select/SelectPieces";
@@ -20,21 +19,18 @@ const InventGame = (props: Props) => {
       <h1>Invent a game here </h1>
       <div className="InventGame">
         <InventGameWindow />
-        <form className="InventGame__Form">
+        <div className="InventGame__Form">
           <div className="InventGame__Form__Board">
-            <Field
-              component={SelectBoard}
+            <SelectBoard
               title="Select a board"
               boards={props.boards}
-              name="SelectBoard"
             />
             <div className="InventGame__Form__Board__Link">
               <Link to="/Invent/Board">Invent a new board</Link>
             </div>
           </div>
           <div className="InventGame__Form__Piece">
-            <Field
-              component={SelectPieces}
+            <SelectPieces
               title="Select your pieces"
               pieces={props.pieces}
             />
@@ -42,12 +38,10 @@ const InventGame = (props: Props) => {
               <Link to="/Invent/Pieces">Invent new pieces</Link>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </>
   );
 };
 
-export default reduxForm({
-  form: "invent-game",
-})(InventGame);
+export default InventGame;
