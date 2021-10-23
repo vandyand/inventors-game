@@ -1,7 +1,6 @@
 import React from "react";
 import { flatten, range } from "lodash";
 import { degreesToRadians } from "./Grid";
-// import Triangle from "./shapes";
 
 type Props = {
   rotation?: number;
@@ -55,7 +54,6 @@ const HexagonGrid = ({ rotation = 0 }: Props) => {
   return (
     <svg height="1000" width="1000">
       {pointss.map((points, ind) => {
-        // const [x, y] = coords;
         return (
           <polygon
             key={ind}

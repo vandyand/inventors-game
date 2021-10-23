@@ -1,8 +1,6 @@
 import { API_URL } from "./config";
 import { board } from "./types/GameComponents";
 
-// import { board } from "./components/game/Board";
-
 export const getBoards = async () => {
   return await window.fetch(`${API_URL}/boards`).then((res) => {
     return res.json();

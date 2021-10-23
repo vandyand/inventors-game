@@ -115,37 +115,16 @@ const TriangleGrid = ({ rotation = 0 }: Props) => {
               center={centers[ind]}
               color="white"
               id={cellNum}
-              // gridRotation={rotation}
               offsets={shape_1_offsets}
               onClick={() => undefined}
               scale={sidelength}
               shapeRotation={rotation}
             />
-            // <polygon
-            //   key={cellNum}
-            //   onClick={() => toggleCell(cellNum)}
-            //   fill={cells[cellNum] === 1 ? "light-blue" : "white"}
-            //   stroke="black"
-            //   strokeWidth="0.5"
-            //   points={points}
-            //   transform={`rotate(${rotation}, 0, 0)`}
-            // />
           );
         })}
         {other_pointss.map((points, ind) => {
           const cellNum = upIndexMap[ind];
           return <div onClick={() => toggleCell(0)}>{cellNum}</div>;
-          // return (
-          //   <polygon
-          //     key={cellNum}
-          //     onClick={() => toggleCell(cellNum)}
-          //     fill={cells[cellNum] === 1 ? "light-blue" : "white"}
-          //     stroke="black"
-          //     strokeWidth="0.5"
-          //     points={points}
-          //     transform={`rotate(${rotation}, 0, 0)`}
-          //   />
-          // );
         })}
       </svg>
     </>

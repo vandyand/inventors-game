@@ -1,8 +1,6 @@
 import * as api from "../../api";
 import { board } from "../../types/GameComponents";
 
-// import type { board } from "../../components/game/Board";
-
 export const SUBMIT_NEW_BOARD = "SUBMIT_NEW_BOARD";
 export const LOAD_BOARD_SUCCESS = "LOAD_BOARD_SUCCESS";
 export const LOADING_BOARD = "LOADING_BOARD";

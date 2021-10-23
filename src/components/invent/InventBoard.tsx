@@ -1,8 +1,5 @@
-// import React, {useState} from "react";
 import React from "react";
 import { APP_URL } from "../../config";
-// import { Redirect } from "react-router-dom";
-// import Grid from "../grids/Grid";
 import InventBoardForm from "./InventBoardForm";
 
 export type gridType = "squares" | "triangles" | "hexagons";

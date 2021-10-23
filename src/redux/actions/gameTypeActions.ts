@@ -25,26 +25,3 @@ export function loadGameType(id): any {
       .catch((err) => console.log(err.messge));
   };
 }
-
-// export function loadGameTypes(): any {
-//   return (dispatch) => {
-//     dispatch({
-//       type: LOADING_BOARD,
-//       payload: true,
-//     });
-
-//     return api
-//       .getBoard(id)
-//       .then((response) => {
-//         dispatch({
-//           type: LOAD_BOARD_SUCCESS,
-//           payload: response,
-//         });
-//         dispatch({
-//           type: LOADING_BOARD,
-//           payload: false,
-//         });
-//       })
-//       .catch((err) => console.log(err.messge));
-//   };
-// }

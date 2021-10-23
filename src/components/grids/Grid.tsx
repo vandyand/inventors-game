@@ -14,7 +14,6 @@ type Props = {
   rotation?: number;
   scale?: number;
   updateBoardBox?: (boardBox: Array<number>) => void;
-  // value?: Array<number>;
   windowSize?: Array<number>;
 };
 
@@ -133,7 +132,6 @@ const Grid = ({
       {patternCenters.map((center, ind) =>
         patterns[type].map((shape, shapeInd) => {
           const id = ind * patterns[type].length + shapeInd;
-          // const color = getColor(id);
           return (
             <Polygon
               center={[
@@ -141,9 +139,7 @@ const Grid = ({
                 center[1] + shape.center[1],
               ]}
               color={selectedCells.includes(id) ? "pink" : "white"}
-              // color="pink"
               displayCellNumber={false}
-              // displayRowColNumbers={true}
               gridRotation={gridRotation}
               id={id}
               key={id}

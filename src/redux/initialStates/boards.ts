@@ -1,5 +1,3 @@
-// import { board } from "../../components/game/Board";
-
 import { board } from "../../types/GameComponents";
 
 export const boards: Array<board> = [
@@ -10,7 +8,5 @@ export const boards: Array<board> = [
     size: [8, 8],
     gridType: "square",
     gridTypeId: 1,
-    // rowCodes: ["1", "2", "3", "4", "5", "6", "7", "8"],
-    // columnCodes: ["a", "b", "c", "d", "e", "f", "g", "h"],
   },
 ];

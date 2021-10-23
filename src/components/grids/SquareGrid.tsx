@@ -1,6 +1,5 @@
 import React from "react";
 import { flatten, range } from "lodash";
-// import Triangle from "./shapes";
 
 type Props = {
   rotation?: number;
@@ -54,7 +53,6 @@ const SquareGrid = ({ rotation = 0 }: Props) => {
             stroke="black"
             points={points}
             transform={`rotate(${rotation}, 0, 0) rotate(${rotation}, ${center[0]}, ${center[1]})`}
-          // transform={`rotate(45, ${center[0]}, ${center[1]})`}
           />
         );
       })}

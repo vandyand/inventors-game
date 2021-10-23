@@ -31,17 +31,14 @@ const Polygon = ({
 }: Props) => {
   const points = offsets.reduce(
     (acc, offset) =>
-      (acc += `${(center[0] + offset[0]) * scale},${
-        (center[1] + offset[1]) * scale
+    (acc += `${(center[0] + offset[0]) * scale},${(center[1] + offset[1]) * scale
       } `),
     ""
   );
 
-  const centerPoints = `${center[0] * scale + 1},${center[1] * scale + 1}, ${
-    center[0] * scale + 1
-  },${center[1] * scale - 1}, ${center[0] * scale - 1},${
-    center[1] * scale - 1
-  } ${center[0] * scale - 1},${center[1] * scale + 1}`;
+  const centerPoints = `${center[0] * scale + 1},${center[1] * scale + 1}, ${center[0] * scale + 1
+    },${center[1] * scale - 1}, ${center[0] * scale - 1},${center[1] * scale - 1
+    } ${center[0] * scale - 1},${center[1] * scale + 1}`;
 
   return (
     <>

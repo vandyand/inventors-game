@@ -7,7 +7,6 @@ import "./app.scss";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import Main from "./components/MainMenu";
 import Play from "./components/play/Play";
-// import Game from "./components/game/Game";
 import InventGame from "./components/invent/InventGame";
 import InventBoard from "./components/invent/InventBoard.container";
 import Grid from "./components/grids/Grid";
