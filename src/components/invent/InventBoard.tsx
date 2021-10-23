@@ -21,7 +21,6 @@ const InventBoard = (props: Props) => {
   const submitAndRedirect = (values) => {
     props.onSubmit(values);
     window.location.href = `${APP_URL}/Invent`;
-    // return <Redirect to="/Invent" />;
   };
 
   return (

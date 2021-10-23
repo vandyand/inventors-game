@@ -117,7 +117,6 @@ const Grid = ({
 
   const handleClick = (id) => {
     toggleCell(id);
-    // onChange(selectedCells);
   };
 
   const toggleCell = (targetId) => {
@@ -143,7 +142,7 @@ const Grid = ({
               ]}
               color={selectedCells.includes(id) ? "pink" : "white"}
               // color="pink"
-              displayCellNumber={true}
+              displayCellNumber={false}
               // displayRowColNumbers={true}
               gridRotation={gridRotation}
               id={id}
@@ -160,14 +159,3 @@ const Grid = ({
 };
 
 export default Grid;
-
-// type PolygonProps = {
-//   center: Array<number>;
-//   color?: string;
-//   gridRotation?: number;
-//   id: number;
-//   offsets: Array<Array<number>>;
-//   onClick?: () => void;
-//   scale?: number;
-//   shapeRotation?: number;
-// };
