@@ -1,11 +1,12 @@
 export type board = {
   id: string;
   name: string;
+  description: string;
   pic?: string;
-  code: string;
-  gridType?: string;
-  gridTypeId?: number;
+  grid_type_id: number;
   size: Array<number>;
+  board_shape: string;
+  rotation: string;
 };
 
 export type piece = {

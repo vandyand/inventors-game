@@ -3,8 +3,10 @@ import { board } from "../../types/GameComponents";
 
 export const SUBMIT_NEW_BOARD = "SUBMIT_NEW_BOARD";
 export const LOAD_BOARD_SUCCESS = "LOAD_BOARD_SUCCESS";
-export const LOADING_BOARD = "LOADING_BOARD";
-export const LOADING_BOARDS = "LOADING_BOARDS";
+export const LOAD_BOARDS_SUCCESS = "LOAD_BOARDS_SUCCESS";
+export const LOAD_PIECE_SUCCESS = "LOAD_PIECE_SUCCESS";
+export const LOAD_PIECES_SUCCESS = "LOAD_PIECES_SUCCESS";
+export const LOADING_STATE = "LOADING_STATE";
 
 export const getRowNum = (cellId, numCols) => Math.floor(cellId / numCols);
 
@@ -51,8 +53,8 @@ export const getBoardDimensions = (selectedCells, gridSize) => {
 export function loadBoard(id): any {
   return (dispatch) => {
     dispatch({
-      type: LOADING_BOARD,
-      payload: true,
+      type: LOADING_STATE,
+      payload: { loadingBoard: true },
     });
 
     return api
@@ -63,35 +65,52 @@ export function loadBoard(id): any {
           payload: response,
         });
         dispatch({
-          type: LOADING_BOARD,
-          payload: false,
+          type: LOADING_STATE,
+          payload: { loadingBoard: false },
         });
       })
       .catch((err) => console.log(err.messge));
   };
 }
 
-export function loadBoards(): any {
+export function loadBoardsAndPieces(): any {
   return (dispatch) => {
-    dispatch({ type: LOADING_BOARDS, payload: true });
-
     return api
       .getBoards()
-      .then((response) => {
-        dispatch({ type: LOAD_BOARD_SUCCESS, payload: response });
-        dispatch({ type: LOADING_BOARDS, payload: false });
-      })
-      .catch((err) => console.log(err.message));
+      .then((res) => dispatch({ type: LOAD_BOARD_SUCCESS, payload: res }));
+  };
+}
+
+// export function loadBoards(): any {
+//   return async (dispatch) => {
+//     dispatch({ type: LOADING_BOARDS, payload: true });
+
+//     return api.getBoards().then((response) => {
+//       dispatch({ type: LOAD_BOARD_SUCCESS, payload: response });
+//       dispatch({ type: LOADING_BOARDS, payload: false });
+//     });
+//   };
+// }
+
+export function loadPieces(): any {
+  return (dispatch) => {
+    dispatch({ type: LOADING_STATE, payload: { loadingPieces: true } });
+
+    return api.getAllPieces().then((response) => {
+      dispatch({ type: LOAD_PIECES_SUCCESS, payload: response });
+      dispatch({ type: LOADING_STATE, payload: { loadingPieces: false } });
+    });
   };
 }
 
 export function createNewBoard(values) {
   const newBoard: board = {
+    description: "random text here",
+    board_shape: "square",
+    rotation: "0",
     id: "12",
     name: "board-12",
-    code: "b-12",
-    gridTypeId: 1,
-    gridType: values.gridType,
+    grid_type_id: 1,
     size: getBoardDimensions(values.selectedCells, [12, 12]),
   };
 

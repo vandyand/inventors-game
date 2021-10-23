@@ -1,11 +1,18 @@
-import React from "react";
+
+
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { board, piece } from "../../types/GameComponents";
 import SelectBoard from "./select/SelectBoard";
 import SelectPieces from "./select/SelectPieces";
+import InventGameWindow from "./InventGameWindow";
+
 
 import "./InventGameStyles.scss";
-import InventGameWindow from "./InventGameWindow";
+import { useDispatch, connect } from "react-redux";
+import { loadBoardsAndPieces } from "../../redux/actions/boardActions";
+
+import "./InventGameStyles.scss";
 
 type Props = {
   boards: Array<board>;
@@ -13,6 +20,13 @@ type Props = {
 };
 
 const InventGame = (props: Props) => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadBoardsAndPieces());
+  }, [dispatch]);
+
   return (
     <>
       <Link to="/">Main Menu</Link>
@@ -44,4 +58,12 @@ const InventGame = (props: Props) => {
   );
 };
 
-export default InventGame;
+
+const mapStateToProps = (state: any) => {
+  return {
+    boards: state.board,
+    pieces: state.pieces,
+  };
+};
+
+export default connect(mapStateToProps, null)(InventGame);

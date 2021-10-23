@@ -1,21 +1,18 @@
-// import React from "react";
 import { connect } from "react-redux";
-// import { getFormValues } from "redux-form";
 // import { Dispatch } from "redux";
 import InventGame from "./InventGame";
-import { loadBoards } from "../../redux/actions/boardActions";
+// import { loadBoardsAndPieces } from "../../redux/actions/boardActions";  
 
 const mapStateToProps = (state: any) => {
-  loadBoards();
   return {
     boards: state.board,
   };
 };
 
-// const mapDispatchToProps = (dispatch: Dispatch, ownProps: any) => {
-//   return {
-//     onSubmit: (formValues) => dispatch(createNewBoard(formValues)),
-//   };
-// };
+// const mapDispatchToProps = (dispatch: Dispatch, ownProps: any) => ({
+//   loadBoardsAndPieces,
+//   // onLoad: () => dispatch({ type: "TEST", payload: "test" }),
+//   // onLoad: (b: any) => console.log("test: ", b)
+// });
 
 export default connect(mapStateToProps, null)(InventGame);
