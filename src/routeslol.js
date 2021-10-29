@@ -1,14 +1,11 @@
 import React from "react";
-// import { connect } from "react-redux";
-// import Game from "./components/game/Game.container";
-// import { LOAD_GAME, GET_PIECES_STRENGTH } from "./redux/actions/actionTypes";
 import "./app.scss";
 
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import Main from "./components/MainMenu";
 import Play from "./components/play/Play";
 import InventGame from "./components/invent/InventGame";
-import InventBoard from "./components/invent/InventBoard.container";
+import InventBoard from "./components/invent/InventBoard";
 import Grid from "./components/grids/Grid";
 import InventPieces from "./components/invent/InventPieces";
 
@@ -28,12 +25,3 @@ const Routes = () => {
 };
 
 export default Routes;
-
-// const mapDispatchToProps = (dispatch) => ({
-//   onLoadGame: () => dispatch({ type: LOAD_GAME }),
-//   onGetPiecesStrength: () => dispatch({ type: GET_PIECES_STRENGTH }),
-// });
-
-// export default connect((state) => {
-//   return { state };
-// }, mapDispatchToProps)(App);

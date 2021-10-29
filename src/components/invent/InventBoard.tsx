@@ -1,6 +1,11 @@
 import React from "react";
 import { APP_URL } from "../../config";
 import InventBoardForm from "./InventBoardForm";
+import { getFormValues } from "redux-form";
+import { Dispatch } from "redux";
+import { connect } from "react-redux";
+import { createNewBoard } from "../../redux/actions/boardActions";
+
 
 export type gridType = "squares" | "triangles" | "hexagons";
 type formValues = {
@@ -30,4 +35,18 @@ const InventBoard = (props: Props) => {
   );
 };
 
-export default InventBoard;
+
+const mapStateToProps = (state: any) => {
+  const formValues = getFormValues("invent-board-form")(state);
+  return {
+    formValues,
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: any) => {
+  return {
+    onSubmit: (formValues) => dispatch(createNewBoard(formValues)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(InventBoard);

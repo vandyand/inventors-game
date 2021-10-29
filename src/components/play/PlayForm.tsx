@@ -1,5 +1,9 @@
 import React from "react";
 import { Field, Form, reduxForm } from "redux-form";
+import { connect } from "react-redux";
+import { getFormValues } from "redux-form";
+import { Dispatch } from "redux";
+import { startNewGame } from "../../redux/actions/playGameActions";
 
 const gameTypes = ["chess", "alt-chess", "new weird game"];
 const opponents = ["computer", "human"];
@@ -34,6 +38,20 @@ const PlayForm = (props: Props) => {
   );
 };
 
-export default reduxForm({
+
+const mapStateToProps = (state: any) => {
+  const formValues = getFormValues("play_game")(state);
+  return {
+    formValues,
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    onSubmit: (formValues) => dispatch(startNewGame(formValues)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
   form: "play_game",
-})(PlayForm);
+})(PlayForm));

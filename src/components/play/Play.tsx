@@ -1,5 +1,5 @@
 import React from "react";
-import PlayForm from "./PlayForm.container";
+import PlayForm from "./PlayForm";
 
 type Props = {
   handleSubmit: (values: any) => void;
