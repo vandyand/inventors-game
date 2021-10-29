@@ -1,4 +1,4 @@
 export { piecesReducer } from "./piecesReducer";
-export { boardReducer } from "./boardReducer";
+export { boardsReducer } from "./boardsReducer";
 export { gameTypesReducer } from "./gameTypesReducer";
 export { currentGameReducer } from "./currentGameReducer";

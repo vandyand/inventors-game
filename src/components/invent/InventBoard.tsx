@@ -4,7 +4,7 @@ import InventBoardForm from "./InventBoardForm";
 import { getFormValues } from "redux-form";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { createNewBoard } from "../../redux/actions/boardActions";
+import { createNewBoard } from "../../redux/actions/boardsActions";
 
 
 export type gridType = "squares" | "triangles" | "hexagons";

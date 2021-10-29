@@ -9,14 +9,14 @@ import { reducer as formReducer } from "redux-form";
 import thunk from "redux-thunk";
 import {
   piecesReducer,
-  boardReducer,
+  boardsReducer,
   gameTypesReducer,
   currentGameReducer,
 } from "./redux/reducers";
 
 const combinedReducer = combineReducers({
   pieces: piecesReducer,
-  board: boardReducer,
+  boards: boardsReducer,
   gameTypes: gameTypesReducer,
   currentGame: currentGameReducer,
   form: formReducer,

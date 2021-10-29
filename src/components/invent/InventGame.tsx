@@ -10,7 +10,7 @@ import InventGameWindow from "./InventGameWindow";
 
 import "./InventGameStyles.scss";
 import { useDispatch, connect } from "react-redux";
-import { loadBoardsAndPieces } from "../../redux/actions/boardActions";
+import { loadBoardsAndPieces } from "../../redux/actions/boardsActions";
 
 import "./InventGameStyles.scss";
 
@@ -61,7 +61,7 @@ const InventGame = (props: Props) => {
 
 const mapStateToProps = (state: any) => {
   return {
-    boards: state.board,
+    boards: state.boards,
     pieces: state.pieces,
   };
 };
