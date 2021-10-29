@@ -8,7 +8,7 @@ type input = {
 };
 
 type Props = {
-  input: input;
+  input?: input;
   gridSize?: Array<number>;
   type?: "squares" | "triangles" | "hexagons";
   rotation?: number;
