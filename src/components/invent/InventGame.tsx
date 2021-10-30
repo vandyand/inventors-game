@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { board, piece } from "../../types/GameComponents";
-import SelectBoard from "./select/SelectBoard";
+import SelectFromBoardOptions from "./select/SelectFromBoardOptions";
 import SelectPieces from "./select/SelectPieces";
 import InventGameWindow from "./InventGameWindow";
 
@@ -35,7 +35,7 @@ const InventGame = (props: Props) => {
         <InventGameWindow />
         <div className="InventGame__Form">
           <div className="InventGame__Form__Board">
-            <SelectBoard
+            <SelectFromBoardOptions
               title="Select a board"
               boards={props.boards}
             />
