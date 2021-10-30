@@ -9,7 +9,7 @@ type Props = {
 const BoardOption = ({ board, onSelectBoardOption }: Props) => {
   return (
     <div className="BoardOption" onClick={onSelectBoardOption}>
-      <div>this is board {`${board.name}`}</div>
+      <div>this is board: {`${board.name}`}</div>
       <img alt={`${board.name}`} src={board.pic} />
     </div>
   );

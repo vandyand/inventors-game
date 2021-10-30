@@ -1,5 +1,6 @@
 import React from "react";
-import { Field, Form, reduxForm } from "redux-form";
+import { Field, FieldArray, Form, reduxForm } from "redux-form";
+import { board } from "../../types/GameComponents";
 import GridField from "../grids/GridField";
 
 type Props = {
@@ -8,6 +9,17 @@ type Props = {
 };
 
 const InventBoardForm = (props: Props) => {
+
+  const renderSizeInput = ({ fields }) => {
+    return fields.map((name) => <Field
+      component="input"
+      name={name}
+      type="number"
+      parse={parseInt}
+    />
+    )
+  }
+
   return (
     <div style={{ float: "left" }}>
       <h3>Invent your board! </h3>
@@ -22,21 +34,36 @@ const InventBoardForm = (props: Props) => {
           />
         </div>
         <div>
-          <div>
+          {/* <div>
             <label>Grid Type</label>
             <Field name="gridType" component="select" value="square">
               <option value="squares">Square</option>
               <option value="triangles">Triangle</option>
               <option value="hexagons">Hexagon</option>
             </Field>
+          </div> */}
+          <div>
+            <label>Name</label>
+            <Field
+              name="name"
+              component="input"
+              type="text"
+            />
           </div>
           <div>
-            <label>Rotation</label>
+            <label>Description</label>
             <Field
-              name="rotation"
+              name="description"
               component="input"
+              type="text"
+            />
+          </div>
+          <div>
+            <label>Size</label>
+            <FieldArray
+              name="size"
+              component={renderSizeInput}
               type="number"
-              placeholder={0}
             />
           </div>
           <button type="submit">
@@ -51,5 +78,5 @@ const InventBoardForm = (props: Props) => {
 
 export default reduxForm({
   form: "invent-board-form",
-  initialValues: { gridType: "squares", rotation: 0 },
+  initialValues: ({ name: "", description: "", grid_type_id: 1, board_shape: "rectangle", size: [8, 8], rotation: "0" } as board),
 })(InventBoardForm);

@@ -7,7 +7,7 @@ import SelectFromBoardOptions from "./select/SelectFromBoardOptions";
 import SelectFromPieceOptions from "./select/SelectFromPieceOptions";
 import InventGameWindow from "./InventGameWindow";
 import { useDispatch, connect } from "react-redux";
-import { loadBoardsAndPieces } from "../../redux/actions/boardsActions";
+import { loadBoards } from "../../redux/actions/boardsActions";
 
 import "./InventGameStyles.scss";
 
@@ -21,7 +21,7 @@ const InventGame = (props: Props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadBoardsAndPieces());
+    dispatch(loadBoards());
   }, [dispatch]);
 
   return (

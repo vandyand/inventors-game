@@ -1,5 +1,5 @@
 import React from "react";
-import { APP_URL } from "../../config";
+// import { APP_URL } from "../../config";
 import InventBoardForm from "./InventBoardForm";
 import { getFormValues } from "redux-form";
 import { Dispatch } from "redux";
@@ -20,16 +20,16 @@ type Props = {
 };
 
 const InventBoard = (props: Props) => {
-  const submitAndRedirect = (values) => {
-    props.onSubmit(values);
-    window.location.href = `${APP_URL}/Invent`;
-  };
+  // const submitAndRedirect = (values) => {
+  //   props.onSubmit(values);
+  //   window.location.href = `${APP_URL}/Invent`;
+  // };
 
   return (
     <div className="InventBoard" style={{ display: "flex" }}>
       <InventBoardForm
         formValues={props.formValues}
-        onSubmit={submitAndRedirect}
+        onSubmit={props.onSubmit}
       />
     </div>
   );
@@ -45,7 +45,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: any) => {
   return {
-    onSubmit: (formValues) => dispatch(createNewBoard(formValues)),
+    onSubmit: (formValues) => dispatch(createNewBoard(formValues) as any),
   };
 };
 

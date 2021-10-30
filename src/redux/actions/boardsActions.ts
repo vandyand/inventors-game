@@ -1,7 +1,6 @@
 import * as api from "../../api";
-import { board } from "../../types/GameComponents";
 
-export const SUBMIT_NEW_BOARD = "SUBMIT_NEW_BOARD";
+export const CREATE_BOARD_SUCCESS = "CREATE_BOARD_SUCCESS";
 export const LOAD_BOARD_SUCCESS = "LOAD_BOARD_SUCCESS";
 export const LOAD_BOARDS_SUCCESS = "LOAD_BOARDS_SUCCESS";
 export const LOAD_PIECE_SUCCESS = "LOAD_PIECE_SUCCESS";
@@ -73,7 +72,7 @@ export function loadBoard(id): any {
   };
 }
 
-export function loadBoardsAndPieces(): any {
+export function loadBoards(): any {
   return (dispatch) => {
     return api
       .getBoards()
@@ -103,16 +102,12 @@ export function loadPieces(): any {
   };
 }
 
-export function createNewBoard(values) {
-  const newBoard: board = {
-    description: "random text here",
-    board_shape: "square",
-    rotation: "0",
-    id: "12",
-    name: "board-12",
-    grid_type_id: 1,
-    size: getBoardDimensions(values.selectedCells, [12, 12]),
+export function createNewBoard(board) {
+  return (dispatch) => {
+    return api
+      .createNewBoard(board)
+      .then((newBoard) =>
+        dispatch({ type: CREATE_BOARD_SUCCESS, payload: newBoard })
+      );
   };
-
-  return { type: SUBMIT_NEW_BOARD, payload: newBoard };
 }
