@@ -2,6 +2,8 @@ import React from "react";
 import { flatten, range } from "lodash";
 import Polygon from "./Polygon";
 
+import './GridStyles.scss'
+
 export type GridProps = {
   gridSize?: Array<number>;
   type?: "squares" | "triangles" | "hexagons";
@@ -43,7 +45,7 @@ const offsets = {
     [0.5, TAN_30 * 0.5],
     [-0.5, TAN_30 * 0.5],
   ],
-  upside_down_triangle: [
+  upsideDownTriangle: [
     [0, TAN_30],
     [0.5, -TAN_30 * 0.5],
     [-0.5, -TAN_30 * 0.5],
@@ -71,7 +73,7 @@ const Grid = ({
         center: [0, 0],
       },
       {
-        offsets: offsets.upside_down_triangle,
+        offsets: offsets.upsideDownTriangle,
         center: [0.5, -TAN_30 * 0.5],
       },
     ],
@@ -105,32 +107,32 @@ const Grid = ({
 
   const patternCenters = getPatternCenters(type);
 
-
-
   return (
-    <svg height={`${windowSize[0]}`} width={`${windowSize[1]}`}>
-      {patternCenters.map((center, ind) =>
-        patterns[type].map((shape, shapeInd) => {
-          const id = ind * patterns[type].length + shapeInd;
-          return (
-            <Polygon
-              center={[
-                center[0] + shape.center[0],
-                center[1] + shape.center[1],
-              ]}
-              color={selectedCells && selectedCells.includes(id) ? "pink" : "white"}
-              displayCellNumber={false}
-              gridRotation={gridRotation}
-              id={id}
-              key={id}
-              offsets={shape.offsets}
-              onClick={updateSelectedCells}
-              scale={scale}
-            />
-          );
-        })
-      )}
-    </svg>
+    <div className="Grid">
+      <svg height={`${windowSize[0]}`} width={`${windowSize[1]}`}>
+        {patternCenters.map((center, ind) =>
+          patterns[type].map((shape, shapeInd) => {
+            const id = ind * patterns[type].length + shapeInd;
+            return (
+              <Polygon
+                center={[
+                  center[0] + shape.center[0],
+                  center[1] + shape.center[1],
+                ]}
+                color={selectedCells && selectedCells.includes(id) ? "pink" : "white"}
+                displayCellNumber={false}
+                gridRotation={gridRotation}
+                id={id}
+                key={id}
+                offsets={shape.offsets}
+                onClick={updateSelectedCells}
+                scale={scale}
+              />
+            );
+          })
+        )}
+      </svg>
+    </div>
   );
 };
 
