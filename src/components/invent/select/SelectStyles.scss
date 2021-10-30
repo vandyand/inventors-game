@@ -1,11 +1,11 @@
-.SelectBoard,
-.SelectPieces {
+.SelectFromBoardOptions,
+.SelectFromPieceOptions {
   border: 1px solid black;
   border-radius: 8px;
   padding: 16px;
 
   .BoardOption,
-  .SelectPieces {
+  .PieceOption {
     border: 1px solid blue;
     border-radius: 8px;
     padding: 8px;

@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { board, piece } from "../../types/GameComponents";
 import SelectFromBoardOptions from "./select/SelectFromBoardOptions";
-import SelectPieces from "./select/SelectPieces";
+import SelectFromPieceOptions from "./select/SelectFromPieceOptions";
 import InventGameWindow from "./InventGameWindow";
 import { useDispatch, connect } from "react-redux";
 import { loadBoardsAndPieces } from "../../redux/actions/boardsActions";
@@ -41,7 +41,7 @@ const InventGame = (props: Props) => {
             </div>
           </div>
           <div className="InventGame__Form__Piece">
-            <SelectPieces
+            <SelectFromPieceOptions
               title="Select your pieces"
               pieces={props.pieces}
             />

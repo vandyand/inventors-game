@@ -1,9 +1,9 @@
 import React from "react";
-import PieceOption from "./SelectPieceOption";
+import PieceOption from "./PieceOption";
 
-const SelectPieces = (props: any) => {
+const SelectFromPieceOptions = (props: any) => {
   return (
-    <div className="SelectPieces">
+    <div className="SelectFromPieceOptions">
       <h4>{props.title}</h4>
       {props.pieces ? (
         props.pieces.map((piece) => (
@@ -16,4 +16,4 @@ const SelectPieces = (props: any) => {
   );
 };
 
-export default SelectPieces;
+export default SelectFromPieceOptions;

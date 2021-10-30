@@ -11,7 +11,7 @@ type Props = {
 
 const SelectFromBoardOptions = (props: Props) => {
   return (
-    <div className="SelectBoard">
+    <div className="SelectFromBoardOptions">
       <h4>{props.title}</h4>
       {props.boards ? (
         props.boards.map((board, ind) => (
