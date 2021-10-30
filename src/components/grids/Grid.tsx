@@ -14,12 +14,6 @@ export type GridProps = {
   updateSelectedCells?: (id: number) => void;
 };
 
-const expand = (array1, array2) => {
-  return flatten(
-    array1.map((ar1Val) => array2.map((ar2Val) => [ar2Val, ar1Val]))
-  );
-};
-
 export const degreesToRadians = (degrees: number) => (degrees * Math.PI) / 180;
 
 const TAN_30 = Math.tan(degreesToRadians(30));
@@ -86,11 +80,19 @@ const Grid = ({
     ],
   };
 
+  const expand = (array1, array2) => {
+    return flatten(
+      array1.map((ar1Val) => array2.map((ar2Val) => [ar2Val + 0.5, ar1Val + 0.5]))
+    );
+  };
+
+  const squareCenters = expand(range(numRows), range(numCols));
+
   const triHexCenters = flatten(
     range(numRows).map((rowNum) =>
       range(numCols).map((colNum) => [
-        rowNum % 2 === 0 ? colNum : colNum + 0.5,
-        rowNum * SIN_60,
+        rowNum % 2 === 0 ? colNum + 0.5 : colNum + 1,
+        rowNum * SIN_60 + TAN_30,
       ])
     )
   );
@@ -98,7 +100,7 @@ const Grid = ({
   const getPatternCenters = (type) => {
     switch (type) {
       case "squares":
-        return expand(range(numRows), range(numCols));
+        return squareCenters;
       case "triangles":
       case "hexagons":
         return triHexCenters;
