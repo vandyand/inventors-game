@@ -1,7 +1,8 @@
 import React from "react";
 // import { connect } from "react-redux";
 // import { board, piece } from "../../types/GameComponents";
-import Grid from "../grids/Grid";
+// import Grid from "../grids/Grid";
+import Board from "../Board"
 
 // type Props = {
 //   board: board;
@@ -13,8 +14,7 @@ const InventGameWindow = (props) => {
   return (
     <div className="InventGameWindow">
       <div className="InventGameWindow__Board">
-        This is a board (holder)
-        <Grid type={"squares"} rotation={0} />
+        <Board />
       </div>
     </div>
   )

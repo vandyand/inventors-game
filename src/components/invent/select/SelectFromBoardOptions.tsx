@@ -15,7 +15,7 @@ const SelectFromBoardOptions = (props: Props) => {
       <h4>{props.title}</h4>
       {props.boards ? (
         props.boards.map((board, ind) => (
-          <BoardOption board={board} key={ind} onSelectBoardOption={() => console.log(`you clicked ${board.name}`)} />
+          <BoardOption board={board} key={ind} onSelectBoardOption={() => console.log(`you clicked board: ${board.name}`)} />
         ))
       ) : (
         <div>No boards here. Please invent one!</div>

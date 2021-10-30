@@ -6,9 +6,6 @@ import { board, piece } from "../../types/GameComponents";
 import SelectFromBoardOptions from "./select/SelectFromBoardOptions";
 import SelectPieces from "./select/SelectPieces";
 import InventGameWindow from "./InventGameWindow";
-
-
-import "./InventGameStyles.scss";
 import { useDispatch, connect } from "react-redux";
 import { loadBoardsAndPieces } from "../../redux/actions/boardsActions";
 
