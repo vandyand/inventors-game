@@ -2,19 +2,14 @@ import React from "react";
 import { flatten, range } from "lodash";
 import Polygon from "./Polygon";
 
-type input = {
-  onChange: (newSelectedCells: Array<number>) => void;
-  value: Array<number>;
-};
-
-type Props = {
-  input?: input;
+export type GridProps = {
   gridSize?: Array<number>;
   type?: "squares" | "triangles" | "hexagons";
   rotation?: number;
   scale?: number;
-  updateBoardBox?: (boardBox: Array<number>) => void;
   windowSize?: Array<number>;
+  selectedCells?: Array<number>;
+  updateSelectedCells?: (id: number) => void;
 };
 
 const expand = (array1, array2) => {
@@ -56,19 +51,15 @@ const offsets = {
 };
 
 const Grid = ({
-  input,
-  gridSize = [12, 12],
+  gridSize = [6, 6],
   rotation = 0,
   scale = 80,
   type = "squares",
-  updateBoardBox,
   windowSize = [800, 800],
-}: Props) => {
+  selectedCells = [],
+  updateSelectedCells = () => { },
+}: GridProps) => {
   const [numCols, numRows] = gridSize;
-  const selectedCells = input.value;
-  const updateSelectedCells = (newSelectedCells) => {
-    input.onChange(newSelectedCells);
-  };
 
   const gridRotation = `${rotation}, ${windowSize[0] / 2}, ${windowSize[1] / 2
     }`;
@@ -114,18 +105,7 @@ const Grid = ({
 
   const patternCenters = getPatternCenters(type);
 
-  const handleClick = (id) => {
-    toggleCell(id);
-  };
 
-  const toggleCell = (targetId) => {
-    if (selectedCells.includes(targetId)) {
-      updateSelectedCells(selectedCells.filter((x) => x !== targetId));
-      return;
-    }
-
-    updateSelectedCells([...selectedCells, targetId]);
-  };
 
   return (
     <svg height={`${windowSize[0]}`} width={`${windowSize[1]}`}>
@@ -138,13 +118,13 @@ const Grid = ({
                 center[0] + shape.center[0],
                 center[1] + shape.center[1],
               ]}
-              color={selectedCells.includes(id) ? "pink" : "white"}
+              color={selectedCells && selectedCells.includes(id) ? "pink" : "white"}
               displayCellNumber={false}
               gridRotation={gridRotation}
               id={id}
               key={id}
               offsets={shape.offsets}
-              onClick={handleClick}
+              onClick={updateSelectedCells}
               scale={scale}
             />
           );

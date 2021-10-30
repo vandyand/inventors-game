@@ -1,12 +1,12 @@
 import React from "react";
-import Grid from "./Grid";
+import SelectableGrid from "./SelectableGrid";
 
 type Props = any;
 
 const GridField = (props: Props) => {
   return (
     <div>
-      <Grid
+      <SelectableGrid
         type={props.gridType}
         rotation={props.rotation}
         input={props.input}
